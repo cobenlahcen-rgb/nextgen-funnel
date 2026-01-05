@@ -70,7 +70,7 @@ p{color:var(--muted)}
   cursor:pointer;
 }
 .choice:hover{background:#222244}
-.price{font-size:34px;font-weight:800}
+.price{font-size:34px;font-weight:800;margin:8px 0 0}
 .small{font-size:12px;color:var(--muted)}
 .actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
 .btn.secondary{
@@ -88,7 +88,8 @@ p{color:var(--muted)}
 <div id="hero" class="card">
   <h1>Create Your Conversation Experience</h1>
   <p>Personalized conversations, storytelling, and intelligent interaction.</p>
-  <button class="btn" onclick="go('avatars')">Start</button>
+  <!-- Optimization #3: "Free" CTA -->
+  <button class="btn" onclick="go('avatars')">Start Free Experience</button>
   <p class="small" style="margin-top:10px;">Safe content • No therapy • No adult interactions</p>
 </div>
 
@@ -137,8 +138,9 @@ p{color:var(--muted)}
 
 <!-- LOADING -->
 <div id="loading" class="card hidden">
-  <h2>Preparing your experience…</h2>
-  <p>Please wait a moment</p>
+  <!-- Optimization #4 -->
+  <h2>Customizing your experience…</h2>
+  <p>Matching your style and preferences</p>
 </div>
 
 <!-- RESULT -->
@@ -154,6 +156,10 @@ p{color:var(--muted)}
 <!-- PRICE -->
 <div id="price" class="card hidden">
   <h2>Unlock Full Access</h2>
+
+  <!-- Optimization #5 -->
+  <p class="small">Most users choose monthly for full flexibility</p>
+
   <p class="price">$19 / month</p>
   <p>Unlimited conversations · Cancel anytime</p>
   <button class="btn" disabled>Unlock Access (Coming Soon)</button>
@@ -170,8 +176,12 @@ p{color:var(--muted)}
 let avatar = null;
 let step = 0;
 
+// Optimization #1: default avatar preselect (only first time)
+let firstAvatarVisit = true;
+
+// Optimization #2: improved first question wording
 const qs = [
-  ["What do you want most?", ["Creative storytelling", "Deep conversations", "Daily conversations", "Ideas & brainstorming"]],
+  ["What kind of conversations do you enjoy most?", ["Creative storytelling", "Deep conversations", "Daily conversations", "Ideas & brainstorming"]],
   ["Choose a tone", ["Calm", "Playful", "Bold", "Thoughtful"]],
   ["Reply style?", ["Short", "Balanced", "Detailed"]]
 ];
@@ -180,7 +190,11 @@ function go(id){
   document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
 
-  // Reset quiz progress if user goes back to choose a different style
+  if(id === 'avatars' && firstAvatarVisit){
+    firstAvatarVisit = false;
+    selectAvatar(1);
+  }
+
   if(id === 'avatars'){
     step = 0;
     document.getElementById('bar').style.width = '0%';
@@ -191,7 +205,7 @@ function selectAvatar(n){
   avatar = n;
   document.querySelectorAll('.avatar').forEach(a => a.classList.remove('active'));
   document.querySelectorAll('.avatar')[n-1].classList.add('active');
-  setTimeout(() => { go('quiz'); render(); }, 250);
+  setTimeout(() => { go('quiz'); render(); }, 200);
 }
 
 function render(){
