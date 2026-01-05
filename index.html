@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Create Your AI Companion</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+:root{
+  --bg:#0a0a12;
+  --card:#131324;
+  --accent:#7c5cff;
+  --text:#f4f4ff;
+  --muted:#a1a1c8;
+}
+*{box-sizing:border-box;font-family:Inter,system-ui,Arial}
+body{
+  margin:0;
+  background:radial-gradient(800px 400px at 20% -10%,rgba(124,92,255,.25),transparent 60%),var(--bg);
+  color:var(--text);
+}
+.container{max-width:960px;margin:auto;padding:32px}
+.card{
+  background:rgba(19,19,36,.92);
+  border-radius:22px;
+  padding:28px;
+  box-shadow:0 30px 80px rgba(0,0,0,.6);
+}
+h1{font-size:38px;margin:0 0 10px}
+p{color:var(--muted)}
+.btn{
+  background:var(--accent);
+  border:none;
+  color:#fff;
+  padding:14px 22px;
+  border-radius:14px;
+  font-weight:700;
+  cursor:pointer;
+}
+.hidden{display:none}
+.progress{height:8px;background:#222;border-radius:10px;overflow:hidden;margin:18px 0}
+.bar{height:100%;width:0;background:linear-gradient(90deg,#7c5cff,#4ade80);transition:.3s}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px}
+.avatar{
+  border-radius:16px;
+  overflow:hidden;
+  cursor:pointer;
+  border:2px solid transparent;
+  transition:.2s;
+}
+.avatar img{width:100%;display:block}
+.avatar:hover{transform:translateY(-3px)}
+.avatar.active{border-color:var(--accent)}
+.choice{
+  padding:14px;
+  background:#1a1a30;
+  border-radius:14px;
+  margin-top:10px;
+  cursor:pointer;
+}
+.choice:hover{background:#222244}
+.price{font-size:34px;font-weight:800}
+.small{font-size:12px;color:var(--muted)}
+</style>
+</head>
+
+<body>
+<div class="container">
+
+<!-- HERO -->
+<div id="hero" class="card">
+  <h1>Create Your AI Companion</h1>
+  <p>Personalized conversations, roleplay & daily interaction.</p>
+  <button class="btn" onclick="go('avatars')">Start</button>
+</div>
+
+<!-- AVATAR SELECT -->
+<div id="avatars" class="card hidden">
+  <div class="progress"><div class="bar" style="width:20%"></div></div>
+  <h2>Select your companion</h2>
+  <div class="grid">
+    <div class="avatar" onclick="selectAvatar(1)"><img src="assets/companion1.jpg"></div>
+    <div class="avatar" onclick="selectAvatar(2)"><img src="assets/companion2.jpg"></div>
+    <div class="avatar" onclick="selectAvatar(3)"><img src="assets/companion3.jpg"></div>
+    <div class="avatar" onclick="selectAvatar(4)"><img src="assets/companion4.jpg"></div>
+  </div>
+</div>
+
+<!-- QUIZ -->
+<div id="quiz" class="card hidden">
+  <div class="progress"><div id="bar" class="bar"></div></div>
+  <h2 id="q"></h2>
+  <div id="opts"></div>
+</div>
+
+<!-- LOADING -->
+<div id="loading" class="card hidden">
+  <h2>Analyzing your preferences…</h2>
+  <p>Please wait</p>
+</div>
+
+<!-- RESULT -->
+<div id="result" class="card hidden">
+  <h2>Your companion is ready</h2>
+  <p id="res"></p>
+  <button class="btn" onclick="go('price')">Continue</button>
+</div>
+
+<!-- PRICE -->
+<div id="price" class="card hidden">
+  <h2>Unlock Full Access</h2>
+  <p class="price">$19 / month</p>
+  <p>Unlimited conversations · Cancel anytime</p>
+  <button class="btn" disabled>Unlock Access (Coming Soon)</button>
+  <p class="small">AI-powered conversational service. No therapy. No adult content.</p>
+</div>
+
+</div>
+
+<script>
+let avatar=null;
+let step=0;
+const qs=[
+ ["What do you want most?",["Creative roleplay","Deep conversations","Daily companion","Ideas & brainstorming"]],
+ ["Choose a tone",["Calm","Playful","Bold","Thoughtful"]],
+ ["Reply style?",["Short","Balanced","Detailed"]]
+];
+function go(id){
+ document.querySelectorAll('.card').forEach(c=>c.classList.add('hidden'));
+ document.getElementById(id).classList.remove('hidden');
+}
+function selectAvatar(n){
+ avatar=n;
+ document.querySelectorAll('.avatar').forEach(a=>a.classList.remove('active'));
+ document.querySelectorAll('.avatar')[n-1].classList.add('active');
+ setTimeout(()=>{go('quiz');render();},400);
+}
+function render(){
+ document.getElementById('bar').style.width=((step+1)/qs.length*100)+'%';
+ document.getElementById('q').innerText=qs[step][0];
+ let o=document.getElementById('opts');o.innerHTML='';
+ qs[step][1].forEach(v=>{
+  let d=document.createElement('div');
+  d.className='choice';
+  d.innerText=v;
+  d.onclick=next;
+  o.appendChild(d);
+ });
+}
+function next(){
+ step++;
+ if(step<qs.length){render();}
+ else{
+  go('loading');
+  setTimeout(()=>{
+   go('result');
+   document.getElementById('res').innerText="Your selected companion and preferences are matched.";
+  },2000);
+ }
+}
+</script>
+
+</body>
+</html>
