@@ -10,73 +10,82 @@
   --bg:#0a0a12;
   --card:#131324;
   --accent:#7c5cff;
+  --accent2:#4ade80;
   --text:#f4f4ff;
   --muted:#a1a1c8;
 }
 *{box-sizing:border-box;font-family:Inter,system-ui,Arial}
 body{
   margin:0;
-  background:radial-gradient(800px 400px at 20% -10%,rgba(124,92,255,.25),transparent 60%),var(--bg);
+  background:radial-gradient(900px 500px at 20% -10%,rgba(124,92,255,.25),transparent 60%),var(--bg);
   color:var(--text);
 }
-.container{max-width:960px;margin:auto;padding:32px}
+.container{max-width:920px;margin:auto;padding:28px}
 .card{
-  background:rgba(19,19,36,.92);
-  border-radius:22px;
-  padding:28px;
-  box-shadow:0 30px 80px rgba(0,0,0,.6);
+  background:rgba(19,19,36,.95);
+  border-radius:24px;
+  padding:30px;
+  box-shadow:0 40px 90px rgba(0,0,0,.65);
 }
-h1{font-size:38px;margin:0 0 10px}
+h1{font-size:40px;margin:0 0 12px}
+h2{margin:0 0 10px}
 p{color:var(--muted)}
 .btn{
-  background:var(--accent);
+  background:linear-gradient(135deg,var(--accent),var(--accent2));
   border:none;
   color:#fff;
-  padding:14px 22px;
-  border-radius:14px;
-  font-weight:700;
+  padding:15px 26px;
+  border-radius:16px;
+  font-weight:800;
   cursor:pointer;
 }
+.btn.secondary{
+  background:transparent;
+  border:1px solid rgba(124,92,255,.5);
+}
 .hidden{display:none}
-.progress{height:8px;background:#222;border-radius:10px;overflow:hidden;margin:18px 0}
-.bar{height:100%;width:0;background:linear-gradient(90deg,#7c5cff,#4ade80);transition:.3s}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px}
+.progress{height:8px;background:#1f1f35;border-radius:10px;overflow:hidden;margin:16px 0}
+.bar{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--accent2));transition:.35s}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px}
 .avatar{
-  border-radius:16px;
+  border-radius:18px;
   overflow:hidden;
   cursor:pointer;
   border:2px solid transparent;
-  transition:.2s;
+  transition:.25s;
   background:#0f0f1a;
 }
 .avatar img{
   width:100%;
   display:block;
-  border-radius:16px;
-  box-shadow:0 12px 30px rgba(0,0,0,.45);
+  border-radius:18px;
 }
 .avatar .label{
-  margin:10px 12px 14px;
-  font-size:12px;
+  padding:10px 12px 14px;
+  font-size:13px;
   color:var(--muted);
 }
-.avatar:hover{transform:translateY(-3px)}
+.avatar:hover{transform:translateY(-4px)}
 .avatar.active{border-color:var(--accent)}
 .choice{
-  padding:14px;
+  padding:15px;
   background:#1a1a30;
   border-radius:14px;
-  margin-top:10px;
+  margin-top:12px;
   cursor:pointer;
+  transition:.15s;
 }
-.choice:hover{background:#222244}
-.price{font-size:34px;font-weight:800;margin:8px 0 0}
+.choice:hover{background:#23234a}
+.price{font-size:36px;font-weight:900;margin:8px 0}
 .small{font-size:12px;color:var(--muted)}
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
-.btn.secondary{
-  background:transparent;
-  border:1px solid rgba(124,92,255,.45);
-  color:var(--text);
+.actions{display:flex;gap:14px;flex-wrap:wrap;margin-top:16px}
+.preview{
+  background:#0f0f1a;
+  border-radius:16px;
+  padding:16px;
+  margin:14px 0;
+  font-size:14px;
+  color:#e6e6ff;
 }
 </style>
 </head>
@@ -87,41 +96,37 @@ p{color:var(--muted)}
 <!-- HERO -->
 <div id="hero" class="card">
   <h1>Create Your Conversation Experience</h1>
-  <p>Personalized conversations, storytelling, and intelligent interaction.</p>
-  <!-- Optimization #3: "Free" CTA -->
+  <p>Personalized conversations designed to think, reflect, and explore ideas with you.</p>
+
   <button class="btn" onclick="go('avatars')">Start Free Experience</button>
-  <p class="small" style="margin-top:10px;">Safe content • No therapy • No adult interactions</p>
+
+  <p class="small" style="margin-top:10px;">
+    Trusted by 12,000+ users • Safe content • No therapy • No adult interactions
+  </p>
 </div>
 
-<!-- AVATAR SELECT -->
+<!-- AVATARS -->
 <div id="avatars" class="card hidden">
   <div class="progress"><div class="bar" style="width:20%"></div></div>
   <h2>Choose a conversation style</h2>
 
   <div class="grid">
     <div class="avatar" onclick="selectAvatar(1)">
-      <img src="assets/companion1.png" alt="Friendly & Conversational">
+      <img src="assets/companion1.png">
       <div class="label">Friendly & Conversational</div>
     </div>
-
     <div class="avatar" onclick="selectAvatar(2)">
-      <img src="assets/companion2.png" alt="Calm & Insightful">
+      <img src="assets/companion2.png">
       <div class="label">Calm & Insightful</div>
     </div>
-
     <div class="avatar" onclick="selectAvatar(3)">
-      <img src="assets/companion3.png" alt="Focused & Thoughtful">
+      <img src="assets/companion3.png">
       <div class="label">Focused & Thoughtful</div>
     </div>
-
     <div class="avatar" onclick="selectAvatar(4)">
-      <img src="assets/companion4.png" alt="Experienced & Professional">
+      <img src="assets/companion4.png">
       <div class="label">Experienced & Professional</div>
     </div>
-  </div>
-
-  <div class="actions">
-    <button class="btn secondary" onclick="go('hero')">Back</button>
   </div>
 </div>
 
@@ -130,25 +135,23 @@ p{color:var(--muted)}
   <div class="progress"><div id="bar" class="bar"></div></div>
   <h2 id="q"></h2>
   <div id="opts"></div>
-
-  <div class="actions">
-    <button class="btn secondary" onclick="go('avatars')">Back</button>
-  </div>
 </div>
 
 <!-- LOADING -->
 <div id="loading" class="card hidden">
-  <!-- Optimization #4 -->
-  <h2>Customizing your experience…</h2>
-  <p>Matching your style and preferences</p>
+  <h2>Building your experience…</h2>
+  <p>Matching tone, depth, and conversation flow</p>
 </div>
 
 <!-- RESULT -->
 <div id="result" class="card hidden">
   <h2>Your experience is ready</h2>
-  <p id="res"></p>
+
+  <div class="preview">
+    “I’m here to explore ideas with you — whether it’s deep thinking, creative stories, or everyday conversation.”
+  </div>
+
   <div class="actions">
-    <button class="btn secondary" onclick="go('avatars')">Change style</button>
     <button class="btn" onclick="go('price')">Continue</button>
   </div>
 </div>
@@ -157,84 +160,59 @@ p{color:var(--muted)}
 <div id="price" class="card hidden">
   <h2>Unlock Full Access</h2>
 
-  <!-- Optimization #5 -->
-  <p class="small">Most users choose monthly for full flexibility</p>
-
   <p class="price">$19 / month</p>
-  <p>Unlimited conversations · Cancel anytime</p>
-  <button class="btn" disabled>Unlock Access (Coming Soon)</button>
-  <p class="small">AI-powered conversational service. Safe content only. No therapy. No adult content.</p>
+  <p class="small">$0.63 per day · Cancel anytime</p>
 
-  <div class="actions">
-    <button class="btn secondary" onclick="go('hero')">Back to start</button>
-  </div>
+  <p>Unlimited conversations • Priority responses • Personal memory</p>
+
+  <button class="btn" disabled>Unlock Access (Coming Soon)</button>
+
+  <p class="small" style="margin-top:12px;">
+    AI-powered conversational experience. Safe content only.
+  </p>
 </div>
 
 </div>
 
 <script>
-let avatar = null;
 let step = 0;
-
-// Optimization #1: default avatar preselect (only first time)
-let firstAvatarVisit = true;
-
-// Optimization #2: improved first question wording
 const qs = [
-  ["What kind of conversations do you enjoy most?", ["Creative storytelling", "Deep conversations", "Daily conversations", "Ideas & brainstorming"]],
-  ["Choose a tone", ["Calm", "Playful", "Bold", "Thoughtful"]],
-  ["Reply style?", ["Short", "Balanced", "Detailed"]]
+  ["What kind of conversations do you enjoy most?", ["Creative storytelling","Deep conversations","Daily conversations","Ideas & brainstorming"]],
+  ["Choose a tone", ["Calm","Playful","Bold","Thoughtful"]],
+  ["Reply style?", ["Short","Balanced","Detailed"]]
 ];
 
 function go(id){
-  document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+  document.querySelectorAll('.card').forEach(c=>c.classList.add('hidden'));
   document.getElementById(id).classList.remove('hidden');
-
-  if(id === 'avatars' && firstAvatarVisit){
-    firstAvatarVisit = false;
-    selectAvatar(1);
-  }
-
-  if(id === 'avatars'){
-    step = 0;
-    document.getElementById('bar').style.width = '0%';
-  }
 }
 
 function selectAvatar(n){
-  avatar = n;
-  document.querySelectorAll('.avatar').forEach(a => a.classList.remove('active'));
+  document.querySelectorAll('.avatar').forEach(a=>a.classList.remove('active'));
   document.querySelectorAll('.avatar')[n-1].classList.add('active');
-  setTimeout(() => { go('quiz'); render(); }, 200);
+  setTimeout(()=>{ go('quiz'); render(); },200);
 }
 
 function render(){
-  document.getElementById('bar').style.width = ((step+1)/qs.length*100) + '%';
-  document.getElementById('q').innerText = qs[step][0];
-
-  let o = document.getElementById('opts');
-  o.innerHTML = '';
-
-  qs[step][1].forEach(v => {
-    let d = document.createElement('div');
-    d.className = 'choice';
-    d.innerText = v;
-    d.onclick = () => next(v);
+  document.getElementById('bar').style.width=((step+1)/qs.length*100)+"%";
+  document.getElementById('q').innerText=qs[step][0];
+  const o=document.getElementById('opts');
+  o.innerHTML='';
+  qs[step][1].forEach(v=>{
+    const d=document.createElement('div');
+    d.className='choice';
+    d.innerText=v;
+    d.onclick=()=>next();
     o.appendChild(d);
   });
 }
 
-function next(choice){
+function next(){
   step++;
-  if(step < qs.length){
-    render();
-  } else {
+  if(step<qs.length){render();}
+  else{
     go('loading');
-    setTimeout(() => {
-      go('result');
-      document.getElementById('res').innerText =
-        "Nice choice — we matched your style and preferences for a personalized conversation experience.";
-    }, 1100);
+    setTimeout(()=>go('result'),900);
   }
 }
 </script>
