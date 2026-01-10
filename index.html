@@ -5,7 +5,7 @@
 <title>NextGen AI Hub — Conversation Experience</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-<!-- ✅ Whop Embedded Checkout Loader (required for modal embedded checkout) -->
+<!-- ✅ Whop Embedded Checkout Loader (required) -->
 <script async defer src="https://js.whop.com/static/checkout/loader.js"></script>
 
 <style>
@@ -182,7 +182,7 @@ p{color:var(--muted);margin:10px 0 0;line-height:1.45}
 }
 
 /* =========================
-   ✅ Whop Modal (embedded checkout)
+   ✅ Whop Modal (Professional + Responsive + Scroll)
    ========================= */
 .ng-modal{
   position:fixed;
@@ -191,43 +191,85 @@ p{color:var(--muted);margin:10px 0 0;line-height:1.45}
   z-index:9999;
 }
 .ng-modal.is-open{display:block}
+
 .ng-modal__backdrop{
   position:absolute;
   inset:0;
-  background:rgba(0,0,0,.68);
+  background:rgba(0,0,0,.72);
+  backdrop-filter: blur(6px);
 }
+
 .ng-modal__panel{
   position:relative;
-  width:min(980px,calc(100% - 24px));
-  height:min(720px,calc(100% - 24px));
-  margin:12px auto;
+  width:min(1020px, calc(100% - 20px));
+  height:min(92vh, 820px);
+  margin:10px auto;
   background:#0b0b0f;
   border:1px solid rgba(255,255,255,.10);
-  border-radius:16px;
-  box-shadow:0 20px 60px rgba(0,0,0,.55);
+  border-radius:18px;
+  box-shadow:0 30px 90px rgba(0,0,0,.65);
   overflow:hidden;
+
+  /* ✅ real app modal */
+  display:flex;
+  flex-direction:column;
 }
+
 .ng-modal__header{
   padding:14px 16px;
   border-bottom:1px solid rgba(255,255,255,.08);
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0));
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
 }
-.ng-modal__title{font-weight:900;font-size:16px}
-.ng-modal__subtitle{opacity:.7;font-size:13px;margin-top:2px}
+
+.ng-modal__title{
+  font-weight:900;
+  font-size:15px;
+  letter-spacing:-.2px;
+}
+
+.ng-modal__subtitle{
+  opacity:.75;
+  font-size:12px;
+  white-space:nowrap;
+}
+
 .ng-modal__close{
   position:absolute;
   top:10px;
   right:10px;
-  width:38px;
-  height:38px;
+  width:40px;
+  height:40px;
   border-radius:12px;
   border:1px solid rgba(255,255,255,.10);
   background:rgba(255,255,255,.06);
   color:#fff;
   cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
 }
+.ng-modal__close:hover{ background:rgba(255,255,255,.10); }
+
+/* ✅ key fix: scroll inside modal cleanly */
 #whop-embedded-checkout{
-  height:calc(100% - 58px);
+  flex:1;
+  min-height:0;         /* IMPORTANT */
+  overflow:auto;        /* scroll inside modal */
+  -webkit-overflow-scrolling: touch;
+  background:#fff;      /* Whop UI is white */
 }
+
+/* Optional: nicer scrollbar (Chrome/Edge) */
+#whop-embedded-checkout::-webkit-scrollbar{ width:10px; }
+#whop-embedded-checkout::-webkit-scrollbar-thumb{
+  background: rgba(0,0,0,.18);
+  border-radius: 999px;
+}
+
 .ng-modal__error{
   position:absolute;
   left:16px;
@@ -239,6 +281,16 @@ p{color:var(--muted);margin:10px 0 0;line-height:1.45}
   border:1px solid rgba(255,0,0,.25);
   font-size:13px;
   color:rgba(255,255,255,.92);
+}
+
+@media (max-width: 640px){
+  .ng-modal__panel{
+    width: calc(100% - 12px);
+    height: 94vh;
+    margin: 6px auto;
+    border-radius: 16px;
+  }
+  .ng-modal__subtitle{ display:none; }
 }
 </style>
 </head>
@@ -325,7 +377,6 @@ p{color:var(--muted);margin:10px 0 0;line-height:1.45}
 <div id="result" class="card hidden">
   <h2>Your experience is ready</h2>
 
-  <!-- Visual message with selected character -->
   <div class="chatwrap">
     <img id="avatarPreview" src="assets/companion1.png" alt="Selected companion">
     <div class="bubble">
@@ -377,11 +428,8 @@ p{color:var(--muted);margin:10px 0 0;line-height:1.45}
     </div>
   </div>
 
-  <!-- ✅ Modal checkout (stays inside funnel) -->
   <div class="actions" style="margin-top:18px;">
-    <button class="btn" onclick="openWhopModal()">
-      Unlock with Secure Checkout
-    </button>
+    <button class="btn" onclick="openWhopModal()">Unlock with Secure Checkout</button>
     <button class="btn secondary" onclick="go('result')">Back</button>
   </div>
 
@@ -390,15 +438,15 @@ p{color:var(--muted);margin:10px 0 0;line-height:1.45}
   </p>
 </div>
 
-<!-- ✅ SUCCESS (post-payment) -->
+<!-- SUCCESS -->
 <div id="success" class="card hidden">
   <div class="toprow">
     <div class="pill">Payment confirmed</div>
-    <div class="pill">Next step: unlock flow (webhook later)</div>
+    <div class="pill">Access unlock automation next</div>
   </div>
 
   <h2 style="margin-top:14px;">✅ You’re in</h2>
-  <p class="small">Your purchase is confirmed. Next, we’ll route you forward. (Webhook unlock automation comes next.)</p>
+  <p class="small">Your purchase is confirmed. Next, we’ll route you forward.</p>
 
   <div class="footerNote">
     <p class="small" style="margin:0;">
@@ -412,7 +460,7 @@ p{color:var(--muted);margin:10px 0 0;line-height:1.45}
   </div>
 
   <p class="small" style="margin-top:10px;">
-    Note: For now, this confirms payment and routes you to the next step. We’ll add the webhook-based unlock soon.
+    Note: For now, this confirms payment and routes you to the next step. Webhook-based unlock comes next.
   </p>
 </div>
 
@@ -422,12 +470,15 @@ p{color:var(--muted);margin:10px 0 0;line-height:1.45}
 <div id="whopModal" class="ng-modal" aria-hidden="true">
   <div class="ng-modal__backdrop" onclick="closeWhopModal()"></div>
 
-  <div class="ng-modal__panel" role="dialog" aria-modal="true" aria-label="Secure checkout">
+  <div class="ng-modal__panel" role="dialog" aria-modal="true" aria-label="Checkout">
     <button class="ng-modal__close" onclick="closeWhopModal()" aria-label="Close checkout">✕</button>
 
     <div class="ng-modal__header">
-      <div class="ng-modal__title">Secure Checkout</div>
-      <div class="ng-modal__subtitle">You’ll stay on NextGen AI Hub</div>
+      <div>
+        <div class="ng-modal__title">Checkout</div>
+        <div class="ng-modal__subtitle">Powered by Whop • Secure payment</div>
+      </div>
+      <div style="opacity:.75;font-size:12px;"></div>
     </div>
 
     <!-- Whop mounts the embedded checkout inside this div -->
@@ -454,6 +505,7 @@ const RETURN_URL = "https://nextgenaihub.net/?whop_return=1";
 
 /**
  * Avatar images:
+ * If later you add message-pose files, set getMessagePoseSrc() to companionN_msg.png
  */
 const AVATAR_BASE = {
   1: "assets/companion1.png",
@@ -462,7 +514,6 @@ const AVATAR_BASE = {
   4: "assets/companion4.png",
 };
 
-// Optional “message pose” naming convention:
 function getMessagePoseSrc(n){
   return AVATAR_BASE[n];
   // If you upload these later, switch to:
@@ -512,25 +563,27 @@ function openWhopModal(){
   const err = document.getElementById("whopError");
   if (err) err.style.display = "none";
 
-  // Ensure config is correct (safe if you ever change it)
   checkout.setAttribute("data-whop-checkout-plan-id", WHOP_PLAN_ID);
   checkout.setAttribute("data-whop-checkout-return-url", RETURN_URL);
 
   modal.classList.add("is-open");
   modal.setAttribute("aria-hidden", "false");
+
   document.body.style.overflow = "hidden";
+  document.documentElement.style.overflow = "hidden"; // mobile-safe
 }
 
 function closeWhopModal(){
   const modal = document.getElementById("whopModal");
   modal.classList.remove("is-open");
   modal.setAttribute("aria-hidden", "true");
+
   document.body.style.overflow = "";
+  document.documentElement.style.overflow = "";
 }
 
 /**
  * Whop Callbacks (called by embedded checkout)
- * on-complete: (planId, receiptId)
  */
 window.onCheckoutComplete = (planId, receiptId) => {
   closeWhopModal();
@@ -553,8 +606,8 @@ window.onCheckoutStateChange = (state) => {
 
 /**
  * Return URL handler:
- * If a payment method redirects out and returns, Whop may append status=success|error
- * We'll handle our marker (?whop_return=1) and show success or show the modal again.
+ * If a payment method redirects out and returns, it may append status=success|error.
+ * We'll handle our marker (?whop_return=1) and show success or retry.
  */
 (function handleWhopReturn(){
   const url = new URL(window.location.href);
@@ -563,7 +616,7 @@ window.onCheckoutStateChange = (state) => {
 
   if (!whopReturn) return;
 
-  // Clean the URL so refresh won't repeat the action
+  // Clean URL so refresh doesn't repeat
   url.searchParams.delete("whop_return");
   url.searchParams.delete("status");
   window.history.replaceState({}, "", url.toString());
@@ -574,7 +627,6 @@ window.onCheckoutStateChange = (state) => {
     if (receiptEl) receiptEl.textContent = localStorage.getItem("ng_whop_receipt_id") || "Confirmed";
     go("success");
   } else {
-    // Show error and reopen modal
     go("price");
     const err = document.getElementById("whopError");
     if (err) err.style.display = "block";
@@ -662,7 +714,6 @@ function next(choice){
 function showResult(){
   go('result');
 
-  // Create a personalized message from answers (still safe)
   const [topic, tone, style] = answers;
   const toneLine = {
     Calm: "calm and clear",
@@ -680,7 +731,6 @@ function showResult(){
   document.getElementById('resMsg').innerText =
     `“Perfect — I’ll keep it ${toneLine} with ${styleLine}. Let’s start with ${String(topic || "").toLowerCase()}.”`;
 
-  // Update image again on result page
   const preview = document.getElementById("avatarPreview");
   if(preview) preview.src = getMessagePoseSrc(avatar);
 }
