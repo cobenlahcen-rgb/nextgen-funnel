@@ -389,15 +389,15 @@ p{color:var(--muted);margin:10px 0 0;line-height:1.45}
   <p class="small" style="margin-top:10px;">Tip: Most users start the free trial right after setup to keep personalization.</p>
 </div>
 
-<!-- PRICE (✅ Updated for free trial) -->
+<!-- PRICE (✅ Best conversion CTA copy) -->
 <div id="price" class="card hidden">
   <div class="toprow">
     <div class="pill">7-day free trial included</div>
     <div class="pill">Cancel anytime</div>
   </div>
 
-  <h2 style="margin-top:14px;">Start Your Free Trial</h2>
-  <p class="small">No charge today. Your selected conversation style is saved.</p>
+  <h2 style="margin-top:14px;">Start Chat Access</h2>
+  <p class="small">Your setup is ready. Begin chatting in less than a minute.</p>
 
   <div class="priceRow">
     <div class="plan">
@@ -414,7 +414,7 @@ p{color:var(--muted);margin:10px 0 0;line-height:1.45}
   </div>
 
   <div class="actions" style="margin-top:18px;">
-    <button class="btn" onclick="openWhopModal()">Start 7-Day Free Trial</button>
+    <button class="btn" onclick="openWhopModal()">Start Chat</button>
     <button class="btn secondary" onclick="go('result')">Back</button>
   </div>
 
@@ -498,8 +498,6 @@ const AVATAR_BASE = {
 
 function getMessagePoseSrc(n){
   return AVATAR_BASE[n];
-  // If you upload these later:
-  // return `assets/companion${n}_msg.png`;
 }
 
 let avatar = 1;
