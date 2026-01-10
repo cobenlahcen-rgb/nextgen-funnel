@@ -2,39 +2,57 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>NextGen AI – Conversation Experience</title>
+<title>NextGen AI Hub — Conversation Experience</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <style>
 :root{
   --bg:#0a0a12;
-  --card:#131324;
+  --card:rgba(19,19,36,.92);
   --accent:#7c5cff;
   --accent2:#4ade80;
   --text:#f4f4ff;
   --muted:#a1a1c8;
+  --stroke:rgba(124,92,255,.25);
 }
 *{box-sizing:border-box;font-family:Inter,system-ui,Arial}
 body{
   margin:0;
+  min-height:100vh;
   background:
-    radial-gradient(800px 400px at 20% -10%,rgba(124,92,255,.25),transparent 60%),
+    radial-gradient(900px 450px at 18% -8%,rgba(124,92,255,.25),transparent 60%),
+    radial-gradient(700px 380px at 85% 0%,rgba(74,222,128,.16),transparent 55%),
     var(--bg);
   color:var(--text);
 }
-.container{max-width:960px;margin:auto;padding:32px}
+.container{max-width:980px;margin:auto;padding:28px}
 .card{
-  background:rgba(19,19,36,.94);
+  background:var(--card);
+  border:1px solid rgba(255,255,255,.06);
   border-radius:22px;
   padding:28px;
-  box-shadow:0 30px 80px rgba(0,0,0,.6);
+  box-shadow:0 30px 90px rgba(0,0,0,.62);
+  backdrop-filter: blur(10px);
 }
+h1{font-size:40px;margin:0 0 10px;letter-spacing:-.4px}
+h2{margin:0 0 10px;font-size:24px}
+p{color:var(--muted);margin:10px 0 0;line-height:1.45}
+.small{font-size:12px;color:var(--muted)}
 .hidden{display:none}
-h1{font-size:38px;margin:0 0 10px}
-h2{margin:0 0 10px}
-p{color:var(--muted)}
+
+.toprow{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
+.pill{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:8px 12px;border-radius:999px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+  color:var(--muted);font-size:12px;
+}
+
 .btn{
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  display:inline-flex;align-items:center;justify-content:center;
+  gap:10px;
+  background:linear-gradient(135deg,var(--accent),rgba(124,92,255,.65));
   border:none;
   color:#fff;
   padding:14px 22px;
@@ -42,54 +60,124 @@ p{color:var(--muted)}
   font-weight:800;
   cursor:pointer;
   text-decoration:none;
-  display:inline-block;
+  box-shadow:0 18px 40px rgba(124,92,255,.18);
+  transition:.15s transform,.15s filter;
 }
+.btn:hover{transform:translateY(-1px);filter:saturate(1.1)}
+.btn:active{transform:translateY(0px)}
 .btn.secondary{
   background:transparent;
   border:1px solid rgba(124,92,255,.45);
+  box-shadow:none;
+  color:var(--text);
 }
-.progress{height:8px;background:#222;border-radius:10px;overflow:hidden;margin:18px 0}
-.bar{height:100%;width:0;background:linear-gradient(90deg,#7c5cff,#4ade80);transition:.3s}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px}
+.btn.link{
+  background:transparent;border:none;box-shadow:none;
+  color:var(--muted);padding:10px 0;font-weight:700;
+  text-decoration:underline;cursor:pointer
+}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;align-items:center}
+
+.progress{
+  height:8px;background:#222;border-radius:10px;overflow:hidden;margin:16px 0 14px;
+  border:1px solid rgba(255,255,255,.06)
+}
+.bar{
+  height:100%;width:0;
+  background:linear-gradient(90deg,var(--accent),var(--accent2));
+  transition:.25s ease;
+}
+
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
 .avatar{
   border-radius:16px;
   overflow:hidden;
   cursor:pointer;
   border:2px solid transparent;
-  transition:.2s;
+  transition:.18s;
   background:#0f0f1a;
+  position:relative;
 }
-.avatar img{width:100%;display:block}
-.avatar .label{padding:10px;font-size:12px;color:var(--muted)}
-.avatar.active{border-color:var(--accent)}
+.avatar img{
+  width:100%;
+  aspect-ratio: 4/5;
+  object-fit:cover;
+  display:block;
+  border-radius:14px;
+}
+.avatar .label{
+  padding:10px 12px 14px;
+  font-size:12px;
+  color:var(--muted);
+}
+.avatar:hover{transform:translateY(-3px)}
+.avatar.active{border-color:var(--accent);box-shadow:0 0 0 4px rgba(124,92,255,.14)}
+
 .choice{
   padding:14px;
-  background:#1a1a30;
+  background:#17172b;
+  border:1px solid rgba(255,255,255,.06);
   border-radius:14px;
   margin-top:10px;
   cursor:pointer;
+  transition:.15s;
 }
-.choice:hover{background:#222244}
-.actions{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
-.price{font-size:36px;font-weight:900}
-.preview{
-  display:flex;
-  gap:18px;
-  align-items:center;
-  margin-top:10px;
-}
-.preview img{
-  width:120px;
-  border-radius:18px;
-  box-shadow:0 20px 50px rgba(0,0,0,.5);
-}
-.quote{
-  background:#0f0f1a;
-  border-radius:14px;
+.choice:hover{background:#1e1e38}
+
+.chatwrap{
+  display:flex;gap:16px;align-items:center;flex-wrap:wrap;
+  margin-top:14px;
   padding:14px;
-  font-size:14px;
+  border-radius:18px;
+  background:rgba(0,0,0,.22);
+  border:1px solid rgba(255,255,255,.07);
 }
-.small{font-size:12px;color:var(--muted)}
+.chatwrap img{
+  width:88px;height:88px;border-radius:18px;object-fit:cover;
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 18px 40px rgba(0,0,0,.35);
+}
+.bubble{
+  flex:1;
+  min-width:220px;
+  padding:12px 14px;
+  border-radius:16px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.06);
+  color:var(--text);
+  line-height:1.45;
+}
+.bubble .muted{color:var(--muted);font-size:12px;margin-top:6px}
+
+.priceRow{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
+  gap:14px;
+  margin-top:14px;
+}
+.plan{
+  padding:16px;border-radius:18px;
+  background:rgba(255,255,255,.03);
+  border:1px solid rgba(255,255,255,.07);
+}
+.plan .tag{
+  display:inline-flex;align-items:center;gap:8px;
+  padding:6px 10px;border-radius:999px;
+  font-size:12px;
+  background:rgba(124,92,255,.14);
+  border:1px solid rgba(124,92,255,.22);
+  color:var(--text);
+}
+.plan .big{font-size:30px;font-weight:900;margin:10px 0 2px}
+.plan ul{margin:10px 0 0;padding-left:18px;color:var(--muted)}
+.plan li{margin:6px 0}
+
+.footerNote{
+  margin-top:14px;
+  padding-top:12px;
+  border-top:1px solid rgba(255,255,255,.06);
+}
+
 </style>
 </head>
 
@@ -98,34 +186,50 @@ p{color:var(--muted)}
 
 <!-- HERO -->
 <div id="hero" class="card">
-  <h1>Create Your Conversation Experience</h1>
-  <p>Personalized conversations, creative thinking, and intelligent interaction.</p>
-  <button class="btn" onclick="go('avatars')">Start Free Experience</button>
-  <p class="small" style="margin-top:10px;">
-    Safe content • No therapy • No adult content
-  </p>
+  <div class="toprow">
+    <div class="pill">chat.nextgenaihub.net • Personalized AI conversation</div>
+    <div class="pill">Safe content • No therapy • No adult interactions</div>
+  </div>
+
+  <h1 style="margin-top:16px;">Create Your Conversation Experience</h1>
+  <p>Choose a style. Answer 3 quick questions. Get a personalized conversation setup in seconds.</p>
+
+  <div class="actions">
+    <button class="btn" onclick="go('avatars')">Start Free Experience</button>
+    <button class="btn secondary" onclick="scrollToHow()">How it works</button>
+  </div>
+
+  <div id="how" class="footerNote">
+    <p class="small">
+      ⚡ Fast setup • 🔒 Secure checkout handled by Whop • ✅ Works on all devices
+    </p>
+  </div>
 </div>
 
-<!-- AVATARS -->
+<!-- AVATAR SELECT -->
 <div id="avatars" class="card hidden">
   <div class="progress"><div class="bar" style="width:20%"></div></div>
   <h2>Choose a conversation style</h2>
+  <p class="small">Pick the vibe that fits you. You can change it anytime.</p>
 
-  <div class="grid">
+  <div class="grid" style="margin-top:14px;">
     <div class="avatar" onclick="selectAvatar(1)">
-      <img src="assets/companion1.png">
+      <img src="assets/companion1.png" alt="Friendly & Conversational">
       <div class="label">Friendly & Conversational</div>
     </div>
+
     <div class="avatar" onclick="selectAvatar(2)">
-      <img src="assets/companion2.png">
+      <img src="assets/companion2.png" alt="Calm & Insightful">
       <div class="label">Calm & Insightful</div>
     </div>
+
     <div class="avatar" onclick="selectAvatar(3)">
-      <img src="assets/companion3.png">
+      <img src="assets/companion3.png" alt="Focused & Thoughtful">
       <div class="label">Focused & Thoughtful</div>
     </div>
+
     <div class="avatar" onclick="selectAvatar(4)">
-      <img src="assets/companion4.png">
+      <img src="assets/companion4.png" alt="Experienced & Professional">
       <div class="label">Experienced & Professional</div>
     </div>
   </div>
@@ -138,6 +242,7 @@ p{color:var(--muted)}
 <!-- QUIZ -->
 <div id="quiz" class="card hidden">
   <div class="progress"><div id="bar" class="bar"></div></div>
+
   <h2 id="q"></h2>
   <div id="opts"></div>
 
@@ -149,18 +254,21 @@ p{color:var(--muted)}
 <!-- LOADING -->
 <div id="loading" class="card hidden">
   <h2>Customizing your experience…</h2>
-  <p>Matching your preferences</p>
+  <p>Matching your style + preferences</p>
+  <div class="progress" style="margin-top:16px;"><div id="loadbar" class="bar" style="width:0%"></div></div>
+  <p class="small" id="loadtxt" style="margin-top:10px;">Preparing your first message…</p>
 </div>
 
 <!-- RESULT -->
 <div id="result" class="card hidden">
   <h2>Your experience is ready</h2>
 
-  <div class="preview">
-    <img id="finalAvatar" src="">
-    <div class="quote">
-      “I’m here to explore ideas with you — whether it’s deep thinking,
-      creative stories, or everyday conversation.”
+  <!-- Visual message with selected character -->
+  <div class="chatwrap">
+    <img id="avatarPreview" src="assets/companion1.png" alt="Selected companion">
+    <div class="bubble">
+      <div id="resMsg">“I’m here to explore ideas with you — whether it’s deep thinking, creative stories, or everyday conversation.”</div>
+      <div class="muted">Your selected style is ready. Continue to unlock full access.</div>
     </div>
   </div>
 
@@ -168,83 +276,229 @@ p{color:var(--muted)}
     <button class="btn secondary" onclick="go('avatars')">Change style</button>
     <button class="btn" onclick="go('price')">Continue</button>
   </div>
+
+  <p class="small" style="margin-top:10px;">Tip: Most users unlock right after setup to keep the personalization.</p>
 </div>
 
 <!-- PRICE -->
 <div id="price" class="card hidden">
-  <h2>Unlock Full Access</h2>
-  <p class="small">Unlimited conversations • Cancel anytime</p>
-
-  <p class="price">$19 / month</p>
-
-  <a
-    class="btn"
-    href="https://whop.com/checkout/plan_bjy3o9ZScfqmY"
-    target="_blank"
-  >
-    Unlock Full Access
-  </a>
-
-  <p class="small" style="margin-top:12px;">
-    Secure checkout powered by Whop
-  </p>
-
-  <div class="actions">
-    <button class="btn secondary" onclick="go('hero')">Back to start</button>
+  <div class="toprow">
+    <div class="pill">Secure checkout powered by Whop</div>
+    <div class="pill">Cancel anytime</div>
   </div>
+
+  <h2 style="margin-top:14px;">Unlock Full Access</h2>
+  <p class="small">You’re 1 step away — keep your selected style and start your full experience.</p>
+
+  <div class="priceRow">
+    <div class="plan">
+      <div class="tag">Most Popular</div>
+      <div class="big">$19 / month</div>
+      <div class="small">Unlimited conversations • Flexible</div>
+      <ul>
+        <li>Unlimited safe chats</li>
+        <li>Faster responses</li>
+        <li>Priority access</li>
+      </ul>
+    </div>
+
+    <div class="plan">
+      <div class="tag">Best Value</div>
+      <div class="big">$119 / year</div>
+      <div class="small">Save vs monthly</div>
+      <ul>
+        <li>Everything in monthly</li>
+        <li>Lower effective price</li>
+        <li>Locked-in access</li>
+      </ul>
+      <p class="small" style="margin-top:10px;">(You can add yearly later if you want.)</p>
+    </div>
+  </div>
+
+  <!-- SAME TAB redirect to Whop checkout -->
+  <div class="actions" style="margin-top:18px;">
+    <a class="btn" id="checkoutBtn" href="https://whop.com/checkout/plan_bjy3o9ZScfqmY">
+      Unlock with Secure Checkout
+    </a>
+    <button class="btn secondary" onclick="go('result')">Back</button>
+  </div>
+
+  <p class="small" style="margin-top:10px;">
+    We don’t store card details. Checkout is handled securely by Whop.
+  </p>
 </div>
 
 </div>
 
 <script>
-let avatar = 1;
-let step = 0;
+/**
+ * CONFIG
+ * Put your Whop checkout link here (same tab redirect).
+ */
+const WHOP_CHECKOUT_URL = "https://whop.com/checkout/plan_bjy3o9ZScfqmY";
 
-const qs = [
-  ["What kind of conversations do you enjoy most?",
-    ["Creative storytelling","Deep conversations","Daily conversations","Ideas & brainstorming"]],
-  ["Choose a tone",["Calm","Playful","Bold","Thoughtful"]],
-  ["Reply style?",["Short","Balanced","Detailed"]]
-];
+/**
+ * Avatar images:
+ * Optionally, if you create alternate poses later:
+ * - assets/companion1_msg.png etc.
+ * We'll automatically prefer *_msg.png for the "message page" if present.
+ */
+const AVATAR_BASE = {
+  1: "assets/companion1.png",
+  2: "assets/companion2.png",
+  3: "assets/companion3.png",
+  4: "assets/companion4.png",
+};
 
-function go(id){
-  document.querySelectorAll('.card').forEach(c=>c.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
-  if(id==='avatars'){step=0}
+// Optional “message pose” file naming convention:
+function getMessagePoseSrc(n){
+  // Try companionN_msg.png first (if you upload it), otherwise fallback.
+  // NOTE: We can't truly "check file exists" without server.
+  // So we just use the normal one. When you add *_msg.png, swap below.
+  return AVATAR_BASE[n];
+  // If you upload these, change to:
+  // return `assets/companion${n}_msg.png`;
 }
 
-function selectAvatar(n){
+let avatar = 1; // default
+let step = 0;
+let firstAvatarVisit = true;
+
+const answers = [];
+
+// Questions (kept safe / YouTube-friendly)
+const qs = [
+  ["What kind of conversations do you enjoy most?", ["Creative storytelling", "Deep conversations", "Daily conversations", "Ideas & brainstorming"]],
+  ["Choose a tone", ["Calm", "Playful", "Bold", "Thoughtful"]],
+  ["Reply style?", ["Short", "Balanced", "Detailed"]],
+];
+
+function scrollToHow(){
+  document.getElementById('how').scrollIntoView({behavior:'smooth',block:'start'});
+}
+
+function go(id){
+  document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
+  document.getElementById(id).classList.remove('hidden');
+
+  // Setup checkout link (same tab)
+  const btn = document.getElementById("checkoutBtn");
+  if(btn) btn.href = WHOP_CHECKOUT_URL;
+
+  if(id === 'avatars' && firstAvatarVisit){
+    firstAvatarVisit = false;
+    selectAvatar(1, true);
+  }
+
+  if(id === 'avatars'){
+    step = 0;
+    answers.length = 0;
+    const b = document.getElementById('bar');
+    if(b) b.style.width = '0%';
+  }
+}
+
+function selectAvatar(n, skipAutoGo){
   avatar = n;
-  document.querySelectorAll('.avatar').forEach(a=>a.classList.remove('active'));
+
+  // UI active border
+  document.querySelectorAll('.avatar').forEach(a => a.classList.remove('active'));
   document.querySelectorAll('.avatar')[n-1].classList.add('active');
-  setTimeout(()=>{go('quiz');render()},200);
+
+  // Update preview image (result page)
+  const preview = document.getElementById("avatarPreview");
+  if(preview){
+    preview.src = getMessagePoseSrc(n);
+  }
+
+  if(skipAutoGo) return;
+
+  setTimeout(() => { go('quiz'); render(); }, 180);
 }
 
 function render(){
-  document.getElementById('bar').style.width=((step+1)/qs.length*100)+'%';
-  document.getElementById('q').innerText=qs[step][0];
-  let o=document.getElementById('opts');o.innerHTML='';
-  qs[step][1].forEach(v=>{
-    let d=document.createElement('div');
-    d.className='choice';
-    d.innerText=v;
-    d.onclick=()=>next();
+  const b = document.getElementById('bar');
+  if(b) b.style.width = ((step+1)/qs.length*100) + '%';
+
+  document.getElementById('q').innerText = qs[step][0];
+
+  let o = document.getElementById('opts');
+  o.innerHTML = '';
+
+  qs[step][1].forEach(v => {
+    let d = document.createElement('div');
+    d.className = 'choice';
+    d.innerText = v;
+    d.onclick = () => next(v);
     o.appendChild(d);
   });
 }
 
-function next(){
+function next(choice){
+  answers.push(choice);
   step++;
-  if(step<qs.length){render()}
-  else{
-    go('loading');
-    setTimeout(()=>{
-      document.getElementById('finalAvatar').src=
-        `assets/companion${avatar}.png`;
-      go('result');
-    },1000);
+
+  if(step < qs.length){
+    render();
+    return;
   }
+
+  // Loading animation
+  go('loading');
+  const loadbar = document.getElementById('loadbar');
+  const loadtxt = document.getElementById('loadtxt');
+
+  let pct = 0;
+  const msgs = [
+    "Preparing your first message…",
+    "Adjusting tone and pacing…",
+    "Finalizing conversation style…",
+    "Ready."
+  ];
+
+  const timer = setInterval(() => {
+    pct += Math.floor(Math.random()*16) + 10;
+    if(pct > 100) pct = 100;
+    if(loadbar) loadbar.style.width = pct + "%";
+    if(loadtxt){
+      const idx = Math.min(msgs.length-1, Math.floor(pct/34));
+      loadtxt.innerText = msgs[idx];
+    }
+    if(pct >= 100){
+      clearInterval(timer);
+      setTimeout(() => showResult(), 280);
+    }
+  }, 180);
 }
+
+function showResult(){
+  go('result');
+
+  // Create a personalized message from answers (still safe)
+  const [topic, tone, style] = answers;
+  const toneLine = {
+    Calm: "calm and clear",
+    Playful: "light and creative",
+    Bold: "direct and confident",
+    Thoughtful: "deep and reflective"
+  }[tone] || "balanced";
+
+  const styleLine = {
+    Short: "short replies",
+    Balanced: "balanced replies",
+    Detailed: "detailed replies"
+  }[style] || "balanced replies";
+
+  document.getElementById('resMsg').innerText =
+    `“Perfect — I’ll keep it ${toneLine} with ${styleLine}. Let’s start with ${topic.toLowerCase()}.”`;
+
+  // Update image again on result page
+  const preview = document.getElementById("avatarPreview");
+  if(preview) preview.src = getMessagePoseSrc(avatar);
+}
+
+// Start on hero
+go('hero');
 </script>
 
 </body>
