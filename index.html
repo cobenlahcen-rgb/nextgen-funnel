@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
+<meta charset="UTF-8" />
 <title>Create Your Conversation Experience</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 <style>
 :root{
@@ -17,7 +17,9 @@
 *{box-sizing:border-box;font-family:Inter,system-ui,Arial}
 body{
   margin:0;
-  background:radial-gradient(800px 400px at 20% -10%,rgba(124,92,255,.25),transparent 60%),var(--bg);
+  background:
+    radial-gradient(800px 400px at 20% -10%,rgba(124,92,255,.25),transparent 60%),
+    var(--bg);
   color:var(--text);
 }
 .container{max-width:960px;margin:auto;padding:32px}
@@ -28,6 +30,7 @@ body{
   box-shadow:0 30px 80px rgba(0,0,0,.6);
 }
 h1{font-size:38px;margin:0 0 10px}
+h2{margin:0 0 10px}
 p{color:var(--muted)}
 .btn{
   background:linear-gradient(90deg,var(--accent),var(--accent2));
@@ -40,33 +43,49 @@ p{color:var(--muted)}
   text-decoration:none;
   display:inline-block;
 }
-.hidden{display:none}
-.progress{height:8px;background:#222;border-radius:10px;overflow:hidden;margin:18px 0}
-.bar{height:100%;width:0;background:linear-gradient(90deg,#7c5cff,#4ade80);transition:.3s}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px}
-.avatar{
-  border-radius:16px; overflow:hidden; cursor:pointer;
-  border:2px solid transparent; transition:.2s; background:#0f0f1a;
-}
-.avatar img{width:100%; display:block; border-radius:16px; box-shadow:0 12px 30px rgba(0,0,0,.45);}
-.avatar .label{margin:10px 12px 14px; font-size:12px; color:var(--muted);}
-.avatar:hover{transform:translateY(-3px)}
-.avatar.active{border-color:var(--accent)}
-.choice{
-  padding:14px; background:#1a1a30; border-radius:14px;
-  margin-top:10px; cursor:pointer;
-}
-.choice:hover{background:#222244}
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
 .btn.secondary{
   background:transparent;
   border:1px solid rgba(124,92,255,.45);
   color:var(--text);
 }
-.small{font-size:12px;color:var(--muted)}
+.hidden{display:none}
+.progress{height:8px;background:#222;border-radius:10px;overflow:hidden;margin:18px 0}
+.bar{height:100%;width:0;background:linear-gradient(90deg,#7c5cff,#4ade80);transition:.3s}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:16px}
+.avatar{
+  border-radius:16px;
+  overflow:hidden;
+  cursor:pointer;
+  border:2px solid transparent;
+  transition:.2s;
+  background:#0f0f1a;
+}
+.avatar img{
+  width:100%;
+  display:block;
+  border-radius:16px;
+  box-shadow:0 12px 30px rgba(0,0,0,.45);
+}
+.avatar .label{
+  margin:10px 12px 14px;
+  font-size:12px;
+  color:var(--muted);
+}
+.avatar:hover{transform:translateY(-3px)}
+.avatar.active{border-color:var(--accent)}
+.choice{
+  padding:14px;
+  background:#1a1a30;
+  border-radius:14px;
+  margin-top:10px;
+  cursor:pointer;
+}
+.choice:hover{background:#222244}
 .price{font-size:34px;font-weight:900;margin:8px 0 0}
+.small{font-size:12px;color:var(--muted)}
+.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
 
-/* Visual “message preview” */
+/* “visual message” preview */
 .chatwrap{
   display:flex; gap:16px; align-items:center; flex-wrap:wrap;
   margin-top:14px; padding:14px;
@@ -87,9 +106,47 @@ p{color:var(--muted)}
 }
 .bubble .muted{color:var(--muted);font-size:12px;margin-top:6px}
 
-/* Embedded checkout container styling */
+/* ===== MODAL ===== */
+.modalBackdrop{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.72);
+  display:none;
+  align-items:center;
+  justify-content:center;
+  padding:18px;
+  z-index:9999;
+}
+.modalBackdrop.show{display:flex}
+.modal{
+  width:min(920px,100%);
+  background:rgba(19,19,36,.96);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:22px;
+  box-shadow:0 30px 90px rgba(0,0,0,.75);
+  overflow:hidden;
+}
+.modalHeader{
+  display:flex; align-items:center; justify-content:space-between;
+  gap:12px;
+  padding:14px 16px;
+  border-bottom:1px solid rgba(255,255,255,.08);
+}
+.modalHeader .title{
+  font-weight:900;
+}
+.iconBtn{
+  background:transparent;
+  border:1px solid rgba(124,92,255,.35);
+  color:var(--text);
+  border-radius:12px;
+  padding:8px 12px;
+  cursor:pointer;
+  font-weight:800;
+}
+.modalBody{
+  padding:14px;
+}
 .checkoutBox{
-  margin-top:14px;
   border-radius:18px;
   overflow:hidden;
   border:1px solid rgba(255,255,255,.08);
@@ -120,14 +177,17 @@ p{color:var(--muted)}
       <img src="assets/companion1.png" alt="Friendly & Conversational">
       <div class="label">Friendly & Conversational</div>
     </div>
+
     <div class="avatar" onclick="selectAvatar(2)">
       <img src="assets/companion2.png" alt="Calm & Insightful">
       <div class="label">Calm & Insightful</div>
     </div>
+
     <div class="avatar" onclick="selectAvatar(3)">
       <img src="assets/companion3.png" alt="Focused & Thoughtful">
       <div class="label">Focused & Thoughtful</div>
     </div>
+
     <div class="avatar" onclick="selectAvatar(4)">
       <img src="assets/companion4.png" alt="Experienced & Professional">
       <div class="label">Experienced & Professional</div>
@@ -180,29 +240,47 @@ p{color:var(--muted)}
   <p class="small">Unlimited conversations • Cancel anytime</p>
 
   <p class="price">$19 / month</p>
-  <p>Secure checkout embedded below (no redirect).</p>
+  <p>Checkout opens in a secure modal — you stay in the funnel.</p>
 
-  <!-- ✅ WHOP EMBEDDED CHECKOUT (stays inside your funnel) -->
-  <div class="checkoutBox">
-    <div
-      id="whopCheckout"
-      data-whop-checkout-plan-id="plan_bjy3o9ZScfqmY"
-    ></div>
+  <div class="actions" style="margin-top:16px;">
+    <button class="btn" onclick="openCheckoutModal()">Unlock with Secure Checkout</button>
+    <button class="btn secondary" onclick="go('result')">Back</button>
   </div>
 
   <p class="small" style="margin-top:12px;">
     Payments are processed securely by Whop. We do not store card details.
   </p>
+</div>
 
-  <div class="actions">
-    <button class="btn secondary" onclick="go('result')">Back</button>
+</div>
+
+<!-- ===== CHECKOUT MODAL (embedded checkout inside modal) ===== -->
+<div id="checkoutModal" class="modalBackdrop" role="dialog" aria-modal="true" aria-label="Secure checkout">
+  <div class="modal">
+    <div class="modalHeader">
+      <div class="title">Secure Checkout</div>
+      <button class="iconBtn" onclick="closeCheckoutModal()">Close</button>
+    </div>
+
+    <div class="modalBody">
+      <div class="checkoutBox">
+        <!-- Whop embedded checkout element (inside modal) -->
+        <div
+          id="whopCheckout"
+          data-whop-checkout-plan-id="plan_bjy3o9ZScfqmY"
+          data-whop-checkout-return-url=""
+        ></div>
+      </div>
+
+      <p class="small" style="margin-top:10px;">
+        If you used an external payment method and got redirected back, just reopen checkout and it will reflect the status.
+      </p>
+    </div>
   </div>
 </div>
 
-</div>
-
-<!-- Whop embedded checkout script (renders the checkout inside your div) -->
-<script src="https://unpkg.com/@whop/checkout"></script>
+<!-- Whop loader script (official) :contentReference[oaicite:2]{index=2} -->
+<script async defer src="https://js.whop.com/static/checkout/loader.js"></script>
 
 <script>
 let avatar = 1;
@@ -230,7 +308,6 @@ function selectAvatar(n){
   document.querySelectorAll('.avatar').forEach(a => a.classList.remove('active'));
   document.querySelectorAll('.avatar')[n-1].classList.add('active');
 
-  // update preview image on result page
   const preview = document.getElementById("avatarPreview");
   if(preview) preview.src = `assets/companion${avatar}.png`;
 
@@ -266,6 +343,46 @@ function next(choice){
     }, 900);
   }
 }
+
+/* ===== Modal controls ===== */
+function openCheckoutModal(){
+  // Return URL is required for some payment methods (external redirects) :contentReference[oaicite:3]{index=3}
+  const el = document.getElementById("whopCheckout");
+  const base = window.location.origin + window.location.pathname;
+  // We'll use the same page; you can change to /success.html if you prefer.
+  el.setAttribute("data-whop-checkout-return-url", base + "?status=return");
+
+  document.getElementById("checkoutModal").classList.add("show");
+  document.body.style.overflow = "hidden";
+}
+
+function closeCheckoutModal(){
+  document.getElementById("checkoutModal").classList.remove("show");
+  document.body.style.overflow = "";
+}
+
+// Close modal when clicking backdrop
+document.getElementById("checkoutModal").addEventListener("click", (e) => {
+  if(e.target.id === "checkoutModal") closeCheckoutModal();
+});
+
+// Escape key closes modal
+document.addEventListener("keydown", (e) => {
+  if(e.key === "Escape") closeCheckoutModal();
+});
+
+// If redirected back with ?status=success (some flows), show a simple message
+(function handleReturn(){
+  const params = new URLSearchParams(window.location.search);
+  const status = params.get("status");
+  if(status){
+    // optional: you can route to a success card if you want
+    // for now, we just clean the URL
+    params.delete("status");
+    const clean = window.location.pathname + (params.toString() ? ("?" + params.toString()) : "");
+    window.history.replaceState({}, "", clean);
+  }
+})();
 </script>
 
 </body>
