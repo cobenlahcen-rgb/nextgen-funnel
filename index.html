@@ -210,7 +210,6 @@ p{color:var(--muted);margin:10px 0 0;line-height:1.45}
   box-shadow:0 30px 90px rgba(0,0,0,.65);
   overflow:hidden;
 
-  /* ✅ real app modal */
   display:flex;
   flex-direction:column;
 }
@@ -254,16 +253,13 @@ p{color:var(--muted);margin:10px 0 0;line-height:1.45}
 }
 .ng-modal__close:hover{ background:rgba(255,255,255,.10); }
 
-/* ✅ key fix: scroll inside modal cleanly */
 #whop-embedded-checkout{
   flex:1;
-  min-height:0;         /* IMPORTANT */
-  overflow:auto;        /* scroll inside modal */
+  min-height:0;
+  overflow:auto;
   -webkit-overflow-scrolling: touch;
-  background:#fff;      /* Whop UI is white */
+  background:#fff;
 }
-
-/* Optional: nicer scrollbar (Chrome/Edge) */
 #whop-embedded-checkout::-webkit-scrollbar{ width:10px; }
 #whop-embedded-checkout::-webkit-scrollbar-thumb{
   background: rgba(0,0,0,.18);
@@ -390,63 +386,52 @@ p{color:var(--muted);margin:10px 0 0;line-height:1.45}
     <button class="btn" onclick="go('price')">Continue</button>
   </div>
 
-  <p class="small" style="margin-top:10px;">Tip: Most users unlock right after setup to keep the personalization.</p>
+  <p class="small" style="margin-top:10px;">Tip: Most users start the free trial right after setup to keep personalization.</p>
 </div>
 
-<!-- PRICE -->
+<!-- PRICE (✅ Updated for free trial) -->
 <div id="price" class="card hidden">
   <div class="toprow">
-    <div class="pill">Secure checkout powered by Whop</div>
+    <div class="pill">7-day free trial included</div>
     <div class="pill">Cancel anytime</div>
   </div>
 
-  <h2 style="margin-top:14px;">Unlock Full Access</h2>
-  <p class="small">You’re 1 step away — keep your selected style and start your full experience.</p>
+  <h2 style="margin-top:14px;">Start Your Free Trial</h2>
+  <p class="small">No charge today. Your selected conversation style is saved.</p>
 
   <div class="priceRow">
     <div class="plan">
-      <div class="tag">Most Popular</div>
-      <div class="big">$19 / month</div>
-      <div class="small">Unlimited conversations • Flexible</div>
+      <div class="tag">Free Trial</div>
+      <div class="big">$0 today</div>
+      <div class="small">Then $19 / month after 7 days</div>
       <ul>
-        <li>Unlimited safe chats</li>
-        <li>Faster responses</li>
-        <li>Priority access</li>
+        <li>7-day free trial</li>
+        <li>Unlimited safe conversations</li>
+        <li>Cancel anytime during trial</li>
+        <li>No commitment</li>
       </ul>
-    </div>
-
-    <div class="plan">
-      <div class="tag">Best Value</div>
-      <div class="big">$119 / year</div>
-      <div class="small">Save vs monthly</div>
-      <ul>
-        <li>Everything in monthly</li>
-        <li>Lower effective price</li>
-        <li>Locked-in access</li>
-      </ul>
-      <p class="small" style="margin-top:10px;">(You can add yearly later if you want.)</p>
     </div>
   </div>
 
   <div class="actions" style="margin-top:18px;">
-    <button class="btn" onclick="openWhopModal()">Unlock with Secure Checkout</button>
+    <button class="btn" onclick="openWhopModal()">Start 7-Day Free Trial</button>
     <button class="btn secondary" onclick="go('result')">Back</button>
   </div>
 
   <p class="small" style="margin-top:10px;">
-    We don’t store card details. Checkout is handled securely by Whop.
+    $0 today · No card charged until trial ends · Secure checkout by Whop
   </p>
 </div>
 
 <!-- SUCCESS -->
 <div id="success" class="card hidden">
   <div class="toprow">
-    <div class="pill">Payment confirmed</div>
-    <div class="pill">Access unlock automation next</div>
+    <div class="pill">Trial started</div>
+    <div class="pill">Cancel anytime</div>
   </div>
 
-  <h2 style="margin-top:14px;">✅ You’re in</h2>
-  <p class="small">Your purchase is confirmed. Next, we’ll route you forward.</p>
+  <h2 style="margin-top:14px;">✅ Free trial active</h2>
+  <p class="small">You’re in. Your trial is active and your setup is saved.</p>
 
   <div class="footerNote">
     <p class="small" style="margin:0;">
@@ -460,7 +445,7 @@ p{color:var(--muted);margin:10px 0 0;line-height:1.45}
   </div>
 
   <p class="small" style="margin-top:10px;">
-    Note: For now, this confirms payment and routes you to the next step. Webhook-based unlock comes next.
+    Next: we’ll add webhook-based unlock automation. For now, this confirms your trial and routes you forward.
   </p>
 </div>
 
@@ -475,13 +460,11 @@ p{color:var(--muted);margin:10px 0 0;line-height:1.45}
 
     <div class="ng-modal__header">
       <div>
-        <div class="ng-modal__title">Checkout</div>
-        <div class="ng-modal__subtitle">Powered by Whop • Secure payment</div>
+        <div class="ng-modal__title">Start Free Trial</div>
+        <div class="ng-modal__subtitle">7 days free · Cancel anytime</div>
       </div>
-      <div style="opacity:.75;font-size:12px;"></div>
     </div>
 
-    <!-- Whop mounts the embedded checkout inside this div -->
     <div
       id="whop-embedded-checkout"
       data-whop-checkout-plan-id="plan_bjy3o9ZScfqmY"
@@ -504,8 +487,7 @@ const WHOP_PLAN_ID = "plan_bjy3o9ZScfqmY";
 const RETURN_URL = "https://nextgenaihub.net/?whop_return=1";
 
 /**
- * Avatar images:
- * If later you add message-pose files, set getMessagePoseSrc() to companionN_msg.png
+ * Avatar images
  */
 const AVATAR_BASE = {
   1: "assets/companion1.png",
@@ -516,17 +498,17 @@ const AVATAR_BASE = {
 
 function getMessagePoseSrc(n){
   return AVATAR_BASE[n];
-  // If you upload these later, switch to:
+  // If you upload these later:
   // return `assets/companion${n}_msg.png`;
 }
 
-let avatar = 1; // default
+let avatar = 1;
 let step = 0;
 let firstAvatarVisit = true;
 
 const answers = [];
 
-// Questions (safe / YouTube-friendly)
+// Safe questions
 const qs = [
   ["What kind of conversations do you enjoy most?", ["Creative storytelling", "Deep conversations", "Daily conversations", "Ideas & brainstorming"]],
   ["Choose a tone", ["Calm", "Playful", "Bold", "Thoughtful"]],
@@ -554,9 +536,7 @@ function go(id){
   }
 }
 
-/* =========================
-   ✅ Whop Modal Controls
-   ========================= */
+/* ✅ Whop modal controls */
 function openWhopModal(){
   const modal = document.getElementById("whopModal");
   const checkout = document.getElementById("whop-embedded-checkout");
@@ -570,7 +550,7 @@ function openWhopModal(){
   modal.setAttribute("aria-hidden", "false");
 
   document.body.style.overflow = "hidden";
-  document.documentElement.style.overflow = "hidden"; // mobile-safe
+  document.documentElement.style.overflow = "hidden";
 }
 
 function closeWhopModal(){
@@ -582,13 +562,10 @@ function closeWhopModal(){
   document.documentElement.style.overflow = "";
 }
 
-/**
- * Whop Callbacks (called by embedded checkout)
- */
+/* Whop callbacks */
 window.onCheckoutComplete = (planId, receiptId) => {
   closeWhopModal();
 
-  // Minimal local confirmation for now (until webhook unlock is live)
   localStorage.setItem("ng_paid", "true");
   localStorage.setItem("ng_whop_plan_id", planId || "");
   localStorage.setItem("ng_whop_receipt_id", receiptId || "");
@@ -600,23 +577,17 @@ window.onCheckoutComplete = (planId, receiptId) => {
 };
 
 window.onCheckoutStateChange = (state) => {
-  // Optional debug:
   // console.log("Whop checkout state:", state);
 };
 
-/**
- * Return URL handler:
- * If a payment method redirects out and returns, it may append status=success|error.
- * We'll handle our marker (?whop_return=1) and show success or retry.
- */
+/* Return URL handler */
 (function handleWhopReturn(){
   const url = new URL(window.location.href);
   const whopReturn = url.searchParams.get("whop_return");
-  const status = url.searchParams.get("status"); // success|error (if present)
+  const status = url.searchParams.get("status");
 
   if (!whopReturn) return;
 
-  // Clean URL so refresh doesn't repeat
   url.searchParams.delete("whop_return");
   url.searchParams.delete("status");
   window.history.replaceState({}, "", url.toString());
@@ -634,22 +605,15 @@ window.onCheckoutStateChange = (state) => {
   }
 })();
 
-/* =========================
-   Funnel logic
-   ========================= */
-
+/* Funnel logic */
 function selectAvatar(n, skipAutoGo){
   avatar = n;
 
-  // UI active border
   document.querySelectorAll('.avatar').forEach(a => a.classList.remove('active'));
   document.querySelectorAll('.avatar')[n-1].classList.add('active');
 
-  // Update preview image (result page)
   const preview = document.getElementById("avatarPreview");
-  if(preview){
-    preview.src = getMessagePoseSrc(n);
-  }
+  if(preview){ preview.src = getMessagePoseSrc(n); }
 
   if(skipAutoGo) return;
 
@@ -683,7 +647,6 @@ function next(choice){
     return;
   }
 
-  // Loading animation
   go('loading');
   const loadbar = document.getElementById('loadbar');
   const loadtxt = document.getElementById('loadtxt');
@@ -735,7 +698,6 @@ function showResult(){
   if(preview) preview.src = getMessagePoseSrc(avatar);
 }
 
-// Start on hero
 go('hero');
 </script>
 
