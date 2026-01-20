@@ -1,703 +1,853 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="ary" dir="ltr">
 <head>
-<meta charset="UTF-8" />
-<title>NextGen AI Hub — Conversation Experience</title>
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>WaslUp Style — WhatsApp Front Desk (Demo)</title>
+  <meta name="description" content="Front Desk ديال WhatsApp كيرد فاللحظة، كينظّم الطلبات، وكيهبّط الno-shows. Demo تفاعلي بدارجة." />
 
-<!-- ✅ Whop Embedded Checkout Loader (required) -->
-<script async defer src="https://js.whop.com/static/checkout/loader.js"></script>
+  <style>
+    :root{
+      --bg: #0b0f17;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.09);
+      --stroke: rgba(255,255,255,.12);
+      --text: #f4f7ff;
+      --muted: rgba(244,247,255,.68);
+      --muted2: rgba(244,247,255,.52);
+      --brand: #7c5cff;
+      --brand2:#39d98a;
+      --warn:#ffcc66;
+      --danger:#ff5c7a;
+      --shadow: 0 20px 70px rgba(0,0,0,.45);
+      --radius: 18px;
+      --radius2: 26px;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family:var(--sans);
+      background:
+        radial-gradient(1200px 600px at 20% -10%, rgba(124,92,255,.25), transparent 55%),
+        radial-gradient(900px 500px at 90% 10%, rgba(57,217,138,.18), transparent 60%),
+        radial-gradient(900px 700px at 50% 110%, rgba(255,92,122,.12), transparent 60%),
+        var(--bg);
+      color:var(--text);
+      line-height:1.45;
+    }
+    a{color:inherit}
+    .wrap{
+      max-width:1100px;
+      margin:0 auto;
+      padding:26px 18px 70px;
+    }
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      padding:10px 0 22px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      text-decoration:none;
+    }
+    .logo{
+      width:38px;height:38px;
+      border-radius:12px;
+      background: linear-gradient(135deg, var(--brand), rgba(57,217,138,.9));
+      box-shadow: 0 14px 40px rgba(124,92,255,.25);
+      position:relative;
+      overflow:hidden;
+    }
+    .logo:after{
+      content:"";
+      position:absolute; inset:-30%;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), transparent 55%);
+      transform:rotate(18deg);
+    }
+    .brand b{font-size:14px; letter-spacing:.4px}
+    .brand small{display:block; color:var(--muted); font-size:12px; margin-top:2px}
+    .nav{
+      display:flex; align-items:center; gap:10px;
+    }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:10px 12px;
+      background: var(--panel);
+      border:1px solid var(--stroke);
+      border-radius:999px;
+      color:var(--muted);
+      font-size:13px;
+      text-decoration:none;
+      backdrop-filter: blur(10px);
+    }
+    .pill:hover{background: var(--panel2); color:var(--text)}
+    .pill .dot{
+      width:8px;height:8px;border-radius:999px;background: var(--brand2);
+      box-shadow:0 0 0 6px rgba(57,217,138,.12);
+    }
 
-<style>
-:root{
-  --bg:#0a0a12;
-  --card:rgba(19,19,36,.92);
-  --accent:#7c5cff;
-  --accent2:#4ade80;
-  --text:#f4f4ff;
-  --muted:#a1a1c8;
-  --stroke:rgba(124,92,255,.25);
-}
-*{box-sizing:border-box;font-family:Inter,system-ui,Arial}
-body{
-  margin:0;
-  min-height:100vh;
-  background:
-    radial-gradient(900px 450px at 18% -8%,rgba(124,92,255,.25),transparent 60%),
-    radial-gradient(700px 380px at 85% 0%,rgba(74,222,128,.16),transparent 55%),
-    var(--bg);
-  color:var(--text);
-}
-.container{max-width:980px;margin:auto;padding:28px}
-.card{
-  background:var(--card);
-  border:1px solid rgba(255,255,255,.06);
-  border-radius:22px;
-  padding:28px;
-  box-shadow:0 30px 90px rgba(0,0,0,.62);
-  backdrop-filter: blur(10px);
-}
-h1{font-size:40px;margin:0 0 10px;letter-spacing:-.4px}
-h2{margin:0 0 10px;font-size:24px}
-p{color:var(--muted);margin:10px 0 0;line-height:1.45}
-.small{font-size:12px;color:var(--muted)}
-.hidden{display:none}
+    .hero{
+      display:grid;
+      grid-template-columns: 1.08fr .92fr;
+      gap:22px;
+      align-items:stretch;
+      margin-top:6px;
+    }
+    @media (max-width: 980px){
+      .hero{grid-template-columns:1fr; gap:18px}
+    }
 
-.toprow{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}
-.pill{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:8px 12px;border-radius:999px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.06);
-  color:var(--muted);font-size:12px;
-}
+    .card{
+      background: rgba(255,255,255,.05);
+      border: 1px solid var(--stroke);
+      border-radius: var(--radius2);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+      backdrop-filter: blur(12px);
+    }
+    .card .inner{padding:22px}
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 10px;
+      border-radius:999px;
+      background: rgba(124,92,255,.12);
+      border: 1px solid rgba(124,92,255,.25);
+      color: rgba(244,247,255,.86);
+      font-size:12px;
+      letter-spacing:.2px;
+      width:max-content;
+    }
+    .badge .spark{
+      width:10px;height:10px;border-radius:3px;
+      background: linear-gradient(135deg, var(--brand), rgba(255,255,255,.4));
+      box-shadow: 0 0 0 6px rgba(124,92,255,.12);
+    }
+    h1{
+      margin:14px 0 10px;
+      font-size:40px;
+      line-height:1.05;
+      letter-spacing:-.8px;
+    }
+    @media (max-width: 520px){
+      h1{font-size:34px}
+    }
+    .sub{
+      margin:0 0 18px;
+      color: var(--muted);
+      font-size:15.5px;
+      max-width:56ch;
+    }
+    .kpis{
+      display:grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap:10px;
+      margin:16px 0 18px;
+    }
+    @media (max-width: 520px){
+      .kpis{grid-template-columns:1fr; }
+    }
+    .kpi{
+      padding:12px 12px;
+      border-radius:16px;
+      background: rgba(255,255,255,.05);
+      border:1px solid var(--stroke);
+    }
+    .kpi b{display:block; font-size:13px}
+    .kpi small{display:block; margin-top:3px; color:var(--muted2); font-size:12px}
+    .ctaRow{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin-top:14px;
+    }
+    .btn{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius: 14px;
+      border:1px solid transparent;
+      text-decoration:none;
+      font-weight:600;
+      font-size:14px;
+      cursor:pointer;
+      transition: transform .08s ease, background .2s ease, border .2s ease;
+      user-select:none;
+    }
+    .btn:active{transform: translateY(1px)}
+    .btn.primary{
+      background: linear-gradient(135deg, var(--brand), rgba(57,217,138,.9));
+      color:#0b0f17;
+      box-shadow: 0 18px 45px rgba(124,92,255,.22);
+    }
+    .btn.ghost{
+      background: rgba(255,255,255,.06);
+      border-color: var(--stroke);
+      color: var(--text);
+    }
+    .btn.ghost:hover{background: rgba(255,255,255,.09)}
+    .tiny{
+      margin-top:10px;
+      color: var(--muted2);
+      font-size:12.5px;
+    }
+    .tiny code{
+      font-family: var(--mono);
+      font-size:12px;
+      color: rgba(244,247,255,.86);
+      background: rgba(255,255,255,.06);
+      padding:2px 6px;
+      border-radius:8px;
+      border:1px solid var(--stroke);
+    }
 
-.btn{
-  display:inline-flex;align-items:center;justify-content:center;
-  gap:10px;
-  background:linear-gradient(135deg,var(--accent),rgba(124,92,255,.65));
-  border:none;
-  color:#fff;
-  padding:14px 22px;
-  border-radius:14px;
-  font-weight:800;
-  cursor:pointer;
-  text-decoration:none;
-  box-shadow:0 18px 40px rgba(124,92,255,.18);
-  transition:.15s transform,.15s filter;
-}
-.btn:hover{transform:translateY(-1px);filter:saturate(1.1)}
-.btn:active{transform:translateY(0px)}
-.btn.secondary{
-  background:transparent;
-  border:1px solid rgba(124,92,255,.45);
-  box-shadow:none;
-  color:var(--text);
-}
-.btn.link{
-  background:transparent;border:none;box-shadow:none;
-  color:var(--muted);padding:10px 0;font-weight:700;
-  text-decoration:underline;cursor:pointer
-}
-.actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:16px;align-items:center}
+    /* Demo / WhatsApp mock */
+    .demoHeader{
+      display:flex; align-items:center; justify-content:space-between; gap:10px;
+      padding:14px 16px;
+      background: rgba(255,255,255,.04);
+      border-bottom:1px solid var(--stroke);
+    }
+    .demoHeader .left{
+      display:flex; align-items:center; gap:10px; min-width:0;
+    }
+    .avatar{
+      width:38px;height:38px;border-radius:14px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), transparent 60%),
+                  linear-gradient(135deg, rgba(57,217,138,.95), rgba(124,92,255,.95));
+      border:1px solid rgba(255,255,255,.18);
+      flex:0 0 auto;
+    }
+    .who{min-width:0}
+    .who b{display:block; font-size:13px}
+    .who small{display:block; font-size:12px; color:var(--muted); margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
+    .status{
+      display:flex; align-items:center; gap:8px;
+      color: var(--muted);
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .status .dot{
+      width:8px;height:8px;border-radius:999px;background: var(--brand2);
+      box-shadow:0 0 0 6px rgba(57,217,138,.12);
+    }
+    .chat{
+      height: 460px;
+      padding:14px 12px 10px;
+      overflow:auto;
+      scroll-behavior:smooth;
+      background:
+        radial-gradient(1200px 800px at 20% 10%, rgba(57,217,138,.06), transparent 60%),
+        radial-gradient(900px 700px at 80% 10%, rgba(124,92,255,.06), transparent 55%),
+        rgba(0,0,0,.12);
+    }
+    @media (max-width: 980px){
+      .chat{height: 420px}
+    }
+    .bubbleRow{display:flex; margin:10px 0}
+    .bubbleRow.you{justify-content:flex-start}
+    .bubbleRow.bot{justify-content:flex-end}
+    .bubble{
+      max-width: 82%;
+      padding:10px 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.06);
+      color: rgba(244,247,255,.92);
+      font-size:13.5px;
+      position:relative;
+      backdrop-filter: blur(8px);
+    }
+    .bubble.bot{
+      background: rgba(57,217,138,.12);
+      border-color: rgba(57,217,138,.22);
+    }
+    .meta{
+      margin-top:6px;
+      color: rgba(244,247,255,.58);
+      font-size:11px;
+      display:flex;
+      gap:10px;
+      justify-content:flex-end;
+    }
+    .chips{
+      display:flex; flex-wrap:wrap; gap:8px;
+      padding:12px 12px 14px;
+      border-top:1px solid var(--stroke);
+      background: rgba(255,255,255,.03);
+    }
+    .chip{
+      padding:9px 10px;
+      border-radius: 999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.06);
+      color: rgba(244,247,255,.86);
+      font-size:12.5px;
+      cursor:pointer;
+      transition: transform .08s ease, background .2s ease;
+      user-select:none;
+    }
+    .chip:hover{background: rgba(255,255,255,.09)}
+    .chip:active{transform: translateY(1px)}
+    .chip strong{font-weight:700}
+    .chip .tag{
+      margin-left:6px;
+      color: rgba(244,247,255,.62);
+      font-size:11px;
+    }
+    .sysNote{
+      margin:10px 0 0;
+      padding:10px 12px;
+      border-radius: 14px;
+      border:1px dashed rgba(255,255,255,.18);
+      background: rgba(255,255,255,.03);
+      color: var(--muted);
+      font-size:12.5px;
+    }
 
-.progress{
-  height:8px;background:#222;border-radius:10px;overflow:hidden;margin:16px 0 14px;
-  border:1px solid rgba(255,255,255,.06)
-}
-.bar{
-  height:100%;width:0;
-  background:linear-gradient(90deg,var(--accent),var(--accent2));
-  transition:.25s ease;
-}
+    /* Sections */
+    .grid2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:14px;
+      margin-top:16px;
+    }
+    @media (max-width: 980px){
+      .grid2{grid-template-columns:1fr}
+    }
+    .sectionTitle{
+      font-size:14px;
+      letter-spacing:.6px;
+      text-transform:uppercase;
+      color: rgba(244,247,255,.78);
+      margin:0 0 10px;
+    }
+    .list{
+      display:grid; gap:10px;
+    }
+    .item{
+      padding:12px 12px;
+      border-radius:16px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.05);
+    }
+    .item b{display:block; font-size:13px}
+    .item p{margin:6px 0 0; color:var(--muted); font-size:13px}
 
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px}
-.avatar{
-  border-radius:16px;
-  overflow:hidden;
-  cursor:pointer;
-  border:2px solid transparent;
-  transition:.18s;
-  background:#0f0f1a;
-  position:relative;
-}
-.avatar img{
-  width:100%;
-  aspect-ratio: 4/5;
-  object-fit:cover;
-  display:block;
-  border-radius:14px;
-}
-.avatar .label{
-  padding:10px 12px 14px;
-  font-size:12px;
-  color:var(--muted);
-}
-.avatar:hover{transform:translateY(-3px)}
-.avatar.active{border-color:var(--accent);box-shadow:0 0 0 4px rgba(124,92,255,.14)}
+    /* Fit check form */
+    form{
+      display:grid; gap:10px;
+      margin-top:10px;
+    }
+    .row{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    @media (max-width: 520px){
+      .row{grid-template-columns:1fr}
+    }
+    label{font-size:12px; color:var(--muted); display:block; margin-bottom:6px}
+    input, select, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.05);
+      color: var(--text);
+      outline:none;
+      font-size:14px;
+    }
+    textarea{min-height:92px; resize:vertical}
+    input:focus, select:focus, textarea:focus{
+      border-color: rgba(124,92,255,.55);
+      box-shadow: 0 0 0 6px rgba(124,92,255,.12);
+    }
+    .formActions{
+      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
+      margin-top:4px;
+    }
+    .note{
+      font-size:12px; color: var(--muted2);
+    }
 
-.choice{
-  padding:14px;
-  background:#17172b;
-  border:1px solid rgba(255,255,255,.06);
-  border-radius:14px;
-  margin-top:10px;
-  cursor:pointer;
-  transition:.15s;
-}
-.choice:hover{background:#1e1e38}
-
-.chatwrap{
-  display:flex;gap:16px;align-items:center;flex-wrap:wrap;
-  margin-top:14px;
-  padding:14px;
-  border-radius:18px;
-  background:rgba(0,0,0,.22);
-  border:1px solid rgba(255,255,255,.07);
-}
-.chatwrap img{
-  width:88px;height:88px;border-radius:18px;object-fit:cover;
-  border:1px solid rgba(255,255,255,.08);
-  box-shadow:0 18px 40px rgba(0,0,0,.35);
-}
-.bubble{
-  flex:1;
-  min-width:220px;
-  padding:12px 14px;
-  border-radius:16px;
-  background:rgba(255,255,255,.04);
-  border:1px solid rgba(255,255,255,.06);
-  color:var(--text);
-  line-height:1.45;
-}
-.bubble .muted{color:var(--muted);font-size:12px;margin-top:6px}
-
-.priceRow{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:14px;
-  margin-top:14px;
-}
-.plan{
-  padding:16px;border-radius:18px;
-  background:rgba(255,255,255,.03);
-  border:1px solid rgba(255,255,255,.07);
-}
-.plan .tag{
-  display:inline-flex;align-items:center;gap:8px;
-  padding:6px 10px;border-radius:999px;
-  font-size:12px;
-  background:rgba(124,92,255,.14);
-  border:1px solid rgba(124,92,255,.22);
-  color:var(--text);
-}
-.plan .big{font-size:30px;font-weight:900;margin:10px 0 2px}
-.plan ul{margin:10px 0 0;padding-left:18px;color:var(--muted)}
-.plan li{margin:6px 0}
-
-.footerNote{
-  margin-top:14px;
-  padding-top:12px;
-  border-top:1px solid rgba(255,255,255,.06);
-}
-
-/* =========================
-   ✅ Whop Modal (Professional + Responsive + Scroll)
-   ========================= */
-.ng-modal{
-  position:fixed;
-  inset:0;
-  display:none;
-  z-index:9999;
-}
-.ng-modal.is-open{display:block}
-
-.ng-modal__backdrop{
-  position:absolute;
-  inset:0;
-  background:rgba(0,0,0,.72);
-  backdrop-filter: blur(6px);
-}
-
-.ng-modal__panel{
-  position:relative;
-  width:min(1020px, calc(100% - 20px));
-  height:min(92vh, 820px);
-  margin:10px auto;
-  background:#0b0b0f;
-  border:1px solid rgba(255,255,255,.10);
-  border-radius:18px;
-  box-shadow:0 30px 90px rgba(0,0,0,.65);
-  overflow:hidden;
-
-  display:flex;
-  flex-direction:column;
-}
-
-.ng-modal__header{
-  padding:14px 16px;
-  border-bottom:1px solid rgba(255,255,255,.08);
-  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0));
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  gap:12px;
-}
-
-.ng-modal__title{
-  font-weight:900;
-  font-size:15px;
-  letter-spacing:-.2px;
-}
-
-.ng-modal__subtitle{
-  opacity:.75;
-  font-size:12px;
-  white-space:nowrap;
-}
-
-.ng-modal__close{
-  position:absolute;
-  top:10px;
-  right:10px;
-  width:40px;
-  height:40px;
-  border-radius:12px;
-  border:1px solid rgba(255,255,255,.10);
-  background:rgba(255,255,255,.06);
-  color:#fff;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-}
-.ng-modal__close:hover{ background:rgba(255,255,255,.10); }
-
-#whop-embedded-checkout{
-  flex:1;
-  min-height:0;
-  overflow:auto;
-  -webkit-overflow-scrolling: touch;
-  background:#fff;
-}
-#whop-embedded-checkout::-webkit-scrollbar{ width:10px; }
-#whop-embedded-checkout::-webkit-scrollbar-thumb{
-  background: rgba(0,0,0,.18);
-  border-radius: 999px;
-}
-
-.ng-modal__error{
-  position:absolute;
-  left:16px;
-  right:16px;
-  bottom:14px;
-  padding:10px 12px;
-  border-radius:12px;
-  background:rgba(255,0,0,.12);
-  border:1px solid rgba(255,0,0,.25);
-  font-size:13px;
-  color:rgba(255,255,255,.92);
-}
-
-@media (max-width: 640px){
-  .ng-modal__panel{
-    width: calc(100% - 12px);
-    height: 94vh;
-    margin: 6px auto;
-    border-radius: 16px;
-  }
-  .ng-modal__subtitle{ display:none; }
-}
-</style>
+    /* Footer */
+    footer{
+      margin-top:22px;
+      padding-top:14px;
+      border-top:1px solid rgba(255,255,255,.10);
+      color: rgba(244,247,255,.55);
+      font-size:12px;
+      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+    }
+    .kbd{
+      font-family: var(--mono);
+      font-size:12px;
+      padding:2px 6px;
+      border-radius:8px;
+      background: rgba(255,255,255,.06);
+      border:1px solid var(--stroke);
+      color: rgba(244,247,255,.84);
+    }
+  </style>
 </head>
 
 <body>
-<div class="container">
+  <div class="wrap">
+    <div class="topbar">
+      <a class="brand" href="#top" aria-label="Home">
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <b>WhatsApp Front Desk</b>
+          <small>Demo تفاعلي بدارجة (service ماشي “chatbot”)</small>
+        </div>
+      </a>
 
-<!-- HERO -->
-<div id="hero" class="card">
-  <div class="toprow">
-    <div class="pill">chat.nextgenaihub.net • Personalized AI conversation</div>
-    <div class="pill">Safe content • No therapy • No adult interactions</div>
-  </div>
-
-  <h1 style="margin-top:16px;">Create Your Conversation Experience</h1>
-  <p>Choose a style. Answer 3 quick questions. Get a personalized conversation setup in seconds.</p>
-
-  <div class="actions">
-    <button class="btn" onclick="go('avatars')">Start Free Experience</button>
-    <button class="btn secondary" onclick="scrollToHow()">How it works</button>
-  </div>
-
-  <div id="how" class="footerNote">
-    <p class="small">
-      ⚡ Fast setup • 🔒 Secure checkout handled by Whop • ✅ Works on all devices
-    </p>
-  </div>
-</div>
-
-<!-- AVATAR SELECT -->
-<div id="avatars" class="card hidden">
-  <div class="progress"><div class="bar" style="width:20%"></div></div>
-  <h2>Choose a conversation style</h2>
-  <p class="small">Pick the vibe that fits you. You can change it anytime.</p>
-
-  <div class="grid" style="margin-top:14px;">
-    <div class="avatar" onclick="selectAvatar(1)">
-      <img src="assets/companion1.png" alt="Friendly & Conversational">
-      <div class="label">Friendly & Conversational</div>
-    </div>
-
-    <div class="avatar" onclick="selectAvatar(2)">
-      <img src="assets/companion2.png" alt="Calm & Insightful">
-      <div class="label">Calm & Insightful</div>
-    </div>
-
-    <div class="avatar" onclick="selectAvatar(3)">
-      <img src="assets/companion3.png" alt="Focused & Thoughtful">
-      <div class="label">Focused & Thoughtful</div>
-    </div>
-
-    <div class="avatar" onclick="selectAvatar(4)">
-      <img src="assets/companion4.png" alt="Experienced & Professional">
-      <div class="label">Experienced & Professional</div>
-    </div>
-  </div>
-
-  <div class="actions">
-    <button class="btn secondary" onclick="go('hero')">Back</button>
-  </div>
-</div>
-
-<!-- QUIZ -->
-<div id="quiz" class="card hidden">
-  <div class="progress"><div id="bar" class="bar"></div></div>
-
-  <h2 id="q"></h2>
-  <div id="opts"></div>
-
-  <div class="actions">
-    <button class="btn secondary" onclick="go('avatars')">Back</button>
-  </div>
-</div>
-
-<!-- LOADING -->
-<div id="loading" class="card hidden">
-  <h2>Customizing your experience…</h2>
-  <p>Matching your style + preferences</p>
-  <div class="progress" style="margin-top:16px;"><div id="loadbar" class="bar" style="width:0%"></div></div>
-  <p class="small" id="loadtxt" style="margin-top:10px;">Preparing your first message…</p>
-</div>
-
-<!-- RESULT -->
-<div id="result" class="card hidden">
-  <h2>Your experience is ready</h2>
-
-  <div class="chatwrap">
-    <img id="avatarPreview" src="assets/companion1.png" alt="Selected companion">
-    <div class="bubble">
-      <div id="resMsg">“I’m here to explore ideas with you — whether it’s deep thinking, creative stories, or everyday conversation.”</div>
-      <div class="muted">Your selected style is ready. Continue to unlock full access.</div>
-    </div>
-  </div>
-
-  <div class="actions">
-    <button class="btn secondary" onclick="go('avatars')">Change style</button>
-    <button class="btn" onclick="go('price')">Continue</button>
-  </div>
-
-  <p class="small" style="margin-top:10px;">Tip: Most users start the free trial right after setup to keep personalization.</p>
-</div>
-
-<!-- PRICE (✅ Best conversion CTA copy) -->
-<div id="price" class="card hidden">
-  <div class="toprow">
-    <div class="pill">7-day free trial included</div>
-    <div class="pill">Cancel anytime</div>
-  </div>
-
-  <h2 style="margin-top:14px;">Start Chat Access</h2>
-  <p class="small">Your setup is ready. Begin chatting in less than a minute.</p>
-
-  <div class="priceRow">
-    <div class="plan">
-      <div class="tag">Free Trial</div>
-      <div class="big">$0 today</div>
-      <div class="small">Then $19 / month after 7 days</div>
-      <ul>
-        <li>7-day free trial</li>
-        <li>Unlimited safe conversations</li>
-        <li>Cancel anytime during trial</li>
-        <li>No commitment</li>
-      </ul>
-    </div>
-  </div>
-
-  <div class="actions" style="margin-top:18px;">
-    <button class="btn" onclick="openWhopModal()">Start Chat</button>
-    <button class="btn secondary" onclick="go('result')">Back</button>
-  </div>
-
-  <p class="small" style="margin-top:10px;">
-    $0 today · No card charged until trial ends · Secure checkout by Whop
-  </p>
-</div>
-
-<!-- SUCCESS -->
-<div id="success" class="card hidden">
-  <div class="toprow">
-    <div class="pill">Trial started</div>
-    <div class="pill">Cancel anytime</div>
-  </div>
-
-  <h2 style="margin-top:14px;">✅ Free trial active</h2>
-  <p class="small">You’re in. Your trial is active and your setup is saved.</p>
-
-  <div class="footerNote">
-    <p class="small" style="margin:0;">
-      Receipt: <span id="receiptIdText">Confirmed</span>
-    </p>
-  </div>
-
-  <div class="actions" style="margin-top:18px;">
-    <button class="btn" onclick="go('hero')">Back to start</button>
-    <button class="btn secondary" onclick="go('result')">View setup</button>
-  </div>
-
-  <p class="small" style="margin-top:10px;">
-    Next: we’ll add webhook-based unlock automation. For now, this confirms your trial and routes you forward.
-  </p>
-</div>
-
-</div>
-
-<!-- ✅ Whop Checkout Modal -->
-<div id="whopModal" class="ng-modal" aria-hidden="true">
-  <div class="ng-modal__backdrop" onclick="closeWhopModal()"></div>
-
-  <div class="ng-modal__panel" role="dialog" aria-modal="true" aria-label="Checkout">
-    <button class="ng-modal__close" onclick="closeWhopModal()" aria-label="Close checkout">✕</button>
-
-    <div class="ng-modal__header">
-      <div>
-        <div class="ng-modal__title">Start Free Trial</div>
-        <div class="ng-modal__subtitle">7 days free · Cancel anytime</div>
+      <div class="nav">
+        <a class="pill" href="#demo"><span class="dot"></span> شوف الديمو</a>
+        <a class="pill" href="#fit">Fit Check</a>
       </div>
     </div>
 
-    <div
-      id="whop-embedded-checkout"
-      data-whop-checkout-plan-id="plan_bjy3o9ZScfqmY"
-      data-whop-checkout-return-url="https://nextgenaihub.net/?whop_return=1"
-      data-whop-checkout-on-complete="onCheckoutComplete"
-      data-whop-checkout-on-state-change="onCheckoutStateChange"
-    ></div>
+    <div id="top" class="hero">
+      <!-- LEFT: Pitch -->
+      <section class="card">
+        <div class="inner">
+          <div class="badge"><span class="spark"></span> كيضيعو عليك الزبناء فـ WhatsApp… بلا ما تحس</div>
 
-    <div id="whopError" class="ng-modal__error" style="display:none;">
-      Checkout didn’t complete. Please try again.
+          <h1>WhatsApp ديالك راه هو “الريسيبسيون”.<br/>حنا كننظموه وكنحميـو المبيعات.</h1>
+
+          <p class="sub">
+            ماشي “بوت” كيرد وخلاص. هاد الشي هو <b>Front Desk</b>: كيشد المحادثة حتى كتولي
+            <b>حجز / طلب / موعد / قرار</b>… وكيصعّبها غير فاش خاص إنسان يدخل.
+          </p>
+
+          <div class="kpis" role="list">
+            <div class="kpi" role="listitem">
+              <b>ردّ فاللحظة</b>
+              <small>الزبون ما كينتظرش ساعات</small>
+            </div>
+            <div class="kpi" role="listitem">
+              <b>فلترة الناس</b>
+              <small>جادّين vs تضييع الوقت</small>
+            </div>
+            <div class="kpi" role="listitem">
+              <b>تأكيد + تذكير</b>
+              <small>هبوط no-shows</small>
+            </div>
+          </div>
+
+          <div class="ctaRow">
+            <a class="btn primary" href="#demo">بدا الديمو دابا</a>
+            <a class="btn ghost" href="#fit">دير Fit Check (15 دقيقة)</a>
+          </div>
+
+          <div class="tiny">
+            ملاحظة: هاد الصفحة غير Demo. فالخدمة الحقيقية كنديروها فـ WhatsApp ديالك عبر flows مضبوطين.
+            <span class="kbd">Ctrl</span> + <span class="kbd">K</span> كيعطيك اختصارات فالأسفل.
+          </div>
+        </div>
+      </section>
+
+      <!-- RIGHT: Demo -->
+      <section id="demo" class="card" aria-label="Interactive demo">
+        <div class="demoHeader">
+          <div class="left">
+            <div class="avatar" aria-hidden="true"></div>
+            <div class="who">
+              <b id="demoTitle">Magico Safi — WhatsApp</b>
+              <small id="demoSub">Front Desk: ردّ + تنظيم + تأكيد</small>
+            </div>
+          </div>
+          <div class="status" title="حالة الخدمة">
+            <span class="dot"></span> خدام 24/7
+          </div>
+        </div>
+
+        <div id="chat" class="chat" aria-live="polite" aria-label="Chat">
+          <!-- Messages injected -->
+        </div>
+
+        <div class="chips" aria-label="Scenarios">
+          <button class="chip" data-scenario="clinic"><strong>عيادة</strong><span class="tag">موعد + تذكير</span></button>
+          <button class="chip" data-scenario="restaurant"><strong>مطعم</strong><span class="tag">حجز طابلة</span></button>
+          <button class="chip" data-scenario="realestate"><strong>عقار</strong><span class="tag">زيارة + فلترة</span></button>
+          <button class="chip" data-scenario="ecom"><strong>E-com</strong><span class="tag">FAQ + COD</span></button>
+        </div>
+
+        <div class="inner" style="padding-top:14px">
+          <div class="sysNote" id="sysNote">
+            اختار سيناريو من الفوق. غادي تشوف كيفاش النظام كيرد، كيطلب معلومات ناقصة، وكيصعّد لِإنسان غير فاش خاص.
+          </div>
+        </div>
+      </section>
     </div>
+
+    <!-- Middle content -->
+    <div class="grid2">
+      <section class="card">
+        <div class="inner">
+          <p class="sectionTitle">شنو كيتبدّل فالحقيقة</p>
+          <div class="list">
+            <div class="item">
+              <b>ما كاينش “Seen” وسكات</b>
+              <p>أي رسالة كتلقا ردّ فـ ثواني، حتى إلا كان غير “غادي نعاونك دابا”.</p>
+            </div>
+            <div class="item">
+              <b>النظام كيسول الأسئلة اللي كتنقص</b>
+              <p>باش يوصل للقرار: شكون؟ شحال؟ فين؟ وقتاش؟… بلا ما يضيع الوقت.</p>
+            </div>
+            <div class="item">
+              <b>Escalation نظيف</b>
+              <p>فاش خاص إنسان يدخل، كيتصيفط ليه الملخص ديال الحالة باش ما يبقاش يقلب فالشات.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="inner">
+          <p class="sectionTitle">هاد الخدمة ماشي لهاد الناس</p>
+          <div class="list">
+            <div class="item">
+              <b>إلا كتجيك 5 رسائل فالنهار</b>
+              <p>ما غاديش تحس بالفرق. هادي كتخدم مزيان مع volume.</p>
+            </div>
+            <div class="item">
+              <b>إلا باغي غير “تجربة AI”</b>
+              <p>حنا كنبيعو نتيجة: تنظيم + مبيعات + وقت. ماشي ألعاب.</p>
+            </div>
+            <div class="item">
+              <b>إلا ما كتجاوبش نهائيا</b>
+              <p>Front Desk كيساعدك، ولكن خاص تكون كتحترم الزبون حتى فالhandoff.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Fit check -->
+    <section id="fit" class="card" style="margin-top:14px">
+      <div class="inner">
+        <p class="sectionTitle">Fit Check (15 دقيقة)</p>
+        <p class="sub" style="margin-top:-2px">
+          خليه بسيط: شنو النشاط ديالك، شحال ديال messages كتجيك، وشنو أكثر سؤال كيعوّدوه الزبناء.
+          (هاد الفورم كيدير demo محلياً فقط — إلى بغيتيه يرسل، بدل لينا endpoint ديال السيرفر/CRM ديالك.)
+        </p>
+
+        <form id="fitForm">
+          <div class="row">
+            <div>
+              <label for="biz">النشاط / البزنس</label>
+              <input id="biz" name="biz" placeholder="مثال: عيادة أسنان / مطعم / وكالة عقار..." required />
+            </div>
+            <div>
+              <label for="city">المدينة</label>
+              <input id="city" name="city" placeholder="مثال: القنيطرة / الرباط / سلا / الدار البيضاء..." required />
+            </div>
+          </div>
+
+          <div class="row">
+            <div>
+              <label for="volume">تقريباً شحال رسالة فالنهار؟</label>
+              <select id="volume" name="volume" required>
+                <option value="" selected disabled>اختار</option>
+                <option>5 - 20</option>
+                <option>20 - 60</option>
+                <option>60 - 150</option>
+                <option>150+</option>
+              </select>
+            </div>
+            <div>
+              <label for="channel">فين كيجيو الزبناء أكثر؟</label>
+              <select id="channel" name="channel" required>
+                <option value="" selected disabled>اختار</option>
+                <option>WhatsApp فقط</option>
+                <option>WhatsApp + Instagram</option>
+                <option>WhatsApp + Facebook</option>
+                <option>مزيج (Ads + Organic)</option>
+              </select>
+            </div>
+          </div>
+
+          <div>
+            <label for="pain">شنو أكثر حاجة كتقهرَك فـ WhatsApp دابا؟</label>
+            <textarea id="pain" name="pain" placeholder="مثال: الناس كيسولو على الثمن بزاف / كيحجزو وما كيجيـوش / كنضيع الوقت فالمكان واللوكيشن..." required></textarea>
+          </div>
+
+          <div class="formActions">
+            <button class="btn primary" type="submit">خدّ ليا الملخص</button>
+            <button class="btn ghost" type="button" id="copySummary">نسخ الملخص</button>
+            <span class="note" id="formNote"></span>
+          </div>
+        </form>
+
+        <div class="sysNote" id="summaryBox" style="display:none; margin-top:12px"></div>
+      </div>
+    </section>
+
+    <footer>
+      <div>© <span id="year"></span> WhatsApp Front Desk Demo — دارجة.</div>
+      <div>اختصارات: <span class="kbd">1</span> عيادة • <span class="kbd">2</span> مطعم • <span class="kbd">3</span> عقار • <span class="kbd">4</span> E-com</div>
+    </footer>
   </div>
-</div>
 
-<script>
-/**
- * CONFIG
- */
-const WHOP_PLAN_ID = "plan_bjy3o9ZScfqmY";
-const RETURN_URL = "https://nextgenaihub.net/?whop_return=1";
+  <script>
+    // ---------- Helpers ----------
+    const chatEl = document.getElementById('chat');
+    const sysNoteEl = document.getElementById('sysNote');
+    const demoTitleEl = document.getElementById('demoTitle');
+    const demoSubEl = document.getElementById('demoSub');
 
-/**
- * Avatar images
- */
-const AVATAR_BASE = {
-  1: "assets/companion1.png",
-  2: "assets/companion2.png",
-  3: "assets/companion3.png",
-  4: "assets/companion4.png",
-};
-
-function getMessagePoseSrc(n){
-  return AVATAR_BASE[n];
-}
-
-let avatar = 1;
-let step = 0;
-let firstAvatarVisit = true;
-
-const answers = [];
-
-// Safe questions
-const qs = [
-  ["What kind of conversations do you enjoy most?", ["Creative storytelling", "Deep conversations", "Daily conversations", "Ideas & brainstorming"]],
-  ["Choose a tone", ["Calm", "Playful", "Bold", "Thoughtful"]],
-  ["Reply style?", ["Short", "Balanced", "Detailed"]],
-];
-
-function scrollToHow(){
-  document.getElementById('how').scrollIntoView({behavior:'smooth',block:'start'});
-}
-
-function go(id){
-  document.querySelectorAll('.card').forEach(c => c.classList.add('hidden'));
-  document.getElementById(id).classList.remove('hidden');
-
-  if(id === 'avatars' && firstAvatarVisit){
-    firstAvatarVisit = false;
-    selectAvatar(1, true);
-  }
-
-  if(id === 'avatars'){
-    step = 0;
-    answers.length = 0;
-    const b = document.getElementById('bar');
-    if(b) b.style.width = '0%';
-  }
-}
-
-/* ✅ Whop modal controls */
-function openWhopModal(){
-  const modal = document.getElementById("whopModal");
-  const checkout = document.getElementById("whop-embedded-checkout");
-  const err = document.getElementById("whopError");
-  if (err) err.style.display = "none";
-
-  checkout.setAttribute("data-whop-checkout-plan-id", WHOP_PLAN_ID);
-  checkout.setAttribute("data-whop-checkout-return-url", RETURN_URL);
-
-  modal.classList.add("is-open");
-  modal.setAttribute("aria-hidden", "false");
-
-  document.body.style.overflow = "hidden";
-  document.documentElement.style.overflow = "hidden";
-}
-
-function closeWhopModal(){
-  const modal = document.getElementById("whopModal");
-  modal.classList.remove("is-open");
-  modal.setAttribute("aria-hidden", "true");
-
-  document.body.style.overflow = "";
-  document.documentElement.style.overflow = "";
-}
-
-/* Whop callbacks */
-window.onCheckoutComplete = (planId, receiptId) => {
-  closeWhopModal();
-
-  localStorage.setItem("ng_paid", "true");
-  localStorage.setItem("ng_whop_plan_id", planId || "");
-  localStorage.setItem("ng_whop_receipt_id", receiptId || "");
-
-  const receiptEl = document.getElementById("receiptIdText");
-  if (receiptEl) receiptEl.textContent = receiptId ? receiptId : "Confirmed";
-
-  go("success");
-};
-
-window.onCheckoutStateChange = (state) => {
-  // console.log("Whop checkout state:", state);
-};
-
-/* Return URL handler */
-(function handleWhopReturn(){
-  const url = new URL(window.location.href);
-  const whopReturn = url.searchParams.get("whop_return");
-  const status = url.searchParams.get("status");
-
-  if (!whopReturn) return;
-
-  url.searchParams.delete("whop_return");
-  url.searchParams.delete("status");
-  window.history.replaceState({}, "", url.toString());
-
-  if (status === "success") {
-    localStorage.setItem("ng_paid", "true");
-    const receiptEl = document.getElementById("receiptIdText");
-    if (receiptEl) receiptEl.textContent = localStorage.getItem("ng_whop_receipt_id") || "Confirmed";
-    go("success");
-  } else {
-    go("price");
-    const err = document.getElementById("whopError");
-    if (err) err.style.display = "block";
-    openWhopModal();
-  }
-})();
-
-/* Funnel logic */
-function selectAvatar(n, skipAutoGo){
-  avatar = n;
-
-  document.querySelectorAll('.avatar').forEach(a => a.classList.remove('active'));
-  document.querySelectorAll('.avatar')[n-1].classList.add('active');
-
-  const preview = document.getElementById("avatarPreview");
-  if(preview){ preview.src = getMessagePoseSrc(n); }
-
-  if(skipAutoGo) return;
-
-  setTimeout(() => { go('quiz'); render(); }, 180);
-}
-
-function render(){
-  const b = document.getElementById('bar');
-  if(b) b.style.width = ((step+1)/qs.length*100) + '%';
-
-  document.getElementById('q').innerText = qs[step][0];
-
-  let o = document.getElementById('opts');
-  o.innerHTML = '';
-
-  qs[step][1].forEach(v => {
-    let d = document.createElement('div');
-    d.className = 'choice';
-    d.innerText = v;
-    d.onclick = () => next(v);
-    o.appendChild(d);
-  });
-}
-
-function next(choice){
-  answers.push(choice);
-  step++;
-
-  if(step < qs.length){
-    render();
-    return;
-  }
-
-  go('loading');
-  const loadbar = document.getElementById('loadbar');
-  const loadtxt = document.getElementById('loadtxt');
-
-  let pct = 0;
-  const msgs = [
-    "Preparing your first message…",
-    "Adjusting tone and pacing…",
-    "Finalizing conversation style…",
-    "Ready."
-  ];
-
-  const timer = setInterval(() => {
-    pct += Math.floor(Math.random()*16) + 10;
-    if(pct > 100) pct = 100;
-    if(loadbar) loadbar.style.width = pct + "%";
-    if(loadtxt){
-      const idx = Math.min(msgs.length-1, Math.floor(pct/34));
-      loadtxt.innerText = msgs[idx];
+    function nowTime(){
+      const d = new Date();
+      return d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
     }
-    if(pct >= 100){
-      clearInterval(timer);
-      setTimeout(() => showResult(), 280);
+    function scrollToBottom(){
+      chatEl.scrollTop = chatEl.scrollHeight;
     }
-  }, 180);
-}
+    function bubble(text, side, meta = ""){
+      const row = document.createElement('div');
+      row.className = 'bubbleRow ' + (side === 'you' ? 'you' : 'bot');
 
-function showResult(){
-  go('result');
+      const b = document.createElement('div');
+      b.className = 'bubble ' + (side === 'bot' ? 'bot' : '');
+      b.innerHTML = text;
 
-  const [topic, tone, style] = answers;
-  const toneLine = {
-    Calm: "calm and clear",
-    Playful: "light and creative",
-    Bold: "direct and confident",
-    Thoughtful: "deep and reflective"
-  }[tone] || "balanced";
+      row.appendChild(b);
 
-  const styleLine = {
-    Short: "short replies",
-    Balanced: "balanced replies",
-    Detailed: "detailed replies"
-  }[style] || "balanced replies";
+      if(meta){
+        const m = document.createElement('div');
+        m.className = 'meta';
+        m.innerHTML = meta;
+        b.appendChild(m);
+      }
+      chatEl.appendChild(row);
+      scrollToBottom();
+    }
+    function typing(side='bot'){
+      const id = 'typing-' + Math.random().toString(16).slice(2);
+      const row = document.createElement('div');
+      row.className = 'bubbleRow ' + (side === 'you' ? 'you' : 'bot');
+      row.id = id;
 
-  document.getElementById('resMsg').innerText =
-    `“Perfect — I’ll keep it ${toneLine} with ${styleLine}. Let’s start with ${String(topic || "").toLowerCase()}.”`;
+      const b = document.createElement('div');
+      b.className = 'bubble ' + (side === 'bot' ? 'bot' : '');
+      b.innerHTML = '...';
+      row.appendChild(b);
 
-  const preview = document.getElementById("avatarPreview");
-  if(preview) preview.src = getMessagePoseSrc(avatar);
-}
+      chatEl.appendChild(row);
+      scrollToBottom();
+      return id;
+    }
+    function removeTyping(id){
+      const el = document.getElementById(id);
+      if(el) el.remove();
+      scrollToBottom();
+    }
+    function wait(ms){ return new Promise(r => setTimeout(r, ms)); }
 
-go('hero');
-</script>
+    // ---------- Scenarios ----------
+    const scenarios = {
+      clinic: {
+        title: "عيادة — WhatsApp",
+        sub: "موعد + تأكيد + تذكير",
+        note: "هنا كيبان الفرق: ماشي غير جواب، ولكن إدارة الموعد حتى يتأكد.",
+        script: async () => {
+          chatEl.innerHTML = "";
+          bubble("سلام، بغيت ناخد موعد عند الدكتور 🙏", "you", `<span>${nowTime()}</span>`);
+          const t1 = typing(); await wait(550); removeTyping(t1);
+          bubble("مرحبا 👋 أنا المساعد ديال العيادة. شنو كاين؟ واش بغيت <b>موعد</b> ولا عندك سؤال على <b>الثمن/الخدمات</b>؟", "bot", `<span>${nowTime()}</span>`);
+          await wait(450);
+          bubble("موعد. ممكن غدا فالعشية؟", "you", `<span>${nowTime()}</span>`);
+          const t2 = typing(); await wait(650); removeTyping(t2);
+          bubble("تمام. باش نثبّت الموعد، عطيني لو سمحتي: <b>الاسم</b> + <b>السن</b> + <b>شنو كتحس</b> (باختصار).", "bot", `<span>${nowTime()}</span>`);
+          await wait(500);
+          bubble("سارة، 28، ألم فالضرس 😣", "you", `<span>${nowTime()}</span>`);
+          const t3 = typing(); await wait(750); removeTyping(t3);
+          bubble("واخا سارة. كاينين جوج أوقات غدا: <b>17:30</b> ولا <b>19:00</b>. شنو كيناسبك؟", "bot", `<span>${nowTime()}</span>`);
+          await wait(500);
+          bubble("19:00", "you", `<span>${nowTime()}</span>`);
+          const t4 = typing(); await wait(700); removeTyping(t4);
+          bubble("✅ تمّ الحجز: <b>غدا 19:00</b>. غادي توصلك رسالة تذكير قبل الموعد بـ 3 سوايع. <br><br>باش نأكد نهائياً: واش رقمك هو نفس اللي كنهدرو به دابا؟", "bot", `<span>${nowTime()}</span>`);
+          await wait(500);
+          bubble("نعم", "you", `<span>${nowTime()}</span>`);
+          const t5 = typing(); await wait(650); removeTyping(t5);
+          bubble("Perfect ✅ إلى كان شي تغيير كتب لينا <b>“نبدّل الموعد”</b>. <br><br><i>(Escalation)</i> إلى بغيتي تهضر مع السكرتيرة مباشرة، كتب <b>“إنسان”</b>.", "bot", `<span>${nowTime()}</span>`);
+        }
+      },
 
+      restaurant: {
+        title: "مطعم — WhatsApp",
+        sub: "حجز طابلة + تأكيد",
+        note: "المطاعم كيبغيو السرعة + الوضوح: عدد الناس، الوقت، الاسم، تليفون.",
+        script: async () => {
+          chatEl.innerHTML = "";
+          bubble("سلام، واش كاين حجز الليلة؟", "you", `<span>${nowTime()}</span>`);
+          const t1 = typing(); await wait(520); removeTyping(t1);
+          bubble("مرحبا 👋 كاين. باش نوجد ليك الحجز: شحال ديال الناس وشنو الوقت اللي بغيتي؟", "bot", `<span>${nowTime()}</span>`);
+          await wait(420);
+          bubble("4 دالناس، 21:30", "you", `<span>${nowTime()}</span>`);
+          const t2 = typing(); await wait(700); removeTyping(t2);
+          bubble("واخا. كاين 21:30 ✅. عطيني الاسم اللي نكتب به الحجز + رقم للتأكيد.", "bot", `<span>${nowTime()}</span>`);
+          await wait(420);
+          bubble("Chakir، ونفس الرقم", "you", `<span>${nowTime()}</span>`);
+          const t3 = typing(); await wait(650); removeTyping(t3);
+          bubble("✅ حجزك تأكد: <b>اليوم 21:30</b> لـ <b>4</b> أشخاص باسم <b>Chakir</b>. <br><br>ملاحظة: إلا تأخرت أكثر من 15 دقيقة، غير كتب <b>“تأخير”</b> باش ما يضيعش الحجز.", "bot", `<span>${nowTime()}</span>`);
+          await wait(450);
+          bubble("فين المكان؟", "you", `<span>${nowTime()}</span>`);
+          const t4 = typing(); await wait(600); removeTyping(t4);
+          bubble("📍 ها لوكيشن: <b>Google Maps</b> (رابط) <br>وها العنوان: <b>26 Rue ...</b> <br><br>بغيت نرسلك المينيو؟ كتب <b>“menu”</b>.", "bot", `<span>${nowTime()}</span>`);
+        }
+      },
+
+      realestate: {
+        title: "عقار — WhatsApp",
+        sub: "فلترة + موعد زيارة",
+        note: "العقار خاصو فلترة: budget + مدينة + نوع + جاهزية. وإلا غادي تضيع الوقت مع الفضوليين.",
+        script: async () => {
+          chatEl.innerHTML = "";
+          bubble("سلام، شفت annonce ديال شقة. واش مازال كاينة؟", "you", `<span>${nowTime()}</span>`);
+          const t1 = typing(); await wait(520); removeTyping(t1);
+          bubble("مرحبا 👋 كاينة. باش نأكد ليك المناسبة: شنو المدينة/الحي + budget التقريبي + كراء ولا شراء؟", "bot", `<span>${nowTime()}</span>`);
+          await wait(450);
+          bubble("القنيطرة، budget 4000، كراء", "you", `<span>${nowTime()}</span>`);
+          const t2 = typing(); await wait(720); removeTyping(t2);
+          bubble("تمام. شحال ديال الغرف اللي بغيتي؟ ووقتاش باغي تبدا السكن؟", "bot", `<span>${nowTime()}</span>`);
+          await wait(420);
+          bubble("2 غرف، الأسبوع الجاي", "you", `<span>${nowTime()}</span>`);
+          const t3 = typing(); await wait(650); removeTyping(t3);
+          bubble("واخا. عندي جوج اختيارات فالbudget ديالك. <br>1) 2 غرف فـ ... <br>2) 2 غرف فـ ... <br><br>بغيت <b>زيارة</b>؟ عطيني نهار/وقت مناسب.", "bot", `<span>${nowTime()}</span>`);
+          await wait(520);
+          bubble("السبت مع 16:00", "you", `<span>${nowTime()}</span>`);
+          const t4 = typing(); await wait(700); removeTyping(t4);
+          bubble("✅ تدار موعد زيارة: <b>السبت 16:00</b>. <br><br>باش نأكد: واش غادي تجي بوحدك ولا مع شي حد؟ (غير باش نوجد الوقت.)", "bot", `<span>${nowTime()}</span>`);
+          await wait(450);
+          bubble("مع الزوجة", "you", `<span>${nowTime()}</span>`);
+          const t5 = typing(); await wait(650); removeTyping(t5);
+          bubble("تمام ✅ غادي توصلك رسالة تذكير قبلها بـ 2 سوايع. <br><br><i>(Escalation)</i> إلا بغيتي تفاصيل أكثر/صور كثر، كتب <b>“صور”</b> ولا <b>“إنسان”</b>.", "bot", `<span>${nowTime()}</span>`);
+        }
+      },
+
+      ecom: {
+        title: "E-commerce — WhatsApp",
+        sub: "FAQ + طلب + COD",
+        note: "Ecom كيموت فـ الأسئلة المتكررة: ثمن، توصيل، استبدال، COD. خاص flow سريع.",
+        script: async () => {
+          chatEl.innerHTML = "";
+          bubble("سلام، شحال ثمن هاد المنتوج؟ وواش كاين توصيل؟", "you", `<span>${nowTime()}</span>`);
+          const t1 = typing(); await wait(540); removeTyping(t1);
+          bubble("مرحبا 👋 الثمن هو <b>199dh</b>. التوصيل: <b>25dh</b> داخل المدينة و <b>35dh</b> خارجها. <br><br>بغيتي <b>الدفع عند الاستلام (COD)</b> ولا تحويل؟", "bot", `<span>${nowTime()}</span>`);
+          await wait(470);
+          bubble("COD. واش كاين استبدال؟", "you", `<span>${nowTime()}</span>`);
+          const t2 = typing(); await wait(620); removeTyping(t2);
+          bubble("كاين ✅ عندك <b>7 أيام</b> للاستبدال بشرط يكون المنتوج جديد. <br><br>باش نسجلو الطلب: عطيني <b>الاسم</b> + <b>العنوان</b> + <b>المدينة</b> + <b>تليفون</b>.", "bot", `<span>${nowTime()}</span>`);
+          await wait(500);
+          bubble("Yassine، حي السلام، سلا، نفس الرقم", "you", `<span>${nowTime()}</span>`);
+          const t3 = typing(); await wait(720); removeTyping(t3);
+          bubble("✅ تم تسجيل الطلب. غادي نوصلوك فـ <b>24-48 ساعة</b>. <br><br>بغيت تتبع الشحنة؟ كتب <b>“tracking”</b>. <br><i>(Escalation)</i> إلى وقع شي مشكل، كتب <b>“خدمة الزبناء”</b>.", "bot", `<span>${nowTime()}</span>`);
+        }
+      }
+    };
+
+    async function loadScenario(key){
+      const s = scenarios[key];
+      if(!s) return;
+      demoTitleEl.textContent = s.title;
+      demoSubEl.textContent = s.sub;
+      sysNoteEl.textContent = s.note;
+      await s.script();
+    }
+
+    // ---------- Bind chips ----------
+    document.querySelectorAll('.chip').forEach(btn=>{
+      btn.addEventListener('click', () => loadScenario(btn.dataset.scenario));
+    });
+
+    // Keyboard shortcuts
+    document.addEventListener('keydown', (e) => {
+      if (e.key === '1') loadScenario('clinic');
+      if (e.key === '2') loadScenario('restaurant');
+      if (e.key === '3') loadScenario('realestate');
+      if (e.key === '4') loadScenario('ecom');
+      // Ctrl+K focus fit form
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        document.getElementById('biz').focus();
+        location.hash = '#fit';
+      }
+    });
+
+    // ---------- Fit check form (local summary) ----------
+    const fitForm = document.getElementById('fitForm');
+    const summaryBox = document.getElementById('summaryBox');
+    const formNote = document.getElementById('formNote');
+
+    function makeSummary(data){
+      const lines = [
+        "📌 <b>ملخص Fit Check</b>",
+        `• النشاط: <b>${escapeHtml(data.biz)}</b>`,
+        `• المدينة: <b>${escapeHtml(data.city)}</b>`,
+        `• الرسائل/اليوم: <b>${escapeHtml(data.volume)}</b>`,
+        `• القناة: <b>${escapeHtml(data.channel)}</b>`,
+        `• الألم الرئيسي: <b>${escapeHtml(data.pain)}</b>`,
+        "",
+        "✅ <b>شنو نقدر نديرو ليك (اقتراح سريع):</b>",
+        "1) ردّ تلقائي فاللحظة + جمع المعلومات الناقصة",
+        "2) Flow ديال الحجز/الطلب + تأكيد + تذكير",
+        "3) Escalation لِإنسان غير فاش خاص",
+        "4) تقرير أسبوعي: الرسائل → التحويلات → النقط اللي كيتسربو فيها الزبناء"
+      ];
+      return lines.join("<br>");
+    }
+
+    function escapeHtml(str){
+      return String(str)
+        .replaceAll("&","&amp;")
+        .replaceAll("<","&lt;")
+        .replaceAll(">","&gt;")
+        .replaceAll('"',"&quot;")
+        .replaceAll("'","&#039;");
+    }
+
+    fitForm.addEventListener('submit', (e)=>{
+      e.preventDefault();
+      const data = Object.fromEntries(new FormData(fitForm).entries());
+      const html = makeSummary(data);
+      summaryBox.innerHTML = html;
+      summaryBox.style.display = "block";
+      formNote.textContent = "تمّ توليد الملخص. تقدر تنسخو أو تبعثو لينا.";
+      summaryBox.scrollIntoView({behavior:"smooth", block:"start"});
+    });
+
+    document.getElementById('copySummary').addEventListener('click', async ()=>{
+      if(summaryBox.style.display === "none"){
+        formNote.textContent = "عمر الفورم الأول باش يتولد الملخص.";
+        return;
+      }
+      const temp = summaryBox.innerText;
+      try{
+        await navigator.clipboard.writeText(temp);
+        formNote.textContent = "تنسخ ✅";
+      }catch{
+        formNote.textContent = "ما قدرناش ننسخو (browser). نسخ يدويًا من الصندوق.";
+      }
+    });
+
+    // ---------- Init ----------
+    document.getElementById('year').textContent = new Date().getFullYear();
+    loadScenario('clinic');
+  </script>
 </body>
 </html>
