@@ -1,1828 +1,1612 @@
-<!doctype html>
-<html lang="fr">
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
 <head>
-  <meta charset="utf-8"/>
-  <meta name="viewport" content="width=device-width, initial-scale=1"/>
-  <title>Agent WhatsApp pour ventes & support 24/7</title>
-  <meta name="description" content="Transformez WhatsApp Business en canal de vente 24/7. Réponses instantanées, rendez-vous, qualification de leads et suivi. Démo + calculateur de gains."/>
-  <meta name="theme-color" content="#0b1020"/>
-
-  <!-- Open Graph / Social Media -->
-  <meta property="og:title" content="Agent WhatsApp pour ventes & support 24/7">
-  <meta property="og:description" content="Transformez WhatsApp Business en canal de vente 24/7 avec l'IA">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://whatsapp-agent.ai">
-
-  <!-- Fonts -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
-  <style>
-    :root{
-      --bg:#070a14;
-      --bg2:#0a1226;
-      --card: rgba(255,255,255,.06);
-      --card2: rgba(255,255,255,.085);
-      --stroke: rgba(255,255,255,.12);
-      --text: rgba(255,255,255,.92);
-      --muted: rgba(255,255,255,.70);
-      --muted2: rgba(255,255,255,.55);
-      --accent:#28d17c;      /* green */
-      --accent2:#24c7c7;     /* teal */
-      --danger:#ff4d6d;
-      --shadow: 0 18px 60px rgba(0,0,0,.55);
-      --radius: 18px;
-      --radius2: 26px;
-      --max: 1160px;
-    }
-
-    *{box-sizing:border-box}
-    html,body{height:100%; scroll-behavior: smooth;}
-    body{
-      margin:0;
-      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
-      color:var(--text);
-      background:
-        radial-gradient(1100px 600px at 70% -10%, rgba(36,199,199,.22), transparent 55%),
-        radial-gradient(900px 500px at 10% 10%, rgba(40,209,124,.18), transparent 55%),
-        radial-gradient(900px 600px at 50% 110%, rgba(40,209,124,.10), transparent 55%),
-        linear-gradient(180deg, var(--bg), var(--bg2));
-      overflow-x:hidden;
-    }
-
-    a{color:inherit; text-decoration:none}
-    .container{max-width:var(--max); margin:0 auto; padding:0 20px}
-
-    /* Subtle pattern overlay */
-    .pattern{
-      position:absolute; inset:0;
-      opacity:.13;
-      pointer-events:none;
-      background-image:
-        radial-gradient(circle at 12px 12px, rgba(255,255,255,.14) 1.2px, transparent 1.25px);
-      background-size: 26px 26px;
-      mask-image: radial-gradient(900px 460px at 40% 10%, black 30%, transparent 70%);
-    }
-
-    /* NAV */
-    .nav{
-      position:sticky; top:0; z-index:50;
-      backdrop-filter: blur(14px);
-      background: linear-gradient(180deg, rgba(7,10,20,.78), rgba(7,10,20,.44));
-      border-bottom:1px solid rgba(255,255,255,.08);
-    }
-    .nav-inner{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:14px 0;
-      gap:14px;
-    }
-    .brand{
-      display:flex; align-items:center; gap:10px;
-      font-weight:900; letter-spacing:.2px;
-      font-size: 1.2rem;
-    }
-    .logo{
-      width:36px; height:36px; border-radius:12px;
-      background:
-        radial-gradient(10px 10px at 30% 30%, rgba(255,255,255,.35), transparent 60%),
-        linear-gradient(135deg, rgba(40,209,124,.95), rgba(36,199,199,.85));
-      box-shadow: 0 12px 30px rgba(40,209,124,.15);
-      border:1px solid rgba(255,255,255,.18);
-    }
-    .nav-links{
-      display:flex; align-items:center; gap:18px;
-      color:var(--muted);
-      font-weight:700;
-      font-size:14px;
-    }
-    .nav-links a{opacity:.9; transition: opacity 0.2s ease;}
-    .nav-links a:hover{opacity:1; color:rgba(255,255,255,.92)}
-    .nav-cta{display:flex; align-items:center; gap:10px}
-    .btn{
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.06);
-      color:rgba(255,255,255,.92);
-      padding:10px 14px;
-      border-radius:14px;
-      font-weight:800;
-      font-size:14px;
-      display:inline-flex; align-items:center; gap:10px;
-      cursor:pointer;
-      transition: all .12s ease;
-      user-select:none;
-    }
-    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.085); border-color:rgba(255,255,255,.20)}
-    .btn.primary{
-      background: linear-gradient(135deg, rgba(40,209,124,.95), rgba(36,199,199,.85));
-      border-color: rgba(255,255,255,.18);
-      color:#062012;
-      box-shadow: 0 16px 40px rgba(40,209,124,.18);
-    }
-    .btn.primary:hover{transform:translateY(-1px) scale(1.01)}
-    .btn.ghost{background:transparent}
-    .pill{
-      display:inline-flex; align-items:center; gap:8px;
-      border:1px solid rgba(40,209,124,.28);
-      background: rgba(40,209,124,.10);
-      color: rgba(255,255,255,.88);
-      padding:8px 12px;
-      border-radius:999px;
-      font-weight:800;
-      font-size:13px;
-      width:fit-content;
-    }
-    .dot{
-      width:8px; height:8px; border-radius:50%;
-      background: var(--accent);
-      box-shadow: 0 0 0 4px rgba(40,209,124,.15);
-      animation: pulse 2s infinite;
-    }
-    @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(40,209,124,.7); }
-      70% { box-shadow: 0 0 0 10px rgba(40,209,124,0); }
-      100% { box-shadow: 0 0 0 0 rgba(40,209,124,0); }
-    }
-
-    /* HERO */
-    .hero{
-      position:relative;
-      padding:54px 0 28px;
-    }
-    .hero-grid{
-      display:grid;
-      grid-template-columns: 1.05fr .95fr;
-      gap:26px;
-      align-items:center;
-    }
-    h1{
-      font-size: clamp(34px, 4vw, 54px);
-      line-height:1.05;
-      margin:16px 0 14px;
-      letter-spacing:-.8px;
-    }
-    .h1-accent{
-      background: linear-gradient(135deg, rgba(40,209,124,1), rgba(36,199,199,1));
-      -webkit-background-clip:text;
-      background-clip:text;
-      color:transparent;
-      font-weight:950;
-    }
-    .lead{
-      font-size: 16px;
-      line-height:1.7;
-      color:var(--muted);
-      max-width: 56ch;
-    }
-    .hero-actions{
-      display:flex; gap:12px; flex-wrap:wrap;
-      margin-top:20px;
-    }
-    .badges{
-      display:flex; gap:14px; flex-wrap:wrap;
-      margin-top:18px;
-      color:var(--muted2);
-      font-weight:800;
-      font-size:13px;
-    }
-    .badge{
-      display:flex; align-items:center; gap:8px;
-      padding:8px 10px;
-      border:1px solid rgba(255,255,255,.10);
-      border-radius: 999px;
-      background: rgba(255,255,255,.04);
-      transition: all .2s ease;
-    }
-    .badge:hover{
-      background: rgba(255,255,255,.08);
-      transform: translateY(-2px);
-    }
-    .check{
-      width:18px; height:18px; border-radius:6px;
-      display:grid; place-items:center;
-      background: rgba(40,209,124,.16);
-      border:1px solid rgba(40,209,124,.22);
-      color: rgba(40,209,124,.95);
-      font-size:12px;
-    }
-
-    /* Right demo */
-    .demo-wrap{
-      position:relative;
-      border-radius: var(--radius2);
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-    }
-    .demo-top{
-      display:flex; justify-content:center;
-      padding:14px 12px 10px;
-      border-bottom:1px solid rgba(255,255,255,.08);
-      background: rgba(255,255,255,.03);
-    }
-    .segmented{
-      display:flex; gap:6px;
-      padding:6px;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.14);
-      border-radius:999px;
-      width: fit-content;
-    }
-    .seg-btn{
-      padding:10px 14px;
-      border-radius:999px;
-      border:1px solid transparent;
-      background: transparent;
-      color: rgba(255,255,255,.80);
-      font-weight:900;
-      font-size:13px;
-      cursor:pointer;
-      display:flex; align-items:center; gap:8px;
-      transition: all .12s ease;
-      user-select:none;
-    }
-    .seg-btn.active{
-      background: linear-gradient(135deg, rgba(40,209,124,.95), rgba(36,199,199,.85));
-      color:#062012;
-    }
-    .seg-btn:hover:not(.active){background: rgba(255,255,255,.08); transform: translateY(-1px)}
-    .seg-ico{opacity:.95}
-
-    .phone{
-      margin: 18px auto 18px;
-      width: min(370px, 92%);
-      border-radius: 34px;
-      border: 1px solid rgba(255,255,255,.12);
-      background:
-        radial-gradient(12px 12px at 30% 20%, rgba(255,255,255,.22), transparent 60%),
-        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
-      box-shadow: 0 26px 70px rgba(0,0,0,.6);
-      overflow:hidden;
-      position:relative;
-    }
-    .phone::before{
-      content:"";
-      position:absolute; inset:0;
-      background-image:
-        radial-gradient(circle at 12px 12px, rgba(255,255,255,.12) 1px, transparent 1.1px);
-      background-size: 20px 20px;
-      opacity:.20;
-      pointer-events:none;
-      mask-image: radial-gradient(260px 260px at 50% 20%, black 35%, transparent 75%);
-    }
-    .phone-header{
-      display:flex; align-items:center; justify-content:space-between;
-      padding:12px 14px;
-      background: rgba(0,0,0,.22);
-      border-bottom:1px solid rgba(255,255,255,.10);
-      gap:10px;
-      position:relative;
-      z-index:1;
-    }
-    .ph-left{display:flex; align-items:center; gap:10px}
-    .avatar{
-      width:34px; height:34px; border-radius:12px;
-      background: linear-gradient(135deg, rgba(36,199,199,.85), rgba(40,209,124,.95));
-      border:1px solid rgba(255,255,255,.18);
-      display:grid; place-items:center;
-      font-weight:950; color:#052012;
-    }
-    .ph-title{display:flex; flex-direction:column; gap:2px}
-    .ph-title b{font-size:13px}
-    .ph-title span{font-size:12px; color:var(--muted2)}
-    .ph-actions{
-      display:flex; gap:10px; color:rgba(255,255,255,.85);
-      opacity:.9;
-    }
-    .ico{
-      width:30px; height:30px; border-radius:12px;
-      display:grid; place-items:center;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      cursor: pointer;
-      transition: all .2s ease;
-    }
-    .ico:hover{
-      background: rgba(255,255,255,.1);
-      transform: translateY(-2px);
-    }
-    .chat{
-      padding:14px 14px 12px;
-      display:flex; flex-direction:column; gap:10px;
-      min-height: 355px;
-      position:relative;
-      z-index:1;
-      overflow-y: auto;
-      max-height: 400px;
-    }
-    .msg{
-      max-width: 78%;
-      padding:11px 12px;
-      border-radius: 16px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.05);
-      color: rgba(255,255,255,.90);
-      font-size: 13px;
-      line-height: 1.45;
-      word-wrap: break-word;
-      animation: fadeIn 0.3s ease-out;
-    }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .msg.me{
-      align-self:flex-end;
-      background: rgba(40,209,124,.14);
-      border-color: rgba(40,209,124,.24);
-    }
-    .msg.bot{align-self:flex-start}
-    .meta{
-      margin-top:6px;
-      font-size:11px;
-      color: rgba(255,255,255,.55);
-      display:flex; justify-content:flex-end;
-      gap:8px;
-    }
-    .typing{
-      display:flex; align-items:center; gap:6px;
-      padding:10px 12px;
-      width: fit-content;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.04);
-      color: rgba(255,255,255,.70);
-      font-size: 12px;
-      margin-top: 2px;
-      animation: slideIn 0.3s ease-out;
-    }
-    @keyframes slideIn {
-      from { opacity: 0; transform: translateX(-10px); }
-      to { opacity: 1; transform: translateX(0); }
-    }
-    .dots{display:inline-flex; gap:3px}
-    .dots i{
-      width:5px; height:5px; border-radius:50%;
-      background: rgba(255,255,255,.60);
-      display:block;
-      animation: bounce 1.1s infinite;
-    }
-    .dots i:nth-child(2){animation-delay:.12s}
-    .dots i:nth-child(3){animation-delay:.24s}
-    @keyframes bounce{
-      0%,100%{transform:translateY(0); opacity:.55}
-      50%{transform:translateY(-3px); opacity:1}
-    }
-    .phone-footer{
-      display:flex; gap:10px;
-      padding:12px 14px;
-      border-top:1px solid rgba(255,255,255,.10);
-      background: rgba(0,0,0,.18);
-      position:relative;
-      z-index:1;
-    }
-    .input{
-      flex:1;
-      padding:12px 12px;
-      border-radius: 14px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      color: rgba(255,255,255,.80);
-      font-weight:700;
-      font-size:13px;
-      outline: none;
-      transition: all .2s ease;
-    }
-    .input:focus{
-      border-color: rgba(40,209,124,.5);
-      box-shadow: 0 0 0 2px rgba(40,209,124,.2);
-    }
-    .send{
-      width:46px; height:46px; border-radius:16px;
-      border:1px solid rgba(255,255,255,.16);
-      background: linear-gradient(135deg, rgba(40,209,124,.95), rgba(36,199,199,.85));
-      color:#062012; font-weight:950;
-      display:grid; place-items:center;
-      cursor:pointer;
-      transition: all .12s ease;
-    }
-    .send:hover{transform: translateY(-2px); box-shadow: 0 4px 12px rgba(40,209,124,.3)}
-    .demo-caption{
-      text-align:center;
-      color: var(--muted2);
-      font-weight:800;
-      font-size: 12.5px;
-      padding: 0 18px 18px;
-    }
-
-    /* Sections */
-    .section{
-      padding: 54px 0;
-      position:relative;
-      scroll-margin-top: 80px;
-    }
-    .section h2{
-      margin:0 0 10px;
-      font-size: clamp(24px, 2.5vw, 36px);
-      letter-spacing:-.5px;
-    }
-    .sub{
-      color:var(--muted);
-      line-height:1.7;
-      max-width: 70ch;
-    }
-
-    .grid-2{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:18px;
-      margin-top: 22px;
-    }
-    .grid-3{
-      display:grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap:16px;
-      margin-top: 22px;
-    }
-    .card{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      border-radius: var(--radius);
-      padding:16px;
-      box-shadow: 0 18px 45px rgba(0,0,0,.35);
-      transition: all .3s ease;
-    }
-    .card:hover{
-      transform: translateY(-5px);
-      box-shadow: 0 25px 60px rgba(0,0,0,.45);
-      border-color: rgba(255,255,255,.15);
-    }
-    .card.glass{
-      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.035));
-    }
-    .card-title{
-      display:flex; align-items:center; gap:10px;
-      font-weight:950;
-      margin-bottom:6px;
-    }
-    .card-title span{font-size:15px}
-    .card p{margin:0; color:var(--muted); line-height:1.65; font-size:14px}
-    .mini-ico{
-      width:34px; height:34px; border-radius:14px;
-      display:grid; place-items:center;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      color: rgba(36,199,199,.95);
-      font-weight:950;
-    }
-    .callout-danger{
-      border-color: rgba(255,77,109,.35);
-      background: rgba(255,77,109,.10);
-    }
-    .callout-danger .mini-ico{color: rgba(255,77,109,.95); background: rgba(255,77,109,.10); border-color: rgba(255,77,109,.25)}
-
-    /* ROI */
-    .roi{
-      margin-top: 22px;
-      border-radius: var(--radius2);
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      box-shadow: var(--shadow);
-    }
-    .roi-inner{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:0;
-    }
-    .roi-left{
-      padding:18px;
-      border-right:1px solid rgba(255,255,255,.08);
-      background: rgba(0,0,0,.10);
-    }
-    .roi-right{
-      padding:18px;
-      background: linear-gradient(135deg, rgba(40,209,124,.16), rgba(36,199,199,.10));
-    }
-    .field{
-      display:flex; flex-direction:column; gap:8px;
-      margin-bottom:12px;
-    }
-    .field label{
-      font-weight:900;
-      color: rgba(255,255,255,.85);
-      font-size:13px;
-    }
-    .field input[type="number"], .field input[type="text"], .field select{
-      padding:12px 12px;
-      border-radius: 14px;
-      border:1px solid rgba(255,255,255,.14);
-      background: rgba(255,255,255,.05);
-      color: rgba(255,255,255,.88);
-      outline:none;
-      font-weight:800;
-      transition: all .2s ease;
-    }
-    .field input:focus, .field select:focus{
-      border-color: rgba(40,209,124,.5);
-      box-shadow: 0 0 0 2px rgba(40,209,124,.2);
-    }
-    .field input::placeholder{color: rgba(255,255,255,.45)}
-    .range{
-      display:flex; align-items:center; gap:10px;
-    }
-    .range input[type="range"]{
-      width:100%;
-      -webkit-appearance: none;
-      height: 6px;
-      background: rgba(255,255,255,.1);
-      border-radius: 3px;
-      outline: none;
-    }
-    .range input[type="range"]::-webkit-slider-thumb{
-      -webkit-appearance: none;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: linear-gradient(135deg, rgba(40,209,124,.95), rgba(36,199,199,.85));
-      cursor: pointer;
-      border: 2px solid rgba(255,255,255,.9);
-    }
-    .range .val{
-      min-width: 50px;
-      text-align:right;
-      font-weight:950;
-      color: rgba(255,255,255,.90);
-    }
-    .roi-metrics{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:12px;
-      margin-bottom: 14px;
-    }
-    .metric{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      border-radius: 16px;
-      padding:14px;
-      transition: all .3s ease;
-    }
-    .metric:hover{
-      transform: translateY(-3px);
-      border-color: rgba(40,209,124,.3);
-    }
-    .metric .k{font-size:12px; color:var(--muted2); font-weight:900}
-    .metric .v{font-size:28px; font-weight:950; letter-spacing:-.6px; margin-top:6px}
-    .metric .hint{font-size:12px; color:var(--muted); margin-top:6px; font-weight:800}
-    .roi-big{
-      border:1px solid rgba(40,209,124,.30);
-      background: rgba(40,209,124,.12);
-      border-radius: 20px;
-      padding:16px;
-      display:flex; justify-content:space-between; align-items:flex-end;
-      gap:12px;
-      animation: pulse-glow 2s infinite;
-    }
-    @keyframes pulse-glow {
-      0% { box-shadow: 0 0 20px rgba(40,209,124,.1); }
-      50% { box-shadow: 0 0 30px rgba(40,209,124,.2); }
-      100% { box-shadow: 0 0 20px rgba(40,209,124,.1); }
-    }
-    .roi-big b{display:block; font-size:13px; color: rgba(255,255,255,.78)}
-    .roi-big .gain{
-      font-size:34px;
-      font-weight:980;
-      letter-spacing:-.8px;
-      color: rgba(255,255,255,.96);
-      margin-top:6px;
-    }
-    .roi-pill{
-      display:inline-flex; gap:8px; align-items:center;
-      font-weight:950;
-      color:#062012;
-      background: linear-gradient(135deg, rgba(40,209,124,.95), rgba(36,199,199,.85));
-      padding:10px 12px;
-      border-radius: 16px;
-      border:1px solid rgba(255,255,255,.18);
-      white-space:nowrap;
-    }
-
-    /* Steps */
-    .steps{
-      display:grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap:14px;
-      margin-top: 22px;
-    }
-    .step{
-      position:relative;
-      padding:16px;
-      border-radius: var(--radius);
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      transition: all .3s ease;
-    }
-    .step:hover{
-      transform: translateY(-5px);
-      border-color: rgba(40,209,124,.3);
-    }
-    .step .n{
-      position:absolute; top:14px; right:14px;
-      width:34px; height:34px;
-      border-radius: 999px;
-      display:grid; place-items:center;
-      background: rgba(36,199,199,.14);
-      border:1px solid rgba(36,199,199,.22);
-      color: rgba(36,199,199,.95);
-      font-weight:950;
-    }
-    .step h4{margin:4px 0 8px; font-size:15px}
-    .step p{margin:0; color:var(--muted); line-height:1.65; font-size:13px}
-
-    /* Testimonials */
-    .stars{color: rgba(255,205,77,.95); letter-spacing:1px}
-    .t-foot{display:flex; align-items:center; gap:10px; margin-top:12px}
-    .face{
-      width:38px; height:38px; border-radius:14px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      display:grid; place-items:center;
-      font-weight:950;
-    }
-    .who b{display:block; font-size:13px}
-    .who span{font-size:12px; color:var(--muted2); font-weight:900}
-
-    /* FAQ */
-    .faq{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:14px;
-      margin-top: 22px;
-    }
-    details{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      border-radius: var(--radius);
-      padding:14px 14px;
-      overflow:hidden;
-      transition: all .3s ease;
-    }
-    details:hover{
-      border-color: rgba(40,209,124,.3);
-    }
-    details[open]{
-      background: rgba(255,255,255,.06);
-      border-color: rgba(40,209,124,.4);
-    }
-    summary{
-      cursor:pointer;
-      font-weight:950;
-      font-size:14px;
-      list-style:none;
-      display:flex; align-items:center; justify-content:space-between;
-      gap:10px;
-    }
-    summary::-webkit-details-marker{display:none}
-    details p{
-      margin:10px 0 0;
-      color:var(--muted);
-      line-height:1.65;
-      font-size:13px;
-      animation: slideDown 0.3s ease-out;
-    }
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-    .chev{
-      width:30px; height:30px; border-radius:12px;
-      display:grid; place-items:center;
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.05);
-      transition: all .3s ease;
-      flex: 0 0 auto;
-    }
-    details[open] .chev{transform: rotate(180deg); background: rgba(40,209,124,.1);}
-
-    /* Lead form */
-    .lead-box{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap:18px;
-      margin-top: 22px;
-      border-radius: var(--radius2);
-      overflow:hidden;
-      border: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-      box-shadow: var(--shadow);
-    }
-    .lead-left{
-      padding:22px;
-      background:
-        radial-gradient(700px 360px at 0% 20%, rgba(36,199,199,.16), transparent 55%),
-        radial-gradient(700px 360px at 100% 80%, rgba(40,209,124,.14), transparent 55%),
-        rgba(0,0,0,.12);
-      border-right:1px solid rgba(255,255,255,.08);
-    }
-    .lead-left h3{margin:0 0 10px; font-size:28px; letter-spacing:-.6px}
-    .lead-left .accent{
-      background: linear-gradient(135deg, rgba(40,209,124,1), rgba(36,199,199,1));
-      -webkit-background-clip:text; background-clip:text; color:transparent;
-      font-weight:950;
-    }
-    .lead-left p{margin:0; color:var(--muted); line-height:1.7}
-    .lead-right{padding:18px}
-    .two{
-      display:grid; grid-template-columns: 1fr 1fr; gap:12px;
-    }
-    .submit{
-      width:100%;
-      justify-content:center;
-      padding:14px 16px;
-      border-radius: 16px;
-      font-size:14px;
-    }
-    .tiny{
-      font-size:12px;
-      color: var(--muted2);
-      margin-top: 10px;
-      line-height:1.6;
-      font-weight:800;
-    }
-
-    /* Footer */
-    footer{
-      padding: 30px 0 40px;
-      border-top: 1px solid rgba(255,255,255,.08);
-      color: var(--muted2);
-      font-weight:800;
-      font-size:13px;
-    }
-    .foot{
-      display:flex; align-items:center; justify-content:space-between;
-      gap:12px; flex-wrap:wrap;
-    }
-    .foot a{opacity:.85; transition: opacity .2s ease;}
-    .foot a:hover{opacity:1; color:rgba(255,255,255,.92)}
-
-    /* Floating WhatsApp */
-    .float-wa{
-      position:fixed;
-      right:18px;
-      bottom:18px;
-      z-index:80;
-      width:56px; height:56px;
-      border-radius: 999px;
-      border:1px solid rgba(255,255,255,.16);
-      background: linear-gradient(135deg, rgba(40,209,124,.95), rgba(36,199,199,.85));
-      box-shadow: 0 22px 60px rgba(0,0,0,.55);
-      display:grid; place-items:center;
-      color:#062012;
-      cursor:pointer;
-      transition: all .3s ease;
-      animation: float 3s ease-in-out infinite;
-    }
-    @keyframes float {
-      0% { transform: translateY(0px); }
-      50% { transform: translateY(-10px); }
-      100% { transform: translateY(0px); }
-    }
-    .float-wa:hover{
-      transform: translateY(-2px) scale(1.02);
-      box-shadow: 0 26px 70px rgba(40,209,124,.3);
-    }
-    .wa-tip{
-      position:fixed;
-      right:84px;
-      bottom:26px;
-      z-index:79;
-      padding:10px 12px;
-      border-radius: 14px;
-      border:1px solid rgba(255,255,255,.12);
-      background: rgba(10,18,38,.85);
-      backdrop-filter: blur(10px);
-      color: rgba(255,255,255,.90);
-      font-weight:900;
-      font-size:12.5px;
-      opacity:0;
-      transform: translateY(6px);
-      transition: all .3s ease;
-      pointer-events:none;
-    }
-    .float-wa:hover + .wa-tip{opacity:1; transform: translateY(0)}
-
-    /* Modal */
-    .modal-backdrop{
-      position:fixed; inset:0;
-      background: rgba(0,0,0,.75);
-      backdrop-filter: blur(10px);
-      display:none;
-      z-index:120;
-      padding: 18px;
-      opacity: 0;
-      transition: opacity 0.3s ease;
-    }
-    .modal-backdrop.active{
-      display: flex;
-      opacity: 1;
-      align-items: center;
-      justify-content: center;
-    }
-    .modal{
-      max-width: 820px;
-      margin: 40px auto;
-      border-radius: var(--radius2);
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(10,18,38,.95);
-      box-shadow: 0 30px 80px rgba(0,0,0,.85);
-      overflow:hidden;
-      transform: translateY(20px);
-      transition: transform 0.3s ease;
-      max-height: 90vh;
-      overflow-y: auto;
-    }
-    .modal-backdrop.active .modal{
-      transform: translateY(0);
-    }
-    .modal-head{
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 14px 16px;
-      border-bottom: 1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.03);
-    }
-    .modal-head b{font-size:14px}
-    .modal-close{
-      width:38px; height:38px;
-      border-radius: 14px;
-      border: 1px solid rgba(255,255,255,.12);
-      background: rgba(255,255,255,.06);
-      display:grid; place-items:center;
-      cursor:pointer;
-      font-weight:950;
-      transition: all .2s ease;
-    }
-    .modal-close:hover{
-      background: rgba(255,255,255,.1);
-      transform: rotate(90deg);
-    }
-    .modal-body{padding:16px}
-    .modal-grid{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 16px;
-      align-items:start;
-    }
-    .mini-note{
-      border:1px solid rgba(255,255,255,.10);
-      background: rgba(255,255,255,.04);
-      border-radius: var(--radius);
-      padding: 14px;
-      color: var(--muted);
-      line-height:1.65;
-      font-size: 13px;
-      font-weight:700;
-    }
-
-    /* Success Message */
-    .success-message {
-      display: none;
-      padding: 20px;
-      text-align: center;
-      background: rgba(40,209,124,.1);
-      border: 1px solid rgba(40,209,124,.3);
-      border-radius: var(--radius);
-      margin-top: 20px;
-    }
-    .success-message.active {
-      display: block;
-      animation: fadeIn 0.5s ease-out;
-    }
-
-    /* Responsive */
-    @media (max-width: 980px){
-      .hero-grid{grid-template-columns:1fr; gap:18px}
-      .demo-wrap{order:2}
-      .grid-3{grid-template-columns:1fr}
-      .grid-2{grid-template-columns:1fr}
-      .roi-inner{grid-template-columns:1fr}
-      .roi-left{border-right:none; border-bottom:1px solid rgba(255,255,255,.08)}
-      .steps{grid-template-columns:1fr 1fr}
-      .lead-box{grid-template-columns:1fr}
-      .lead-left{border-right:none; border-bottom:1px solid rgba(255,255,255,.08)}
-      .modal-grid{grid-template-columns:1fr}
-      .faq{grid-template-columns:1fr}
-    }
-    @media (max-width: 768px){
-      .nav-links{display:none}
-      .brand{font-size: 1rem;}
-    }
-    @media (max-width: 520px){
-      .steps{grid-template-columns:1fr}
-      .two{grid-template-columns:1fr}
-      .phone{width: 96%}
-      h1{font-size: 28px;}
-      .hero{padding: 30px 0 20px;}
-      .section{padding: 40px 0;}
-    }
-  </style>
-</head>
-
-<body>
-  <div class="nav">
-    <div class="container">
-      <div class="nav-inner">
-        <div class="brand">
-          <div class="logo"></div>
-          <div>WhatsApp 24/7</div>
-        </div>
-
-        <div class="nav-links">
-          <a href="#demo">Démo</a>
-          <a href="#roi">Calculateur</a>
-          <a href="#secteurs">Secteurs</a>
-          <a href="#faq">FAQ</a>
-        </div>
-
-        <div class="nav-cta">
-          <a class="btn ghost" href="#roi">Calculer les gains</a>
-          <a class="btn primary" href="#contact">Essai / Démo</a>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- HERO -->
-  <header class="hero" id="top">
-    <div class="pattern"></div>
-    <div class="container">
-      <div class="hero-grid">
-        <div>
-          <div class="pill"><span class="dot"></span> Agent intelligent pour WhatsApp Business</div>
-          <h1>
-            Transformez WhatsApp en
-            <span class="h1-accent">canal de vente 24/7</span>
-          </h1>
-          <p class="lead">
-            Finis les retards de réponse. L'agent répond instantanément, qualifie les demandes,
-            prend des rendez-vous, envoie les informations et transfère à un humain uniquement quand c'est nécessaire.
-          </p>
-
-          <div class="hero-actions">
-            <a class="btn primary" href="#contact">Essayer maintenant</a>
-            <a class="btn" href="#roi">Calculer vos gains</a>
-            <button class="btn" id="openDemoModal" type="button">Voir une démo guidée</button>
-          </div>
-
-          <div class="badges">
-            <div class="badge"><span class="check">✓</span> Réponse instantanée</div>
-            <div class="badge"><span class="check">✓</span> Langage naturel</div>
-            <div class="badge"><span class="check">✓</span> Actif 24/7</div>
-          </div>
-        </div>
-
-        <div class="demo-wrap" id="demo">
-          <div class="demo-top">
-            <div class="segmented" role="tablist" aria-label="Secteur">
-              <button class="seg-btn active" data-mode="restaurant" role="tab" aria-selected="true">
-                <span class="seg-ico">🍽️</span> Restaurant
-              </button>
-              <button class="seg-btn" data-mode="clinique" role="tab" aria-selected="false">
-                <span class="seg-ico">🩺</span> Clinique
-              </button>
-              <button class="seg-btn" data-mode="boutique" role="tab" aria-selected="false">
-                <span class="seg-ico">🛍️</span> Boutique
-              </button>
-            </div>
-          </div>
-
-          <div class="phone" aria-label="Aperçu conversation">
-            <div class="phone-header">
-              <div class="ph-left">
-                <div class="avatar" id="avatar">AI</div>
-                <div class="ph-title">
-                  <b id="chatTitle">Bistro 24/7</b>
-                  <span>Compte professionnel · Réponse instantanée</span>
-                </div>
-              </div>
-              <div class="ph-actions">
-                <div class="ico" title="Appel">📞</div>
-                <div class="ico" title="Vidéo">🎥</div>
-              </div>
-            </div>
-
-            <div class="chat" id="chat">
-              <!-- Messages will be inserted here by JavaScript -->
-            </div>
-
-            <div class="phone-footer">
-              <input class="input" id="fakeInput" placeholder="Écrire un message…" />
-              <button class="send" id="sendBtn" title="Envoyer">➤</button>
-            </div>
-          </div>
-
-          <div class="demo-caption">
-            Démo interactive : changez de secteur ou envoyez un message pour voir la réponse.
-          </div>
-        </div>
-      </div>
-    </div>
-  </header>
-
-  <!-- PAIN -->
-  <section class="section">
-    <div class="container">
-      <h2>Pourquoi perdez-vous des clients ? 😰</h2>
-      <p class="sub">
-        Les retards diminuent la confiance et les ventes. Les prospects veulent une réponse tout de suite.
-        Quand ils n'en reçoivent pas, ils passent au concurrent.
-      </p>
-
-      <div class="grid-2">
-        <div class="card glass">
-          <div class="card-title">
-            <div class="mini-ico">⏱️</div>
-            <span>Réponse lente</span>
-          </div>
-          <p>Le client attend une réponse immédiate. Quelques minutes de retard peuvent suffire à le perdre.</p>
-        </div>
-
-        <div class="card glass">
-          <div class="card-title">
-            <div class="mini-ico">🌙</div>
-            <span>Ventes perdues hors horaires</span>
-          </div>
-          <p>Beaucoup écrivent après la fermeture. Un agent 24/7 récupère ces opportunités automatiquement.</p>
-        </div>
-
-        <div class="card glass">
-          <div class="card-title">
-            <div class="mini-ico">💸</div>
-            <span>Coûts de personnel élevés</span>
-          </div>
-          <p>Assurer du 24/7 avec une équipe coûte cher. L'automatisation réduit la charge et améliore l'expérience.</p>
-        </div>
-
-        <div class="card glass callout-danger">
-          <div class="card-title">
-            <div class="mini-ico">⚠️</div>
-            <span>Vérité douloureuse</span>
-          </div>
-          <p><b>Un retard de 5 minutes</b> peut vous faire perdre un client définitivement. La plupart des pertes sont invisibles.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ROI -->
-  <section class="section" id="roi">
-    <div class="container">
-      <h2>Calculateur de gains</h2>
-      <p class="sub">Entrez vos chiffres pour estimer le temps économisé et l'impact sur le chiffre d'affaires.</p>
-
-      <div class="roi">
-        <div class="roi-inner">
-          <div class="roi-left">
-            <div class="field">
-              <label>Nombre de messages WhatsApp par jour</label>
-              <div class="range">
-                <input id="messages" type="range" min="10" max="1000" value="50"/>
-                <div class="val"><span id="messagesVal">50</span></div>
-              </div>
-            </div>
-
-            <div class="field">
-              <label>Valeur moyenne d'une commande (DH)</label>
-              <input id="aov" type="number" min="0" step="10" value="200"/>
-            </div>
-
-            <div class="field">
-              <label>Temps moyen passé par client (minutes)</label>
-              <input id="time" type="number" min="1" step="1" value="5"/>
-            </div>
-
-            <div class="field">
-              <label>Taux de conversion actuel (%)</label>
-              <input id="conv" type="number" min="0" max="100" step="1" value="10"/>
-            </div>
-
-            <div class="field">
-              <label>Amélioration attendue (%)</label>
-              <select id="uplift">
-                <option value="10">+10%</option>
-                <option value="15">+15%</option>
-                <option value="20">+20%</option>
-                <option value="25" selected>+25%</option>
-                <option value="30">+30%</option>
-              </select>
-            </div>
-
-            <a class="btn primary" href="#contact" style="width:100%; justify-content:center;">
-              Voir une démo sur votre activité
-            </a>
-          </div>
-
-          <div class="roi-right">
-            <div class="roi-metrics">
-              <div class="metric">
-                <div class="k">Heures économisées / mois</div>
-                <div class="v" id="hoursSaved">125</div>
-                <div class="hint">Équivalent à une charge de travail importante.</div>
-              </div>
-              <div class="metric">
-                <div class="k">Revenu mensuel actuel (estimé)</div>
-                <div class="v"><span id="revNow">30,000</span> DH</div>
-                <div class="hint">Basé sur les données saisies.</div>
-              </div>
-            </div>
-
-            <div class="roi-big">
-              <div>
-                <b>Avec l'agent (+<span id="upliftVal">25</span>% d'amélioration)</b>
-                <div class="gain">+<span id="revGain">7,600</span> DH</div>
-                <div class="hint" style="margin-top:6px">Revenus supplémentaires mensuels estimés.</div>
-              </div>
-              <div class="roi-pill">
-                <span>+<span id="ordersMore">38</span></span>
-                <span style="font-weight:950;">commandes / mois</span>
-              </div>
-            </div>
-
-            <div class="tiny">
-              Estimation indicative : le résultat dépend de votre offre, rapidité, volume et organisation.
-              L'objectif : <b>réduire les pertes invisibles</b> et augmenter les conversions.
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- SECTEURS -->
-  <section class="section" id="secteurs">
-    <div class="container">
-      <h2>Solutions par secteur</h2>
-      <p class="sub">Des scénarios concrets avec des résultats mesurables : réservation, rendez-vous, qualification, suivi.</p>
-
-      <div class="grid-3">
-        <div class="card glass">
-          <div class="card-title"><div class="mini-ico">🍽️</div><span>Restaurants</span></div>
-          <p>Réservations instantanées, menu partagé, confirmations automatiques.</p>
-          <p style="margin-top:10px;color:rgba(40,209,124,.95);font-weight:950;">Résultat : moins de réservations perdues.</p>
-        </div>
-
-        <div class="card glass">
-          <div class="card-title"><div class="mini-ico">🩺</div><span>Cliniques</span></div>
-          <p>Prise de rendez-vous, rappels automatiques, questions pré-visite.</p>
-          <p style="margin-top:10px;color:rgba(40,209,124,.95);font-weight:950;">Résultat : moins d'absences et meilleure expérience.</p>
-        </div>
-
-        <div class="card glass">
-          <div class="card-title"><div class="mini-ico">🏠</div><span>Immobilier</span></div>
-          <p>Qualification des leads, partage de photos, planification des visites.</p>
-          <p style="margin-top:10px;color:rgba(40,209,124,.95);font-weight:950;">Résultat : visites plus qualifiées.</p>
-        </div>
-
-        <div class="card glass">
-          <div class="card-title"><div class="mini-ico">🛒</div><span>E-commerce</span></div>
-          <p>FAQ produits, suivi de commande, relance panier, support rapide.</p>
-          <p style="margin-top:10px;color:rgba(40,209,124,.95);font-weight:950;">Résultat : ventes récupérées.</p>
-        </div>
-
-        <div class="card glass">
-          <div class="card-title"><div class="mini-ico">🎓</div><span>Éducation</span></div>
-          <p>Inscriptions, envoi de planning, réponses aux questions fréquentes.</p>
-          <p style="margin-top:10px;color:rgba(40,209,124,.95);font-weight:950;">Résultat : accueil allégé.</p>
-        </div>
-
-        <div class="card glass">
-          <div class="card-title"><div class="mini-ico">🧰</div><span>Services</span></div>
-          <p>Collecte des demandes, devis, escalade des cas complexes.</p>
-          <p style="margin-top:10px;color:rgba(40,209,124,.95);font-weight:950;">Résultat : meilleure organisation.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- STEPS -->
-  <section class="section">
-    <div class="container">
-      <h2>Commencez en 4 étapes simples</h2>
-      <p class="sub">Un flux clair : connexion, configuration, mise en ligne, optimisation continue.</p>
-
-      <div class="steps">
-        <div class="step">
-          <div class="n">1</div>
-          <h4>Connexion</h4>
-          <p>On connecte WhatsApp Business et prépare les éléments essentiels (profil, horaires, offres, FAQs).</p>
-        </div>
-        <div class="step">
-          <div class="n">2</div>
-          <h4>Configuration</h4>
-          <p>On définit les scénarios, les règles d'escalade, le ton et les langues pour votre activité.</p>
-        </div>
-        <div class="step">
-          <div class="n">3</div>
-          <h4>Mise en ligne</h4>
-          <p>On active l'agent et on démarre les conversations, avec suivi de la qualité des réponses.</p>
-        </div>
-        <div class="step">
-          <div class="n">4</div>
-          <h4>Optimisation</h4>
-          <p>On améliore les conversions avec des ajustements réguliers : scripts, priorités, reporting.</p>
-        </div>
-      </div>
-
-      <div style="display:flex; justify-content:center; margin-top:18px">
-        <a class="btn primary" href="#contact">Automatiser maintenant</a>
-      </div>
-    </div>
-  </section>
-
-  <!-- TESTIMONIALS -->
-  <section class="section">
-    <div class="container">
-      <h2>Histoires de réussite</h2>
-      <p class="sub">Des retours orientés résultats : moins de pertes, plus de vitesse, meilleure conversion.</p>
-
-      <div class="grid-3">
-        <div class="card glass">
-          <div class="stars">★★★★★</div>
-          <p style="margin-top:8px">
-            "On perdait des rendez-vous parce que personne ne répondait assez vite. Maintenant c'est confirmé automatiquement."
-          </p>
-          <div class="t-foot">
-            <div class="face">YA</div>
-            <div class="who"><b>Yassine A.</b><span>Cabinet / Santé</span></div>
-          </div>
-        </div>
-
-        <div class="card glass">
-          <div class="stars">★★★★★</div>
-          <p style="margin-top:8px">
-            "On a réduit les questions répétitives et récupéré des ventes en dehors des horaires. Gain de temps énorme."
-          </p>
-          <div class="t-foot">
-            <div class="face">SZ</div>
-            <div class="who"><b>Salma Z.</b><span>Boutique en ligne</span></div>
-          </div>
-        </div>
-
-        <div class="card glass">
-          <div class="stars">★★★★★</div>
-          <p style="margin-top:8px">
-            "Les réservations sont confirmées et rappelées. Les clients adorent la rapidité, et l'équipe respire."
-          </p>
-          <div class="t-foot">
-            <div class="face">KB</div>
-            <div class="who"><b>Karim B.</b><span>Restaurant</span></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section class="section" id="faq">
-    <div class="container">
-      <h2>Questions fréquentes</h2>
-      <p class="sub">Des réponses claires avant de démarrer.</p>
-
-      <div class="faq">
-        <details>
-          <summary>Ai-je besoin d'un nouveau numéro WhatsApp ? <span class="chev">⌄</span></summary>
-          <p>Non. On peut connecter l'agent à votre WhatsApp Business actuel. Si besoin, un nouveau numéro peut être créé.</p>
-        </details>
-
-        <details>
-          <summary>Quel est le délai de mise en place ? <span class="chev">⌄</span></summary>
-          <p>En général 24 à 72 heures selon votre activité, vos scénarios et le volume de messages.</p>
-        </details>
-
-        <details>
-          <summary>Peut-il transférer la conversation à un humain ? <span class="chev">⌄</span></summary>
-          <p>Oui. Des règles permettent d'escalader automatiquement (cas complexe, client chaud, urgence, etc.).</p>
-        </details>
-
-        <details>
-          <summary>Quelles langues sont prises en charge ? <span class="chev">⌄</span></summary>
-          <p>Français, arabe et darija selon vos besoins, avec possibilité d'ajouter l'anglais.</p>
-        </details>
-
-        <details style="grid-column:1/-1">
-          <summary>Comment gérez-vous la confidentialité ? <span class="chev">⌄</span></summary>
-          <p>
-            Accès limité, bonnes pratiques de sécurité, et suppression possible sur demande.
-            On définit ensemble ce qui est stocké et ce qui ne l'est pas.
-          </p>
-        </details>
-      </div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section class="section" id="contact">
-    <div class="container">
-      <div class="lead-box">
-        <div class="lead-left">
-          <div class="pill"><span class="dot"></span> Essai gratuit limité</div>
-          <h3>Prêt à automatiser <span class="accent">vos conversations clients</span> ?</h3>
-          <p>
-            Remplissez le formulaire : on configure un scénario adapté à votre activité
-            (réservation, rendez-vous, commande, FAQ) et on vous montre la démo.
-          </p>
-
-          <div class="badges" style="margin-top:16px">
-            <div class="badge"><span class="check">✓</span> Mise en place rapide</div>
-            <div class="badge"><span class="check">✓</span> Scripts sur-mesure</div>
-            <div class="badge"><span class="check">✓</span> Amélioration continue</div>
-          </div>
-        </div>
-
-        <div class="lead-right">
-          <form id="leadForm">
-            <div id="formSuccess" class="success-message">
-              <div style="font-size: 24px; margin-bottom: 10px;">✅</div>
-              <h3 style="margin: 0 0 10px;">Demande envoyée !</h3>
-              <p>Nous vous contacterons dans les 24 heures pour configurer votre démo personnalisée.</p>
-            </div>
-
-            <div id="formFields">
-              <div class="two">
-                <div class="field">
-                  <label>Nom complet</label>
-                  <input type="text" name="fullname" placeholder="Ex : Amine El Amri" required>
-                </div>
-                <div class="field">
-                  <label>Ville</label>
-                  <input type="text" name="city" placeholder="Ex : Casablanca" required>
-                </div>
-              </div>
-
-              <div class="field">
-                <label>E-mail professionnel</label>
-                <input type="email" name="email" placeholder="exemple@email.com" required>
-              </div>
-
-              <div class="two">
-                <div class="field">
-                  <label>Indicatif</label>
-                  <select name="country">
-                    <option value="+212" selected>MA Maroc (+212)</option>
-                    <option value="+33">FR France (+33)</option>
-                    <option value="+32">BE Belgique (+32)</option>
-                    <option value="+1">US/CA (+1)</option>
-                  </select>
-                </div>
-                <div class="field">
-                  <label>Numéro WhatsApp Business</label>
-                  <input type="tel" name="phone" placeholder="06XXXXXXXX" required>
-                </div>
-              </div>
-
-              <div class="two">
-                <div class="field">
-                  <label>Type d'activité</label>
-                  <select name="industry" required>
-                    <option value="" disabled selected>Choisir…</option>
-                    <option>Restaurant / Café</option>
-                    <option>Clinique / Cabinet</option>
-                    <option>E-commerce</option>
-                    <option>Immobilier</option>
-                    <option>Éducation / Formation</option>
-                    <option>Services (garage, beauté, etc.)</option>
-                    <option>Autre</option>
-                  </select>
-                </div>
-                <div class="field">
-                  <label>Volume WhatsApp / jour</label>
-                  <select name="volume" required>
-                    <option value="" disabled selected>Choisir…</option>
-                    <option>10–30</option>
-                    <option>30–80</option>
-                    <option>80–150</option>
-                    <option>150–300</option>
-                    <option>300+</option>
-                  </select>
-                </div>
-              </div>
-
-              <div class="field">
-                <label>Votre objectif principal</label>
-                <input type="text" name="goal" placeholder="Ex : Réservations, RDV, ventes, support…" required>
-              </div>
-
-              <button class="btn primary submit" type="submit">
-                Envoyer la demande et démarrer l'essai
-              </button>
-            </div>
-
-            <div class="tiny">
-              En envoyant ce formulaire, vous acceptez d'être contacté pour la mise en place.
-              Aucune donnée sensible n'est demandée ici.
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <footer>
-    <div class="container">
-      <div class="foot">
-        <div style="display:flex; align-items:center; gap:10px;">
-          <div class="logo" style="width:30px;height:30px;border-radius:12px"></div>
-          <span>WhatsApp 24/7 · Ventes & Support</span>
-        </div>
-        <div style="display:flex; gap:14px; flex-wrap:wrap;">
-          <a href="#top">Haut</a>
-          <a href="#demo">Démo</a>
-          <a href="#roi">Calculateur</a>
-          <a href="#contact">Contact</a>
-        </div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- Floating WhatsApp -->
-  <a class="float-wa" id="waBtn" href="https://wa.me/212600000000?text=Bonjour,%20je%20suis%20intéressé%20par%20l'agent%20WhatsApp%2024/7" target="_blank" aria-label="WhatsApp">
-    💬
-  </a>
-  <div class="wa-tip">Discuter sur WhatsApp</div>
-
-  <!-- Demo Modal -->
-  <div class="modal-backdrop" id="modalBackdrop">
-    <div class="modal">
-      <div class="modal-head">
-        <b>Démo guidée (2 minutes)</b>
-        <div class="modal-close" id="closeDemoModal">×</div>
-      </div>
-      <div class="modal-body">
-        <div class="modal-grid">
-          <div>
-            <h3 style="margin-top:0">Comment fonctionne l'agent ?</h3>
-            <p>L'agent analyse les messages entrants et répond automatiquement selon des règles que vous définissez.</p>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AgentAI 24/7 | WhatsApp Automation for Business Growth</title>
+    <meta name="description" content="Transform WhatsApp into a 24/7 sales machine. AI-powered responses, appointment booking, lead qualification, and automated follow-ups. Start free trial.">
+    <meta name="keywords" content="WhatsApp AI, chatbot, automation, sales, Morocco, business, 24/7, lead generation">
+    <meta name="author" content="AgentAI">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="AgentAI 24/7 - WhatsApp Automation for Business">
+    <meta property="og:description" content="Never miss a sale again. AI-powered WhatsApp assistant works 24/7 to convert leads, book appointments, and boost revenue.">
+    <meta property="og:image" content="https://agentai.com/preview.jpg">
+    <meta property="og:url" content="https://agentai.com">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AgentAI 24/7 - WhatsApp Automation">
+    <meta name="twitter:description" content="AI-powered WhatsApp assistant for 24/7 sales & support">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🤖</text></svg>">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* ===== CSS VARIABLES ===== */
+        :root {
+            /* Color Palette */
+            --primary: #0066FF;
+            --primary-dark: #0052D4;
+            --primary-light: #3385FF;
+            --secondary: #00D4AA;
+            --secondary-dark: #00B892;
+            --accent: #FF6B6B;
+            --success: #28C76F;
+            --warning: #FF9F43;
+            --danger: #EA5455;
             
-            <div class="mini-note">
-              <strong>Exemple pour un restaurant :</strong><br>
-              1. "Bonjour, je voudrais réserver une table" → L'agent demande la date et l'heure.<br>
-              2. "Pour 4 personnes demain 20h" → L'agent vérifie la disponibilité et propose un créneau.<br>
-              3. "Oui parfait" → L'agent confirme et envoie un rappel 24h avant.
-            </div>
-          </div>
-          
-          <div>
-            <h3 style="margin-top:0">Ce que vous configurez</h3>
-            <ul style="color:var(--muted); line-height:1.65; padding-left:20px;">
-              <li>Les horaires d'ouverture</li>
-              <li>Les scénarios de conversation</li>
-              <li>Les informations à envoyer (menu, tarifs, etc.)</li>
-              <li>Les règles d'escalade vers un humain</li>
-              <li>Les langues supportées</li>
-            </ul>
+            /* Background Colors */
+            --bg-dark: #0A0F1E;
+            --bg-darker: #070B16;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --bg-card-hover: rgba(255, 255, 255, 0.06);
+            --bg-glass: rgba(255, 255, 255, 0.05);
             
-            <div class="mini-note" style="margin-top:20px">
-              <strong>Pas de compétences techniques nécessaires</strong><br>
-              On vous guide pas à pas. La plupart des configurations sont prêtes à l'emploi.
-            </div>
+            /* Text Colors */
+            --text-primary: #FFFFFF;
+            --text-secondary: rgba(255, 255, 255, 0.85);
+            --text-muted: rgba(255, 255, 255, 0.65);
+            --text-light: rgba(255, 255, 255, 0.45);
             
-            <a href="#contact" class="btn primary" style="width:100%; margin-top:20px; justify-content:center;">
-              Commencer maintenant
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <script>
-    // Chat Demo Configuration
-    const chatScenarios = {
-      restaurant: {
-        title: "Bistro 24/7",
-        avatar: "🍽️",
-        initialMessages: [
-          { type: "bot", text: "Bonjour ! 👋 Bienvenue au Bistro 24/7. Je suis votre assistant de réservation.", time: "16:02" },
-          { type: "bot", text: "Voulez-vous réserver une table ou consulter notre menu ?", time: "16:02" }
-        ],
-        responses: {
-          "bonjour": "Bonjour ! Comment puis-je vous aider aujourd'hui ?",
-          "reservation": "Parfait ! Pour quelle date et heure souhaitez-vous réserver ?",
-          "menu": "Voici notre menu : https://bistro24/7.menu. Quelle catégorie vous intéresse ?",
-          "au revoir": "Merci ! N'hésitez pas à nous recontacter. Bonne journée !",
-          "2 personnes": "Super ! Nous avons de la disponibilité ce soir à 19h ou 20h30. Que préférez-vous ?",
-          "demain": "D'accord pour demain. Nous avons des tables libres à 19h, 20h et 21h. Quel créneau vous convient ?",
-          "oui": "Parfait ! Réservation confirmée pour demain 20h pour 2 personnes. Un rappel vous sera envoyé demain matin. Au plaisir de vous recevoir !"
+            /* Borders & Shadows */
+            --border-color: rgba(255, 255, 255, 0.12);
+            --border-light: rgba(255, 255, 255, 0.08);
+            --shadow-lg: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            --shadow-md: 0 10px 25px rgba(0, 0, 0, 0.3);
+            --shadow-sm: 0 4px 12px rgba(0, 0, 0, 0.15);
+            
+            /* Gradients */
+            --gradient-primary: linear-gradient(135deg, var(--primary), var(--secondary));
+            --gradient-dark: linear-gradient(135deg, var(--bg-dark), var(--bg-darker));
+            --gradient-card: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+            
+            /* Spacing */
+            --space-xs: 0.5rem;
+            --space-sm: 1rem;
+            --space-md: 1.5rem;
+            --space-lg: 2.5rem;
+            --space-xl: 4rem;
+            --space-2xl: 6rem;
+            
+            /* Border Radius */
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --radius-xl: 24px;
+            --radius-2xl: 32px;
+            --radius-full: 9999px;
+            
+            /* Transitions */
+            --transition-fast: 0.2s ease;
+            --transition-normal: 0.3s ease;
+            --transition-slow: 0.5s ease;
+            
+            /* Container Width */
+            --container-max: 1200px;
         }
-      },
-      clinique: {
-        title: "Clinique du Soin",
-        avatar: "🩺",
-        initialMessages: [
-          { type: "bot", text: "Bonjour, je suis l'assistant de la Clinique du Soin. 🤗", time: "09:15" },
-          { type: "bot", text: "Souhaitez-vous prendre rendez-vous ou avoir des informations sur nos spécialités ?", time: "09:15" }
-        ],
-        responses: {
-          "bonjour": "Bonjour ! Comment pouvons-nous vous aider aujourd'hui ?",
-          "rdv": "Pour quelle spécialité souhaitez-vous un rendez-vous ?",
-          "urgence": "Pour les urgences, appelez le 05 22 00 00 00. Sinon, je peux vous orienter.",
-          "dentiste": "Nos dentistes ont des disponibilités cette semaine. Quel jour vous conviendrait ?",
-          "demain": "Désolé, nous n'avons plus de créneau demain. Je vous propose jeudi ?",
-          "oui": "Rendez-vous confirmé pour jeudi à 14h avec le Dr. Martin. Un rappel SMS vous sera envoyé 24h avant."
-        }
-      },
-      boutique: {
-        title: "Style & Co",
-        avatar: "🛍️",
-        initialMessages: [
-          { type: "bot", text: "Salut ! 👋 Bienvenue chez Style & Co.", time: "11:30" },
-          { type: "bot", text: "Je peux vous aider à trouver des produits, vérifier les disponibilités ou suivre une commande.", time: "11:30" }
-        ],
-        responses: {
-          "bonjour": "Bonjour ! Que recherchez-vous aujourd'hui ?",
-          "robe": "Nous avons de nouvelles robes arrivées cette semaine ! Quelle taille cherchez-vous ?",
-          "dispo": "Quel produit vous intéresse ? Je vérifie le stock immédiatement.",
-          "commande": "Pour suivre une commande, donnez-moi votre numéro de commande.",
-          "livraison": "Livraison gratuite à partir de 500 DH. Délai : 24-48h en ville.",
-          "M": "La robe que vous regardez est disponible en taille M. Voulez-vous que je vous réserve une pièce ?",
-          "oui": "Parfait ! Réservation effectuée. Vous avez 24h pour venir en boutique ou commander en ligne."
-        }
-      }
-    };
-
-    // DOM Elements
-    const chatContainer = document.getElementById('chat');
-    const chatTitle = document.getElementById('chatTitle');
-    const avatar = document.getElementById('avatar');
-    const fakeInput = document.getElementById('fakeInput');
-    const sendBtn = document.getElementById('sendBtn');
-    const segBtns = document.querySelectorAll('.seg-btn');
-    const openDemoModal = document.getElementById('openDemoModal');
-    const modalBackdrop = document.getElementById('modalBackdrop');
-    const closeDemoModal = document.getElementById('closeDemoModal');
-    const leadForm = document.getElementById('leadForm');
-    const formFields = document.getElementById('formFields');
-    const formSuccess = document.getElementById('formSuccess');
-    const waBtn = document.getElementById('waBtn');
-
-    // Current chat mode
-    let currentMode = 'restaurant';
-    let messageCount = 0;
-
-    // Initialize chat
-    function initChat() {
-      chatContainer.innerHTML = '';
-      const scenario = chatScenarios[currentMode];
-      chatTitle.textContent = scenario.title;
-      avatar.textContent = scenario.avatar;
-      
-      scenario.initialMessages.forEach(msg => {
-        addMessage(msg.type, msg.text, msg.time);
-      });
-    }
-
-    // Add message to chat
-    function addMessage(type, text, time = null) {
-      const msgDiv = document.createElement('div');
-      msgDiv.className = `msg ${type}`;
-      
-      const timeText = time || new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
-      
-      msgDiv.innerHTML = `
-        ${text}
-        <div class="meta">${timeText} ${type === 'me' ? '✓✓' : ''}</div>
-      `;
-      
-      chatContainer.appendChild(msgDiv);
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-      messageCount++;
-    }
-
-    // Show typing indicator
-    function showTyping() {
-      const typingDiv = document.createElement('div');
-      typingDiv.className = 'typing';
-      typingDiv.innerHTML = `
-        <span>L'agent écrit</span>
-        <div class="dots">
-          <i></i><i></i><i></i>
-        </div>
-      `;
-      chatContainer.appendChild(typingDiv);
-      chatContainer.scrollTop = chatContainer.scrollHeight;
-      
-      return typingDiv;
-    }
-
-    // Get bot response
-    function getBotResponse(userMessage) {
-      const scenario = chatScenarios[currentMode];
-      const lowerMsg = userMessage.toLowerCase();
-      
-      // Check for keywords in the response mapping
-      for (const [keyword, response] of Object.entries(scenario.responses)) {
-        if (lowerMsg.includes(keyword)) {
-          return response;
-        }
-      }
-      
-      // Default responses based on mode
-      const defaultResponses = {
-        restaurant: "Je comprends. Pour une réservation, dites-moi simplement la date, l'heure et le nombre de personnes.",
-        clinique: "Je peux vous aider à prendre rendez-vous ou répondre à vos questions médicales générales.",
-        boutique: "Je peux vous aider à trouver des produits, vérifier les disponibilités ou vous informer sur les livraisons."
-      };
-      
-      return defaultResponses[currentMode] || "Je vous remercie de votre message. Un conseiller vous répondra rapidement si besoin.";
-    }
-
-    // Handle user message
-    function handleUserMessage() {
-      const userMessage = fakeInput.value.trim();
-      if (!userMessage) return;
-      
-      addMessage('me', userMessage);
-      fakeInput.value = '';
-      
-      // Show typing indicator
-      const typing = showTyping();
-      
-      // Simulate bot thinking time
-      setTimeout(() => {
-        typing.remove();
-        const botResponse = getBotResponse(userMessage);
-        addMessage('bot', botResponse);
-      }, 1000 + Math.random() * 1000);
-    }
-
-    // Switch chat mode
-    function switchMode(mode) {
-      currentMode = mode;
-      segBtns.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.mode === mode);
-        btn.setAttribute('aria-selected', btn.dataset.mode === mode);
-      });
-      initChat();
-    }
-
-    // ROI Calculator
-    function updateROI() {
-      const messages = parseInt(document.getElementById('messages').value);
-      const aov = parseInt(document.getElementById('aov').value) || 200;
-      const time = parseInt(document.getElementById('time').value) || 5;
-      const conv = parseInt(document.getElementById('conv').value) || 10;
-      const uplift = parseInt(document.getElementById('uplift').value) || 25;
-      
-      // Update displayed values
-      document.getElementById('messagesVal').textContent = messages;
-      document.getElementById('upliftVal').textContent = uplift;
-      
-      // Calculate metrics
-      const hoursSaved = (messages * time * 22) / 60; // 22 working days per month
-      const currentOrders = Math.floor((messages * conv / 100) * 22);
-      const currentRevenue = currentOrders * aov;
-      const improvedConv = conv + (conv * uplift / 100);
-      const improvedOrders = Math.floor((messages * improvedConv / 100) * 22);
-      const improvedRevenue = improvedOrders * aov;
-      const revenueGain = improvedRevenue - currentRevenue;
-      const extraOrders = improvedOrders - currentOrders;
-      
-      // Update UI
-      document.getElementById('hoursSaved').textContent = Math.round(hoursSaved);
-      document.getElementById('revNow').textContent = currentRevenue.toLocaleString('fr-FR');
-      document.getElementById('revGain').textContent = revenueGain.toLocaleString('fr-FR');
-      document.getElementById('ordersMore').textContent = extraOrders;
-    }
-
-    // Form submission
-    function handleFormSubmit(e) {
-      e.preventDefault();
-      
-      // In a real app, you would send this data to your backend
-      // For demo purposes, we'll just show success message
-      
-      // Get form data
-      const formData = new FormData(leadForm);
-      const data = Object.fromEntries(formData);
-      
-      console.log('Form submitted:', data);
-      
-      // Show success message
-      formFields.style.display = 'none';
-      formSuccess.classList.add('active');
-      
-      // Scroll to success message
-      formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-      
-      // In production, you would send this data to your backend:
-      // fetch('/api/lead', {
-      //   method: 'POST',
-      //   headers: { 'Content-Type': 'application/json' },
-      //   body: JSON.stringify(data)
-      // })
-    }
-
-    // Event Listeners
-    document.addEventListener('DOMContentLoaded', () => {
-      // Initialize chat
-      initChat();
-      
-      // Initialize ROI calculator
-      updateROI();
-      
-      // ROI Calculator listeners
-      document.getElementById('messages').addEventListener('input', updateROI);
-      document.getElementById('aov').addEventListener('input', updateROI);
-      document.getElementById('time').addEventListener('input', updateROI);
-      document.getElementById('conv').addEventListener('input', updateROI);
-      document.getElementById('uplift').addEventListener('change', updateROI);
-      
-      // Segment buttons
-      segBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          switchMode(btn.dataset.mode);
-        });
-      });
-      
-      // Send message
-      sendBtn.addEventListener('click', handleUserMessage);
-      fakeInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') handleUserMessage();
-      });
-      
-      // Demo messages
-      const demoMessages = [
-        "Bonjour",
-        "Je voudrais réserver",
-        "2 personnes",
-        "Demain",
-        "Oui"
-      ];
-      
-      let demoIndex = 0;
-      function sendDemoMessage() {
-        if (demoIndex < demoMessages.length) {
-          fakeInput.value = demoMessages[demoIndex];
-          handleUserMessage();
-          demoIndex++;
-        }
-      }
-      
-      // Auto-demo (every 10 seconds if no interaction)
-      let demoInterval = setInterval(() => {
-        if (messageCount < 10) {
-          sendDemoMessage();
-        } else {
-          clearInterval(demoInterval);
-        }
-      }, 10000);
-      
-      // Modal functionality
-      openDemoModal.addEventListener('click', () => {
-        modalBackdrop.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      });
-      
-      closeDemoModal.addEventListener('click', () => {
-        modalBackdrop.classList.remove('active');
-        document.body.style.overflow = 'auto';
-      });
-      
-      modalBackdrop.addEventListener('click', (e) => {
-        if (e.target === modalBackdrop) {
-          modalBackdrop.classList.remove('active');
-          document.body.style.overflow = 'auto';
-        }
-      });
-      
-      // Form submission
-      leadForm.addEventListener('submit', handleFormSubmit);
-      
-      // Smooth scrolling for anchor links
-      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-          const href = this.getAttribute('href');
-          if (href === '#') return;
-          
-          e.preventDefault();
-          const target = document.querySelector(href);
-          if (target) {
-            target.scrollIntoView({ behavior: 'smooth' });
-          }
-        });
-      });
-      
-      // Update WhatsApp button with form data on input
-      document.querySelectorAll('#leadForm input, #leadForm select').forEach(input => {
-        input.addEventListener('input', updateWhatsAppLink);
-        input.addEventListener('change', updateWhatsAppLink);
-      });
-      
-      function updateWhatsAppLink() {
-        const name = document.querySelector('input[name="fullname"]')?.value || '';
-        const industry = document.querySelector('select[name="industry"]')?.value || '';
-        const goal = document.querySelector('input[name="goal"]')?.value || '';
         
-        let message = "Bonjour, je suis intéressé par l'agent WhatsApp 24/7.";
-        if (name) message += `\nNom : ${name}`;
-        if (industry) message += `\nActivit
+        /* ===== RESET & BASE STYLES ===== */
+        *, *::before, *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            font-size: 16px;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            color: var(--text-primary);
+            background: var(--bg-darker);
+            overflow-x: hidden;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+        
+        /* Background Effects */
+        .bg-effects {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .gradient-blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.2;
+        }
+        
+        .blob-1 {
+            width: 600px;
+            height: 600px;
+            background: var(--primary);
+            top: -200px;
+            right: -200px;
+            animation: float 20s infinite ease-in-out;
+        }
+        
+        .blob-2 {
+            width: 500px;
+            height: 500px;
+            background: var(--secondary);
+            bottom: -150px;
+            left: -150px;
+            animation: float 25s infinite ease-in-out reverse;
+        }
+        
+        .blob-3 {
+            width: 400px;
+            height: 400px;
+            background: var(--accent);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: pulse 15s infinite ease-in-out;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            25% { transform: translate(30px, 30px) rotate(90deg); }
+            50% { transform: translate(0, 60px) rotate(180deg); }
+            75% { transform: translate(-30px, 30px) rotate(270deg); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 0.1; transform: translate(-50%, -50%) scale(1); }
+            50% { opacity: 0.3; transform: translate(-50%, -50%) scale(1.2); }
+        }
+        
+        /* ===== TYPOGRAPHY ===== */
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: var(--space-md);
+        }
+        
+        h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: var(--space-sm);
+        }
+        
+        h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            color: var(--text-primary);
+        }
+        
+        h3 {
+            font-size: clamp(1.5rem, 3vw, 2rem);
+            color: var(--text-primary);
+        }
+        
+        p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-md);
+            font-size: 1.1rem;
+        }
+        
+        .lead {
+            font-size: clamp(1.1rem, 2vw, 1.3rem);
+            color: var(--text-muted);
+            max-width: 800px;
+        }
+        
+        /* ===== LAYOUT & CONTAINERS ===== */
+        .container {
+            width: 100%;
+            max-width: var(--container-max);
+            margin: 0 auto;
+            padding: 0 var(--space-md);
+        }
+        
+        section {
+            padding: var(--space-2xl) 0;
+            position: relative;
+        }
+        
+        /* ===== COMPONENTS ===== */
+        
+        /* Badge/Pill */
+        .badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-xs);
+            background: rgba(var(--primary-rgb), 0.15);
+            color: var(--primary-light);
+            padding: 0.5rem 1rem;
+            border-radius: var(--radius-full);
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: 1px solid rgba(var(--primary-rgb), 0.3);
+            margin-bottom: var(--space-md);
+        }
+        
+        .badge i {
+            font-size: 0.875rem;
+        }
+        
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-xs);
+            padding: 0.875rem 1.75rem;
+            border-radius: var(--radius-lg);
+            font-weight: 600;
+            font-size: 1rem;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            transition: all var(--transition-normal);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: left var(--transition-normal);
+        }
+        
+        .btn:hover::before {
+            left: 100%;
+        }
+        
+        .btn-primary {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: 0 4px 20px rgba(var(--primary-rgb), 0.4);
+        }
+        
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(var(--primary-rgb), 0.6);
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            border: 2px solid var(--border-color);
+            backdrop-filter: blur(10px);
+        }
+        
+        .btn-secondary:hover {
+            border-color: var(--primary);
+            background: rgba(var(--primary-rgb), 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .btn-lg {
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+        }
+        
+        /* Cards */
+        .card {
+            background: var(--gradient-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-xl);
+            padding: var(--space-lg);
+            transition: all var(--transition-normal);
+            backdrop-filter: blur(10px);
+            height: 100%;
+        }
+        
+        .card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .card-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: var(--radius-lg);
+            background: rgba(var(--primary-rgb), 0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-md);
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+        
+        /* Feature Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+        }
+        
+        /* Stats */
+        .stats {
+            display: flex;
+            gap: var(--space-xl);
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: var(--space-xl);
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1;
+            margin-bottom: var(--space-xs);
+        }
+        
+        .stat-label {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        /* Testimonials */
+        .testimonial-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            padding: var(--space-lg);
+            position: relative;
+            border: 1px solid var(--border-light);
+        }
+        
+        .testimonial-content {
+            font-style: italic;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-md);
+        }
+        
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+        
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .author-info h4 {
+            margin: 0;
+            font-size: 1rem;
+        }
+        
+        .author-info p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+        
+        /* Chat Demo */
+        .chat-demo-container {
+            background: var(--bg-card);
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .chat-header {
+            background: rgba(255, 255, 255, 0.03);
+            padding: var(--space-md);
+            border-bottom: 1px solid var(--border-light);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .chat-info h4 {
+            margin: 0;
+            font-size: 1rem;
+        }
+        
+        .chat-info p {
+            margin: 0;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+        }
+        
+        .chat-messages {
+            padding: var(--space-lg);
+            height: 400px;
+            overflow-y: auto;
+        }
+        
+        .message {
+            margin-bottom: var(--space-md);
+            max-width: 80%;
+            animation: slideIn 0.3s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .message-bot {
+            align-self: flex-start;
+        }
+        
+        .message-user {
+            align-self: flex-end;
+            margin-left: auto;
+        }
+        
+        .message-content {
+            padding: var(--space-md);
+            border-radius: var(--radius-lg);
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-light);
+        }
+        
+        .message-user .message-content {
+            background: rgba(var(--primary-rgb), 0.15);
+            border-color: rgba(var(--primary-rgb), 0.3);
+        }
+        
+        .message-time {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 0.25rem;
+            text-align: right;
+        }
+        
+        .typing-indicator {
+            display: flex;
+            gap: 4px;
+            padding: var(--space-md);
+        }
+        
+        .typing-indicator span {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: var(--text-muted);
+            animation: typing 1.4s infinite ease-in-out;
+        }
+        
+        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+        
+        @keyframes typing {
+            0%, 100% { transform: translateY(0); opacity: 0.4; }
+            50% { transform: translateY(-10px); opacity: 1; }
+        }
+        
+        /* Pricing */
+        .pricing-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: var(--space-lg);
+            margin-top: var(--space-xl);
+        }
+        
+        .pricing-card {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            position: relative;
+            border: 1px solid var(--border-light);
+            transition: all var(--transition-normal);
+        }
+        
+        .pricing-card.featured {
+            border-color: var(--primary);
+            box-shadow: 0 0 40px rgba(var(--primary-rgb), 0.2);
+            transform: scale(1.05);
+        }
+        
+        .pricing-card.featured::before {
+            content: 'Populaire';
+            position: absolute;
+            top: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--gradient-primary);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .pricing-header {
+            text-align: center;
+            margin-bottom: var(--space-lg);
+        }
+        
+        .pricing-price {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--text-primary);
+            margin: var(--space-md) 0;
+        }
+        
+        .pricing-price span {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+        
+        .pricing-features {
+            list-style: none;
+            margin: var(--space-lg) 0;
+        }
+        
+        .pricing-features li {
+            padding: var(--space-sm) 0;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        
+        .pricing-features li i {
+            color: var(--success);
+        }
+        
+        /* FAQ */
+        .faq-container {
+            max-width: 800px;
+            margin: var(--space-xl) auto 0;
+        }
+        
+        .faq-item {
+            background: var(--bg-card);
+            border-radius: var(--radius-lg);
+            margin-bottom: var(--space-sm);
+            border: 1px solid var(--border-light);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: var(--space-md);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 600;
+        }
+        
+        .faq-answer {
+            padding: 0 var(--space-md);
+            max-height: 0;
+            overflow: hidden;
+            transition: all var(--transition-normal);
+            color: var(--text-secondary);
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: var(--space-md);
+            max-height: 500px;
+        }
+        
+        .faq-toggle {
+            transition: transform var(--transition-normal);
+        }
+        
+        .faq-item.active .faq-toggle {
+            transform: rotate(180deg);
+        }
+        
+        /* Form */
+        .contact-form {
+            background: var(--bg-card);
+            border-radius: var(--radius-xl);
+            padding: var(--space-xl);
+            border: 1px solid var(--border-light);
+        }
+        
+        .form-group {
+            margin-bottom: var(--space-md);
+        }
+        
+        .form-label {
+            display: block;
+            margin-bottom: var(--space-xs);
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.875rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            color: var(--text-primary);
+            font-size: 1rem;
+            transition: all var(--transition-fast);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(var(--primary-rgb), 0.1);
+        }
+        
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+        }
+        
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            padding: var(--space-xl) 0;
+            border-top: 1px solid var(--border-light);
+            margin-top: var(--space-2xl);
+        }
+        
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: var(--space-xl);
+        }
+        
+        .footer-brand h3 {
+            margin-bottom: var(--space-sm);
+        }
+        
+        .footer-links h4 {
+            font-size: 1rem;
+            margin-bottom: var(--space-md);
+            color: var(--text-primary);
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: var(--space-xs);
+        }
+        
+        .footer-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: var(--space-xl);
+            color: var(--text-light);
+            font-size: 0.875rem;
+            border-top: 1px solid var(--border-light);
+            margin-top: var(--space-xl);
+        }
+        
+        /* ===== HEADER & NAVIGATION ===== */
+        header {
+            padding: var(--space-md) 0;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            background: rgba(10, 15, 30, 0.8);
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-size: 1.5rem;
+            font-weight: 800;
+            text-decoration: none;
+            color: var(--text-primary);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            background: var(--gradient-primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: var(--space-xl);
+            align-items: center;
+        }
+        
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color var(--transition-fast);
+        }
+        
+        .nav-link:hover {
+            color: var(--primary);
+        }
+        
+        .nav-cta {
+            display: flex;
+            gap: var(--space-sm);
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        
+        /* ===== HERO SECTION ===== */
+        .hero {
+            padding-top: 8rem;
+            padding-bottom: var(--space-2xl);
+            text-align: center;
+            position: relative;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: var(--space-md);
+            justify-content: center;
+            margin-top: var(--space-xl);
+        }
+        
+        /* ===== MEDIA QUERIES ===== */
+        @media (max-width: 1024px) {
+            .nav-links {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            :root {
+                --space-xl: 3rem;
+                --space-2xl: 4rem;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 2rem;
+            }
+            
+            .pricing-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pricing-card.featured {
+                transform: none;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* ===== UTILITY CLASSES ===== */
+        .text-center { text-align: center; }
+        .text-gradient { background: var(--gradient-primary); -webkit-background-clip: text; background-clip: text; color: transparent; }
+        .mt-1 { margin-top: var(--space-sm); }
+        .mt-2 { margin-top: var(--space-md); }
+        .mt-3 { margin-top: var(--space-lg); }
+        .mt-4 { margin-top: var(--space-xl); }
+        .mb-1 { margin-bottom: var(--space-sm); }
+        .mb-2 { margin-bottom: var(--space-md); }
+        .mb-3 { margin-bottom: var(--space-lg); }
+        .mb-4 { margin-bottom: var(--space-xl); }
+        .py-1 { padding-top: var(--space-sm); padding-bottom: var(--space-sm); }
+        .py-2 { padding-top: var(--space-md); padding-bottom: var(--space-md); }
+        .py-3 { padding-top: var(--space-lg); padding-bottom: var(--space-lg); }
+        .py-4 { padding-top: var(--space-xl); padding-bottom: var(--space-xl); }
+        .hidden { display: none; }
+    </style>
+</head>
+<body>
+    <!-- Background Effects -->
+    <div class="bg-effects">
+        <div class="gradient-blob blob-1"></div>
+        <div class="gradient-blob blob-2"></div>
+        <div class="gradient-blob blob-3"></div>
+    </div>
+    
+    <!-- Header -->
+    <header>
+        <div class="container nav-container">
+            <a href="#" class="logo">
+                <div class="logo-icon">🤖</div>
+                <span>AgentAI</span>
+            </a>
+            
+            <nav class="nav-links">
+                <a href="#features" class="nav-link">Fonctionnalités</a>
+                <a href="#demo" class="nav-link">Démo</a>
+                <a href="#pricing" class="nav-link">Tarifs</a>
+                <a href="#testimonials" class="nav-link">Témoignages</a>
+                <a href="#faq" class="nav-link">FAQ</a>
+            </nav>
+            
+            <div class="nav-cta">
+                <a href="#contact" class="btn btn-secondary">Essai Gratuit</a>
+                <button class="mobile-menu-btn">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+    
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="badge">
+                    <i class="fas fa-bolt"></i>
+                    Nouvelle génération d'IA
+                </div>
+                <h1>Transformez WhatsApp en machine à vendre 24/7</h1>
+                <p class="lead">
+                    Votre assistant IA personnel qui répond, qualifie, vend et prend rendez-vous sur WhatsApp.
+                    Jamais plus de lead perdu, jamais plus de client mécontent.
+                </p>
+                
+                <div class="stats">
+                    <div class="stat-item">
+                        <div class="stat-number">24/7</div>
+                        <div class="stat-label">Disponibilité</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">98%</div>
+                        <div class="stat-label">Satisfaction</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">3x</div>
+                        <div class="stat-label">Plus de ventes</div>
+                    </div>
+                    <div class="stat-item">
+                        <div class="stat-number">40%</div>
+                        <div class="stat-label">Coûts réduits</div>
+                    </div>
+                </div>
+                
+                <div class="hero-buttons">
+                    <a href="#contact" class="btn btn-primary btn-lg">
+                        <i class="fas fa-play-circle"></i>
+                        Commencer l'essai gratuit
+                    </a>
+                    <a href="#demo" class="btn btn-secondary btn-lg">
+                        <i class="fas fa-comments"></i>
+                        Voir la démo
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Features Section -->
+    <section id="features">
+        <div class="container">
+            <div class="text-center">
+                <h2>L'Assistant IA Ultime pour WhatsApp Business</h2>
+                <p class="lead">Des fonctionnalités puissantes conçues pour booster vos ventes automatiquement</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Intelligence Contextuelle</h3>
+                    <p>Comprend le contexte de la conversation et répond de manière naturelle, comme un humain.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-calendar-check"></i>
+                    </div>
+                    <h3>Prise de Rendez-vous Automatique</h3>
+                    <p>Gère votre agenda, propose des créaux disponibles et confirme les rendez-vous instantanément.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <h3>Vente Automatisée</h3>
+                    <p>Présente vos produits, répond aux questions et finalise les ventes 24h/24.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-language"></i>
+                    </div>
+                    <h3>Multilingue & Dialectes</h3>
+                    <p>Supporte l'Arabe, le Français, l'Anglais et les dialectes locaux (Darija, etc.).</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Analytique en Temps Réel</h3>
+                    <p>Dashboard complet avec statistiques de conversion, temps de réponse et ROI.</p>
+                </div>
+                
+                <div class="card">
+                    <div class="card-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Sécurité Maximale</h3>
+                    <p>Données cryptées, conforme RGPD et hébergement local au Maroc.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Demo Section -->
+    <section id="demo" class="py-4">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2>Essayez Notre Assistant en Direct</h2>
+                <p class="lead">Découvrez comment l'agent IA gère vos conversations clients</p>
+            </div>
+            
+            <div class="chat-demo-container">
+                <div class="chat-header">
+                    <div class="chat-avatar">AI</div>
+                    <div class="chat-info">
+                        <h4>Assistant AI Pro</h4>
+                        <p>En ligne • Réponse instantanée</p>
+                    </div>
+                </div>
+                
+                <div class="chat-messages" id="chatMessages">
+                    <!-- Messages will be inserted by JavaScript -->
+                </div>
+                
+                <div class="chat-input">
+                    <div class="form-group">
+                        <input type="text" class="form-control" id="chatInput" placeholder="Tapez votre message ici...">
+                    </div>
+                    <button class="btn btn-primary" id="sendMessage">
+                        <i class="fas fa-paper-plane"></i> Envoyer
+                    </button>
+                </div>
+            </div>
+            
+            <div class="text-center mt-4">
+                <div class="badge">
+                    <i class="fas fa-lightbulb"></i>
+                    Conseil : Essayez "Je veux prendre rendez-vous" ou "Quels sont vos tarifs ?"
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Pricing Section -->
+    <section id="pricing" class="py-4">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2>Tarifs Simples et Transparents</h2>
+                <p class="lead">Choisissez l'offre qui correspond à vos besoins</p>
+            </div>
+            
+            <div class="pricing-grid">
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Starter</h3>
+                        <p>Parfait pour les petites entreprises</p>
+                        <div class="pricing-price">199 DH<span>/mois</span></div>
+                    </div>
+                    
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 500 conversations/mois</li>
+                        <li><i class="fas fa-check"></i> Support WhatsApp uniquement</li>
+                        <li><i class="fas fa-check"></i> Réponses automatisées basiques</li>
+                        <li><i class="fas fa-check"></i> Support par email</li>
+                    </ul>
+                    
+                    <button class="btn btn-secondary" onclick="selectPlan('Starter')">Commencer</button>
+                </div>
+                
+                <div class="pricing-card featured">
+                    <div class="pricing-header">
+                        <h3>Pro</h3>
+                        <p>Le plus populaire</p>
+                        <div class="pricing-price">499 DH<span>/mois</span></div>
+                    </div>
+                    
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> 2000 conversations/mois</li>
+                        <li><i class="fas fa-check"></i> Prise de rendez-vous automatique</li>
+                        <li><i class="fas fa-check"></i> Support multilingue</li>
+                        <li><i class="fas fa-check"></i> Intégration calendrier</li>
+                        <li><i class="fas fa-check"></i> Support prioritaire</li>
+                    </ul>
+                    
+                    <button class="btn btn-primary" onclick="selectPlan('Pro')">Commencer l'essai gratuit</button>
+                </div>
+                
+                <div class="pricing-card">
+                    <div class="pricing-header">
+                        <h3>Enterprise</h3>
+                        <p>Pour les grandes entreprises</p>
+                        <div class="pricing-price">Sur mesure</div>
+                    </div>
+                    
+                    <ul class="pricing-features">
+                        <li><i class="fas fa-check"></i> Conversations illimitées</li>
+                        <li><i class="fas fa-check"></i> IA personnalisée</li>
+                        <li><i class="fas fa-check"></i> Intégrations CRM</li>
+                        <li><i class="fas fa-check"></i> Support 24/7 dédié</li>
+                        <li><i class="fas fa-check"></i> Formation équipe</li>
+                    </ul>
+                    
+                    <button class="btn btn-secondary" onclick="selectPlan('Enterprise')">Nous contacter</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Testimonials -->
+    <section id="testimonials" class="py-4">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2>Ils Nous Font Confiance</h2>
+                <p class="lead">Découvrez ce que nos clients disent de nous</p>
+            </div>
+            
+            <div class="features-grid">
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "Depuis que nous utilisons AgentAI, nos réservations ont augmenté de 40% et notre équipe peut se concentrer sur la qualité du service plutôt que sur la prise de rendez-vous."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">YA</div>
+                        <div class="author-info">
+                            <h4>Yassine Alami</h4>
+                            <p>Restaurant Le Jardin, Marrakech</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "L'agent gère 80% de nos conversations clients. Plus jamais de message perdu pendant la nuit. Le ROI a été atteint en 2 semaines seulement."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">SZ</div>
+                        <div class="author-info">
+                            <h4>Salma Ziani</h4>
+                            <p>Boutique de Mode En Ligne</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial-card">
+                    <div class="testimonial-content">
+                        "Nos patients adorent pouvoir prendre rendez-vous à toute heure. Les annulations ont diminué de 60% grâce aux rappels automatiques."
+                    </div>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">KB</div>
+                        <div class="author-info">
+                            <h4>Dr. Karim Benani</h4>
+                            <p>Clinique Dentaire, Casablanca</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ Section -->
+    <section id="faq" class="py-4">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2>Questions Fréquentes</h2>
+                <p class="lead">Trouvez rapidement des réponses à vos questions</p>
+            </div>
+            
+            <div class="faq-container">
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Combien de temps pour la mise en place ?
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        En moyenne 24 à 48 heures. Nous configurons l'agent selon vos besoins spécifiques, formons l'IA avec vos produits/services, et effectuons des tests complets avant le lancement.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Puis-je utiliser mon numéro WhatsApp existant ?
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Oui ! Nous connectons l'agent à votre numéro WhatsApp Business existant. Aucun changement nécessaire pour vos clients.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Comment l'IA comprend-elle le dialecte marocain ?
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Notre IA est spécialement entraînée sur des données en darija et arabe marocain. Elle comprend les expressions locales, l'humour et les nuances culturelles spécifiques au marché marocain.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Que se passe-t-il si un client veut parler à un humain ?
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        L'agent reconnaît quand une conversation nécessite une intervention humaine et transfère automatiquement vers votre équipe, en préservant tout le contexte de la discussion.
+                    </div>
+                </div>
+                
+                <div class="faq-item">
+                    <div class="faq-question">
+                        Y a-t-il un engagement minimum ?
+                        <i class="fas fa-chevron-down faq-toggle"></i>
+                    </div>
+                    <div class="faq-answer">
+                        Non. Tous nos plans sont sans engagement. Vous pouvez annuler à tout moment. Nous offrons également 14 jours d'essai gratuit sur le plan Pro.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Contact Section -->
+    <section id="contact" class="py-4">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2>Prêt à Transformer Votre Business ?</h2>
+                <p class="lead">Commencez votre essai gratuit de 14 jours dès maintenant</p>
+            </div>
+            
+            <div class="contact-form">
+                <form id="leadForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Nom complet *</label>
+                            <input type="text" class="form-control" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Entreprise *</label>
+                            <input type="text" class="form-control" name="company" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label class="form-label">Email *</label>
+                            <input type="email" class="form-control" name="email" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Téléphone WhatsApp *</label>
+                            <input type="tel" class="form-control" name="phone" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Secteur d'activité *</label>
+                        <select class="form-control" name="industry" required>
+                            <option value="">Sélectionnez votre secteur</option>
+                            <option value="restaurant">Restaurant / Café</option>
+                            <option value="health">Santé / Clinique</option>
+                            <option value="retail">Commerce / Boutique</option>
+                            <option value="realestate">Immobilier</option>
+                            <option value="education">Éducation / Formation</option>
+                            <option value="services">Services</option>
+                            <option value="other">Autre</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Objectif principal *</label>
+                        <select class="form-control" name="goal" required>
+                            <option value="">Sélectionnez votre objectif</option>
+                            <option value="sales">Augmenter les ventes</option>
+                            <option value="appointments">Automatiser les rendez-vous</option>
+                            <option value="support">Améliorer le support client</option>
+                            <option value="leads">Qualifier plus de leads</option>
+                            <option value="time">Gagner du temps</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Message additionnel</label>
+                        <textarea class="form-control" name="message" rows="3"></textarea>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-lg">
+                        <i class="fas fa-rocket"></i> Démarrer l'essai gratuit
+                    </button>
+                    
+                    <p class="mt-2" style="color: var(--text-muted); font-size: 0.875rem;">
+                        En soumettant ce formulaire, vous acceptez nos conditions d'utilisation et politique de confidentialité.
+                    </p>
+                </form>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>AgentAI</h3>
+                    <p>L'assistant IA qui transforme WhatsApp en canal de vente 24/7.</p>
+                    <div class="social-links mt-2">
+                        <a href="#" style="color: var(--text-muted); margin-right: var(--space-sm);">
+                            <i class="fab fa-facebook"></i>
+                        </a>
+                        <a href="#" style="color: var(--text-muted); margin-right: var(--space-sm);">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" style="color: var(--text-muted); margin-right: var(--space-sm);">
+                            <i class="fab fa-linkedin"></i>
+                        </a>
+                        <a href="#" style="color: var(--text-muted);">
+                            <i class="fab fa-whatsapp"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Produit</h4>
+                    <ul>
+                        <li><a href="#features">Fonctionnalités</a></li>
+                        <li><a href="#demo">Démo</a></li>
+                        <li><a href="#pricing">Tarifs</a></li>
+                        <li><a href="#faq">FAQ</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Entreprise</h4>
+                    <ul>
+                        <li><a href="#">À propos</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Carrières</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Légal</h4>
+                    <ul>
+                        <li><a href="#">Conditions d'utilisation</a></li>
+                        <li><a href="#">Politique de confidentialité</a></li>
+                        <li><a href="#">Cookies</a></li>
+                        <li><a href="#">RGPD</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="footer-bottom">
+                <p>&copy; 2024 AgentAI. Tous droits réservés.</p>
+                <p>Maroc • France • Canada • Belgique • Suisse</p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- WhatsApp Float Button -->
+    <a href="https://wa.me/212600000000?text=Bonjour,%20je%20suis%20intéressé%20par%20AgentAI%20pour%20mon%20business" 
+       class="whatsapp-float" 
+       target="_blank"
+       style="position: fixed; bottom: 20px; right: 20px; background: #25D366; color: white; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4); text-decoration: none; z-index: 1000;">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    
+    <script>
+        // Initialize primary color RGB
+        document.documentElement.style.setProperty('--primary-rgb', '0, 102, 255');
+        
+        // Mobile Menu Toggle
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            const navLinks = document.querySelector('.nav-links');
+            navLinks.style.display = navLinks.style.display === 'flex' ? 'none' : 'flex';
+            navLinks.style.flexDirection = 'column';
+            navLinks.style.position = 'absolute';
+            navLinks.style.top = '100%';
+            navLinks.style.left = '0';
+            navLinks.style.right = '0';
+            navLinks.style.background = 'var(--bg-dark)';
+            navLinks.style.padding = 'var(--space-lg)';
+            navLinks.style.borderTop = '1px solid var(--border-light)';
+        });
+        
+        // Chat Demo Functionality
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const sendMessageBtn = document.getElementById('sendMessage');
+        
+        // Initial bot message
+        addMessage('bot', 'Bonjour ! 👋 Je suis votre assistant AI. Comment puis-je vous aider aujourd\'hui ?');
+        
+        function addMessage(sender, text) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message message-${sender}`;
+            
+            const time = new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+            
+            messageDiv.innerHTML = `
+                <div class="message-content">${text}</div>
+                <div class="message-time">${time}</div>
+            `;
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'typing-indicator';
+            typingDiv.innerHTML = '<span></span><span></span><span></span>';
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            return typingDiv;
+        }
+        
+        function getBotResponse(userMessage) {
+            const lowerMsg = userMessage.toLowerCase();
+            
+            // Business scenario responses
+            if (lowerMsg.includes('bonjour') || lowerMsg.includes('salut') || lowerMsg.includes('salam')) {
+                return 'Bonjour ! Je suis l\'assistant AI de votre entreprise. Comment puis-je vous aider ?';
+            }
+            
+            if (lowerMsg.includes('rendez-vous') || lowerMsg.includes('rdv') || lowerMsg.includes('réserver')) {
+                return 'Je peux vous aider à prendre rendez-vous ! Pour quel jour souhaitez-vous venir ?';
+            }
+            
+            if (lowerMsg.includes('prix') || lowerMsg.includes('tarif') || lowerMsg.includes('combien')) {
+                return 'Je peux vous envoyer notre tarif complet. Pour quel service êtes-vous intéressé(e) ?';
+            }
+            
+            if (lowerMsg.includes('heure') || lowerMsg.includes('ouvert') || lowerMsg.includes('fermé')) {
+                return 'Nous sommes ouverts du lundi au vendredi de 9h à 18h, et le samedi de 9h à 13h.';
+            }
+            
+            if (lowerMsg.includes('adresse') || lowerMsg.includes('localisation') || lowerMsg.includes('où')) {
+                return 'Notre adresse : Avenue Mohammed V, Casablanca. Voulez-vous que je vous envoie la localisation Google Maps ?';
+            }
+            
+            if (lowerMsg.includes('merci') || lowerMsg.includes('ok') || lowerMsg.includes('d\'accord')) {
+                return 'Avec plaisir ! N\'hésitez pas si vous avez d\'autres questions. 😊';
+            }
+            
+            // Default responses
+            const defaultResponses = [
+                'Je comprends votre demande. Un de nos conseillers vous répondra dans les plus brefs délais.',
+                'Merci pour votre message ! Je peux vous aider avec les rendez-vous, les tarifs ou toute autre information sur nos services.',
+                'Pour une réponse plus personnalisée, je vais transférer votre demande à l\'équipe concernée.',
+                'Je note votre demande. Quelqu\'un de notre équipe vous contactera rapidement.'
+            ];
+            
+            return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+        }
+        
+        sendMessageBtn.addEventListener('click', function() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+            
+            addMessage('user', message);
+            chatInput.value = '';
+            
+            const typingIndicator = showTypingIndicator();
+            
+            setTimeout(() => {
+                typingIndicator.remove();
+                const botResponse = getBotResponse(message);
+                addMessage('bot', botResponse);
+            }, 1000 + Math.random() * 1000);
+        });
+        
+        chatInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessageBtn.click();
+            }
+        });
+        
+        // FAQ Toggle
+        document.querySelectorAll('.faq-question').forEach(question => {
+            question.addEventListener('click', function() {
+                const item = this.parentElement;
+                item.classList.toggle('active');
+            });
+        });
+        
+        // Form Submission
+        document.getElementById('leadForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = Object.fromEntries(formData);
+            
+            // Show success message
+            alert('Merci pour votre demande ! Nous vous contacterons dans les 24 heures pour configurer votre essai gratuit.');
+            
+            // Reset form
+            this.reset();
+            
+            // In production, you would send this to your backend:
+            // fetch('/api/leads', {
+            //     method: 'POST',
+            //     headers: { 'Content-Type': 'application/json' },
+            //     body: JSON.stringify(data)
+            // })
+        });
+        
+        // Plan Selection
+        function selectPlan(plan) {
+            if (plan === 'Enterprise') {
+                document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            } else {
+                alert(`Excellent choix ! Vous avez sélectionné le plan ${plan}. Redirection vers le formulaire d'inscription...`);
+                document.getElementById('contact').scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                const href = this.getAttribute('href');
+                if (href === '#') return;
+                
+                e.preventDefault();
+                const target = document.querySelector(href);
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+        
+        // Auto-demo messages
+        setTimeout(() => {
+            chatInput.value = 'Bonjour, je voudrais prendre rendez-vous';
+            sendMessageBtn.click();
+        }, 2000);
+        
+        setTimeout(() => {
+            chatInput.value = 'Pour demain après-midi';
+            sendMessageBtn.click();
+        }, 5000);
+        
+        // Stats Counter Animation
+        function animateStats() {
+            const statNumbers = document.querySelectorAll('.stat-number');
+            const finalValues = [24, 98, 3, 40];
+            
+            statNumbers.forEach((stat, index) => {
+                let current = 0;
+                const final = finalValues[index];
+                const increment = final / 50;
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= final) {
+                        stat.textContent = index === 0 ? '24/7' : final + (index === 2 ? 'x' : '%');
+                        clearInterval(timer);
+                    } else {
+                        stat.textContent = Math.floor(current) + (index === 2 ? 'x' : '%');
+                    }
+                }, 30);
+            });
+        }
+        
+        // Trigger stats animation when in viewport
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateStats();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+        
+        observer.observe(document.querySelector('.hero'));
+    </script>
+</body>
+</html>
