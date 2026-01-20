@@ -1,853 +1,1828 @@
 <!doctype html>
-<html lang="ary" dir="ltr">
+<html lang="fr">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>WaslUp Style — WhatsApp Front Desk (Demo)</title>
-  <meta name="description" content="Front Desk ديال WhatsApp كيرد فاللحظة، كينظّم الطلبات، وكيهبّط الno-shows. Demo تفاعلي بدارجة." />
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Agent WhatsApp pour ventes & support 24/7</title>
+  <meta name="description" content="Transformez WhatsApp Business en canal de vente 24/7. Réponses instantanées, rendez-vous, qualification de leads et suivi. Démo + calculateur de gains."/>
+  <meta name="theme-color" content="#0b1020"/>
+
+  <!-- Open Graph / Social Media -->
+  <meta property="og:title" content="Agent WhatsApp pour ventes & support 24/7">
+  <meta property="og:description" content="Transformez WhatsApp Business en canal de vente 24/7 avec l'IA">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://whatsapp-agent.ai">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
   <style>
     :root{
-      --bg: #0b0f17;
-      --panel: rgba(255,255,255,.06);
-      --panel2: rgba(255,255,255,.09);
+      --bg:#070a14;
+      --bg2:#0a1226;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.085);
       --stroke: rgba(255,255,255,.12);
-      --text: #f4f7ff;
-      --muted: rgba(244,247,255,.68);
-      --muted2: rgba(244,247,255,.52);
-      --brand: #7c5cff;
-      --brand2:#39d98a;
-      --warn:#ffcc66;
-      --danger:#ff5c7a;
-      --shadow: 0 20px 70px rgba(0,0,0,.45);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.70);
+      --muted2: rgba(255,255,255,.55);
+      --accent:#28d17c;      /* green */
+      --accent2:#24c7c7;     /* teal */
+      --danger:#ff4d6d;
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
       --radius: 18px;
       --radius2: 26px;
-      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono","Courier New", monospace;
-      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      --max: 1160px;
     }
+
     *{box-sizing:border-box}
-    html,body{height:100%}
+    html,body{height:100%; scroll-behavior: smooth;}
     body{
       margin:0;
-      font-family:var(--sans);
-      background:
-        radial-gradient(1200px 600px at 20% -10%, rgba(124,92,255,.25), transparent 55%),
-        radial-gradient(900px 500px at 90% 10%, rgba(57,217,138,.18), transparent 60%),
-        radial-gradient(900px 700px at 50% 110%, rgba(255,92,122,.12), transparent 60%),
-        var(--bg);
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;
       color:var(--text);
-      line-height:1.45;
+      background:
+        radial-gradient(1100px 600px at 70% -10%, rgba(36,199,199,.22), transparent 55%),
+        radial-gradient(900px 500px at 10% 10%, rgba(40,209,124,.18), transparent 55%),
+        radial-gradient(900px 600px at 50% 110%, rgba(40,209,124,.10), transparent 55%),
+        linear-gradient(180deg, var(--bg), var(--bg2));
+      overflow-x:hidden;
     }
-    a{color:inherit}
-    .wrap{
-      max-width:1100px;
-      margin:0 auto;
-      padding:26px 18px 70px;
+
+    a{color:inherit; text-decoration:none}
+    .container{max-width:var(--max); margin:0 auto; padding:0 20px}
+
+    /* Subtle pattern overlay */
+    .pattern{
+      position:absolute; inset:0;
+      opacity:.13;
+      pointer-events:none;
+      background-image:
+        radial-gradient(circle at 12px 12px, rgba(255,255,255,.14) 1.2px, transparent 1.25px);
+      background-size: 26px 26px;
+      mask-image: radial-gradient(900px 460px at 40% 10%, black 30%, transparent 70%);
     }
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:16px;
-      padding:10px 0 22px;
+
+    /* NAV */
+    .nav{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(180deg, rgba(7,10,20,.78), rgba(7,10,20,.44));
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .nav-inner{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:14px;
     }
     .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      text-decoration:none;
+      display:flex; align-items:center; gap:10px;
+      font-weight:900; letter-spacing:.2px;
+      font-size: 1.2rem;
     }
     .logo{
-      width:38px;height:38px;
-      border-radius:12px;
-      background: linear-gradient(135deg, var(--brand), rgba(57,217,138,.9));
-      box-shadow: 0 14px 40px rgba(124,92,255,.25);
-      position:relative;
-      overflow:hidden;
-    }
-    .logo:after{
-      content:"";
-      position:absolute; inset:-30%;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), transparent 55%);
-      transform:rotate(18deg);
-    }
-    .brand b{font-size:14px; letter-spacing:.4px}
-    .brand small{display:block; color:var(--muted); font-size:12px; margin-top:2px}
-    .nav{
-      display:flex; align-items:center; gap:10px;
-    }
-    .pill{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:10px 12px;
-      background: var(--panel);
-      border:1px solid var(--stroke);
-      border-radius:999px;
-      color:var(--muted);
-      font-size:13px;
-      text-decoration:none;
-      backdrop-filter: blur(10px);
-    }
-    .pill:hover{background: var(--panel2); color:var(--text)}
-    .pill .dot{
-      width:8px;height:8px;border-radius:999px;background: var(--brand2);
-      box-shadow:0 0 0 6px rgba(57,217,138,.12);
-    }
-
-    .hero{
-      display:grid;
-      grid-template-columns: 1.08fr .92fr;
-      gap:22px;
-      align-items:stretch;
-      margin-top:6px;
-    }
-    @media (max-width: 980px){
-      .hero{grid-template-columns:1fr; gap:18px}
-    }
-
-    .card{
-      background: rgba(255,255,255,.05);
-      border: 1px solid var(--stroke);
-      border-radius: var(--radius2);
-      box-shadow: var(--shadow);
-      overflow:hidden;
-      position:relative;
-      backdrop-filter: blur(12px);
-    }
-    .card .inner{padding:22px}
-    .badge{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:8px 10px;
-      border-radius:999px;
-      background: rgba(124,92,255,.12);
-      border: 1px solid rgba(124,92,255,.25);
-      color: rgba(244,247,255,.86);
-      font-size:12px;
-      letter-spacing:.2px;
-      width:max-content;
-    }
-    .badge .spark{
-      width:10px;height:10px;border-radius:3px;
-      background: linear-gradient(135deg, var(--brand), rgba(255,255,255,.4));
-      box-shadow: 0 0 0 6px rgba(124,92,255,.12);
-    }
-    h1{
-      margin:14px 0 10px;
-      font-size:40px;
-      line-height:1.05;
-      letter-spacing:-.8px;
-    }
-    @media (max-width: 520px){
-      h1{font-size:34px}
-    }
-    .sub{
-      margin:0 0 18px;
-      color: var(--muted);
-      font-size:15.5px;
-      max-width:56ch;
-    }
-    .kpis{
-      display:grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap:10px;
-      margin:16px 0 18px;
-    }
-    @media (max-width: 520px){
-      .kpis{grid-template-columns:1fr; }
-    }
-    .kpi{
-      padding:12px 12px;
-      border-radius:16px;
-      background: rgba(255,255,255,.05);
-      border:1px solid var(--stroke);
-    }
-    .kpi b{display:block; font-size:13px}
-    .kpi small{display:block; margin-top:3px; color:var(--muted2); font-size:12px}
-    .ctaRow{
-      display:flex; gap:10px; flex-wrap:wrap;
-      margin-top:14px;
-    }
-    .btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      padding:12px 14px;
-      border-radius: 14px;
-      border:1px solid transparent;
-      text-decoration:none;
-      font-weight:600;
-      font-size:14px;
-      cursor:pointer;
-      transition: transform .08s ease, background .2s ease, border .2s ease;
-      user-select:none;
-    }
-    .btn:active{transform: translateY(1px)}
-    .btn.primary{
-      background: linear-gradient(135deg, var(--brand), rgba(57,217,138,.9));
-      color:#0b0f17;
-      box-shadow: 0 18px 45px rgba(124,92,255,.22);
-    }
-    .btn.ghost{
-      background: rgba(255,255,255,.06);
-      border-color: var(--stroke);
-      color: var(--text);
-    }
-    .btn.ghost:hover{background: rgba(255,255,255,.09)}
-    .tiny{
-      margin-top:10px;
-      color: var(--muted2);
-      font-size:12.5px;
-    }
-    .tiny code{
-      font-family: var(--mono);
-      font-size:12px;
-      color: rgba(244,247,255,.86);
-      background: rgba(255,255,255,.06);
-      padding:2px 6px;
-      border-radius:8px;
-      border:1px solid var(--stroke);
-    }
-
-    /* Demo / WhatsApp mock */
-    .demoHeader{
-      display:flex; align-items:center; justify-content:space-between; gap:10px;
-      padding:14px 16px;
-      background: rgba(255,255,255,.04);
-      border-bottom:1px solid var(--stroke);
-    }
-    .demoHeader .left{
-      display:flex; align-items:center; gap:10px; min-width:0;
-    }
-    .avatar{
-      width:38px;height:38px;border-radius:14px;
-      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.35), transparent 60%),
-                  linear-gradient(135deg, rgba(57,217,138,.95), rgba(124,92,255,.95));
-      border:1px solid rgba(255,255,255,.18);
-      flex:0 0 auto;
-    }
-    .who{min-width:0}
-    .who b{display:block; font-size:13px}
-    .who small{display:block; font-size:12px; color:var(--muted); margin-top:1px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis}
-    .status{
-      display:flex; align-items:center; gap:8px;
-      color: var(--muted);
-      font-size:12px;
-      white-space:nowrap;
-    }
-    .status .dot{
-      width:8px;height:8px;border-radius:999px;background: var(--brand2);
-      box-shadow:0 0 0 6px rgba(57,217,138,.12);
-    }
-    .chat{
-      height: 460px;
-      padding:14px 12px 10px;
-      overflow:auto;
-      scroll-behavior:smooth;
+      width:36px; height:36px; border-radius:12px;
       background:
-        radial-gradient(1200px 800px at 20% 10%, rgba(57,217,138,.06), transparent 60%),
-        radial-gradient(900px 700px at 80% 10%, rgba(124,92,255,.06), transparent 55%),
-        rgba(0,0,0,.12);
+        radial-gradient(10px 10px at 30% 30%, rgba(255,255,255,.35), transparent 60%),
+        linear-gradient(135deg, rgba(40,209,124,.95), rgba(36,199,199,.85));
+      box-shadow: 0 12px 30px rgba(40,209,124,.15);
+      border:1px solid rgba(255,255,255,.18);
     }
-    @media (max-width: 980px){
-      .chat{height: 420px}
+    .nav-links{
+      display:flex; align-items:center; gap:18px;
+      color:var(--muted);
+      font-weight:700;
+      font-size:14px;
     }
-    .bubbleRow{display:flex; margin:10px 0}
-    .bubbleRow.you{justify-content:flex-start}
-    .bubbleRow.bot{justify-content:flex-end}
-    .bubble{
-      max-width: 82%;
-      padding:10px 12px;
-      border-radius: 16px;
+    .nav-links a{opacity:.9; transition: opacity 0.2s ease;}
+    .nav-links a:hover{opacity:1; color:rgba(255,255,255,.92)}
+    .nav-cta{display:flex; align-items:center; gap:10px}
+    .btn{
       border:1px solid rgba(255,255,255,.14);
       background: rgba(255,255,255,.06);
-      color: rgba(244,247,255,.92);
-      font-size:13.5px;
-      position:relative;
-      backdrop-filter: blur(8px);
-    }
-    .bubble.bot{
-      background: rgba(57,217,138,.12);
-      border-color: rgba(57,217,138,.22);
-    }
-    .meta{
-      margin-top:6px;
-      color: rgba(244,247,255,.58);
-      font-size:11px;
-      display:flex;
-      gap:10px;
-      justify-content:flex-end;
-    }
-    .chips{
-      display:flex; flex-wrap:wrap; gap:8px;
-      padding:12px 12px 14px;
-      border-top:1px solid var(--stroke);
-      background: rgba(255,255,255,.03);
-    }
-    .chip{
-      padding:9px 10px;
-      border-radius: 999px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.06);
-      color: rgba(244,247,255,.86);
-      font-size:12.5px;
+      color:rgba(255,255,255,.92);
+      padding:10px 14px;
+      border-radius:14px;
+      font-weight:800;
+      font-size:14px;
+      display:inline-flex; align-items:center; gap:10px;
       cursor:pointer;
-      transition: transform .08s ease, background .2s ease;
+      transition: all .12s ease;
       user-select:none;
     }
-    .chip:hover{background: rgba(255,255,255,.09)}
-    .chip:active{transform: translateY(1px)}
-    .chip strong{font-weight:700}
-    .chip .tag{
-      margin-left:6px;
-      color: rgba(244,247,255,.62);
-      font-size:11px;
+    .btn:hover{transform:translateY(-1px); background:rgba(255,255,255,.085); border-color:rgba(255,255,255,.20)}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(40,209,124,.95), rgba(36,199,199,.85));
+      border-color: rgba(255,255,255,.18);
+      color:#062012;
+      box-shadow: 0 16px 40px rgba(40,209,124,.18);
     }
-    .sysNote{
-      margin:10px 0 0;
-      padding:10px 12px;
-      border-radius: 14px;
-      border:1px dashed rgba(255,255,255,.18);
+    .btn.primary:hover{transform:translateY(-1px) scale(1.01)}
+    .btn.ghost{background:transparent}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      border:1px solid rgba(40,209,124,.28);
+      background: rgba(40,209,124,.10);
+      color: rgba(255,255,255,.88);
+      padding:8px 12px;
+      border-radius:999px;
+      font-weight:800;
+      font-size:13px;
+      width:fit-content;
+    }
+    .dot{
+      width:8px; height:8px; border-radius:50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 4px rgba(40,209,124,.15);
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(40,209,124,.7); }
+      70% { box-shadow: 0 0 0 10px rgba(40,209,124,0); }
+      100% { box-shadow: 0 0 0 0 rgba(40,209,124,0); }
+    }
+
+    /* HERO */
+    .hero{
+      position:relative;
+      padding:54px 0 28px;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap:26px;
+      align-items:center;
+    }
+    h1{
+      font-size: clamp(34px, 4vw, 54px);
+      line-height:1.05;
+      margin:16px 0 14px;
+      letter-spacing:-.8px;
+    }
+    .h1-accent{
+      background: linear-gradient(135deg, rgba(40,209,124,1), rgba(36,199,199,1));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      font-weight:950;
+    }
+    .lead{
+      font-size: 16px;
+      line-height:1.7;
+      color:var(--muted);
+      max-width: 56ch;
+    }
+    .hero-actions{
+      display:flex; gap:12px; flex-wrap:wrap;
+      margin-top:20px;
+    }
+    .badges{
+      display:flex; gap:14px; flex-wrap:wrap;
+      margin-top:18px;
+      color:var(--muted2);
+      font-weight:800;
+      font-size:13px;
+    }
+    .badge{
+      display:flex; align-items:center; gap:8px;
+      padding:8px 10px;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius: 999px;
+      background: rgba(255,255,255,.04);
+      transition: all .2s ease;
+    }
+    .badge:hover{
+      background: rgba(255,255,255,.08);
+      transform: translateY(-2px);
+    }
+    .check{
+      width:18px; height:18px; border-radius:6px;
+      display:grid; place-items:center;
+      background: rgba(40,209,124,.16);
+      border:1px solid rgba(40,209,124,.22);
+      color: rgba(40,209,124,.95);
+      font-size:12px;
+    }
+
+    /* Right demo */
+    .demo-wrap{
+      position:relative;
+      border-radius: var(--radius2);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      box-shadow: var(--shadow);
+      overflow:hidden;
+    }
+    .demo-top{
+      display:flex; justify-content:center;
+      padding:14px 12px 10px;
+      border-bottom:1px solid rgba(255,255,255,.08);
       background: rgba(255,255,255,.03);
-      color: var(--muted);
-      font-size:12.5px;
+    }
+    .segmented{
+      display:flex; gap:6px;
+      padding:6px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.14);
+      border-radius:999px;
+      width: fit-content;
+    }
+    .seg-btn{
+      padding:10px 14px;
+      border-radius:999px;
+      border:1px solid transparent;
+      background: transparent;
+      color: rgba(255,255,255,.80);
+      font-weight:900;
+      font-size:13px;
+      cursor:pointer;
+      display:flex; align-items:center; gap:8px;
+      transition: all .12s ease;
+      user-select:none;
+    }
+    .seg-btn.active{
+      background: linear-gradient(135deg, rgba(40,209,124,.95), rgba(36,199,199,.85));
+      color:#062012;
+    }
+    .seg-btn:hover:not(.active){background: rgba(255,255,255,.08); transform: translateY(-1px)}
+    .seg-ico{opacity:.95}
+
+    .phone{
+      margin: 18px auto 18px;
+      width: min(370px, 92%);
+      border-radius: 34px;
+      border: 1px solid rgba(255,255,255,.12);
+      background:
+        radial-gradient(12px 12px at 30% 20%, rgba(255,255,255,.22), transparent 60%),
+        linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+      box-shadow: 0 26px 70px rgba(0,0,0,.6);
+      overflow:hidden;
+      position:relative;
+    }
+    .phone::before{
+      content:"";
+      position:absolute; inset:0;
+      background-image:
+        radial-gradient(circle at 12px 12px, rgba(255,255,255,.12) 1px, transparent 1.1px);
+      background-size: 20px 20px;
+      opacity:.20;
+      pointer-events:none;
+      mask-image: radial-gradient(260px 260px at 50% 20%, black 35%, transparent 75%);
+    }
+    .phone-header{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:12px 14px;
+      background: rgba(0,0,0,.22);
+      border-bottom:1px solid rgba(255,255,255,.10);
+      gap:10px;
+      position:relative;
+      z-index:1;
+    }
+    .ph-left{display:flex; align-items:center; gap:10px}
+    .avatar{
+      width:34px; height:34px; border-radius:12px;
+      background: linear-gradient(135deg, rgba(36,199,199,.85), rgba(40,209,124,.95));
+      border:1px solid rgba(255,255,255,.18);
+      display:grid; place-items:center;
+      font-weight:950; color:#052012;
+    }
+    .ph-title{display:flex; flex-direction:column; gap:2px}
+    .ph-title b{font-size:13px}
+    .ph-title span{font-size:12px; color:var(--muted2)}
+    .ph-actions{
+      display:flex; gap:10px; color:rgba(255,255,255,.85);
+      opacity:.9;
+    }
+    .ico{
+      width:30px; height:30px; border-radius:12px;
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      cursor: pointer;
+      transition: all .2s ease;
+    }
+    .ico:hover{
+      background: rgba(255,255,255,.1);
+      transform: translateY(-2px);
+    }
+    .chat{
+      padding:14px 14px 12px;
+      display:flex; flex-direction:column; gap:10px;
+      min-height: 355px;
+      position:relative;
+      z-index:1;
+      overflow-y: auto;
+      max-height: 400px;
+    }
+    .msg{
+      max-width: 78%;
+      padding:11px 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.90);
+      font-size: 13px;
+      line-height: 1.45;
+      word-wrap: break-word;
+      animation: fadeIn 0.3s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .msg.me{
+      align-self:flex-end;
+      background: rgba(40,209,124,.14);
+      border-color: rgba(40,209,124,.24);
+    }
+    .msg.bot{align-self:flex-start}
+    .meta{
+      margin-top:6px;
+      font-size:11px;
+      color: rgba(255,255,255,.55);
+      display:flex; justify-content:flex-end;
+      gap:8px;
+    }
+    .typing{
+      display:flex; align-items:center; gap:6px;
+      padding:10px 12px;
+      width: fit-content;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.04);
+      color: rgba(255,255,255,.70);
+      font-size: 12px;
+      margin-top: 2px;
+      animation: slideIn 0.3s ease-out;
+    }
+    @keyframes slideIn {
+      from { opacity: 0; transform: translateX(-10px); }
+      to { opacity: 1; transform: translateX(0); }
+    }
+    .dots{display:inline-flex; gap:3px}
+    .dots i{
+      width:5px; height:5px; border-radius:50%;
+      background: rgba(255,255,255,.60);
+      display:block;
+      animation: bounce 1.1s infinite;
+    }
+    .dots i:nth-child(2){animation-delay:.12s}
+    .dots i:nth-child(3){animation-delay:.24s}
+    @keyframes bounce{
+      0%,100%{transform:translateY(0); opacity:.55}
+      50%{transform:translateY(-3px); opacity:1}
+    }
+    .phone-footer{
+      display:flex; gap:10px;
+      padding:12px 14px;
+      border-top:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      position:relative;
+      z-index:1;
+    }
+    .input{
+      flex:1;
+      padding:12px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.80);
+      font-weight:700;
+      font-size:13px;
+      outline: none;
+      transition: all .2s ease;
+    }
+    .input:focus{
+      border-color: rgba(40,209,124,.5);
+      box-shadow: 0 0 0 2px rgba(40,209,124,.2);
+    }
+    .send{
+      width:46px; height:46px; border-radius:16px;
+      border:1px solid rgba(255,255,255,.16);
+      background: linear-gradient(135deg, rgba(40,209,124,.95), rgba(36,199,199,.85));
+      color:#062012; font-weight:950;
+      display:grid; place-items:center;
+      cursor:pointer;
+      transition: all .12s ease;
+    }
+    .send:hover{transform: translateY(-2px); box-shadow: 0 4px 12px rgba(40,209,124,.3)}
+    .demo-caption{
+      text-align:center;
+      color: var(--muted2);
+      font-weight:800;
+      font-size: 12.5px;
+      padding: 0 18px 18px;
     }
 
     /* Sections */
-    .grid2{
+    .section{
+      padding: 54px 0;
+      position:relative;
+      scroll-margin-top: 80px;
+    }
+    .section h2{
+      margin:0 0 10px;
+      font-size: clamp(24px, 2.5vw, 36px);
+      letter-spacing:-.5px;
+    }
+    .sub{
+      color:var(--muted);
+      line-height:1.7;
+      max-width: 70ch;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:18px;
+      margin-top: 22px;
+    }
+    .grid-3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:16px;
+      margin-top: 22px;
+    }
+    .card{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius: var(--radius);
+      padding:16px;
+      box-shadow: 0 18px 45px rgba(0,0,0,.35);
+      transition: all .3s ease;
+    }
+    .card:hover{
+      transform: translateY(-5px);
+      box-shadow: 0 25px 60px rgba(0,0,0,.45);
+      border-color: rgba(255,255,255,.15);
+    }
+    .card.glass{
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.035));
+    }
+    .card-title{
+      display:flex; align-items:center; gap:10px;
+      font-weight:950;
+      margin-bottom:6px;
+    }
+    .card-title span{font-size:15px}
+    .card p{margin:0; color:var(--muted); line-height:1.65; font-size:14px}
+    .mini-ico{
+      width:34px; height:34px; border-radius:14px;
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      color: rgba(36,199,199,.95);
+      font-weight:950;
+    }
+    .callout-danger{
+      border-color: rgba(255,77,109,.35);
+      background: rgba(255,77,109,.10);
+    }
+    .callout-danger .mini-ico{color: rgba(255,77,109,.95); background: rgba(255,77,109,.10); border-color: rgba(255,77,109,.25)}
+
+    /* ROI */
+    .roi{
+      margin-top: 22px;
+      border-radius: var(--radius2);
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadow);
+    }
+    .roi-inner{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:0;
+    }
+    .roi-left{
+      padding:18px;
+      border-right:1px solid rgba(255,255,255,.08);
+      background: rgba(0,0,0,.10);
+    }
+    .roi-right{
+      padding:18px;
+      background: linear-gradient(135deg, rgba(40,209,124,.16), rgba(36,199,199,.10));
+    }
+    .field{
+      display:flex; flex-direction:column; gap:8px;
+      margin-bottom:12px;
+    }
+    .field label{
+      font-weight:900;
+      color: rgba(255,255,255,.85);
+      font-size:13px;
+    }
+    .field input[type="number"], .field input[type="text"], .field select{
+      padding:12px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+      color: rgba(255,255,255,.88);
+      outline:none;
+      font-weight:800;
+      transition: all .2s ease;
+    }
+    .field input:focus, .field select:focus{
+      border-color: rgba(40,209,124,.5);
+      box-shadow: 0 0 0 2px rgba(40,209,124,.2);
+    }
+    .field input::placeholder{color: rgba(255,255,255,.45)}
+    .range{
+      display:flex; align-items:center; gap:10px;
+    }
+    .range input[type="range"]{
+      width:100%;
+      -webkit-appearance: none;
+      height: 6px;
+      background: rgba(255,255,255,.1);
+      border-radius: 3px;
+      outline: none;
+    }
+    .range input[type="range"]::-webkit-slider-thumb{
+      -webkit-appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, rgba(40,209,124,.95), rgba(36,199,199,.85));
+      cursor: pointer;
+      border: 2px solid rgba(255,255,255,.9);
+    }
+    .range .val{
+      min-width: 50px;
+      text-align:right;
+      font-weight:950;
+      color: rgba(255,255,255,.90);
+    }
+    .roi-metrics{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:12px;
+      margin-bottom: 14px;
+    }
+    .metric{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.05);
+      border-radius: 16px;
+      padding:14px;
+      transition: all .3s ease;
+    }
+    .metric:hover{
+      transform: translateY(-3px);
+      border-color: rgba(40,209,124,.3);
+    }
+    .metric .k{font-size:12px; color:var(--muted2); font-weight:900}
+    .metric .v{font-size:28px; font-weight:950; letter-spacing:-.6px; margin-top:6px}
+    .metric .hint{font-size:12px; color:var(--muted); margin-top:6px; font-weight:800}
+    .roi-big{
+      border:1px solid rgba(40,209,124,.30);
+      background: rgba(40,209,124,.12);
+      border-radius: 20px;
+      padding:16px;
+      display:flex; justify-content:space-between; align-items:flex-end;
+      gap:12px;
+      animation: pulse-glow 2s infinite;
+    }
+    @keyframes pulse-glow {
+      0% { box-shadow: 0 0 20px rgba(40,209,124,.1); }
+      50% { box-shadow: 0 0 30px rgba(40,209,124,.2); }
+      100% { box-shadow: 0 0 20px rgba(40,209,124,.1); }
+    }
+    .roi-big b{display:block; font-size:13px; color: rgba(255,255,255,.78)}
+    .roi-big .gain{
+      font-size:34px;
+      font-weight:980;
+      letter-spacing:-.8px;
+      color: rgba(255,255,255,.96);
+      margin-top:6px;
+    }
+    .roi-pill{
+      display:inline-flex; gap:8px; align-items:center;
+      font-weight:950;
+      color:#062012;
+      background: linear-gradient(135deg, rgba(40,209,124,.95), rgba(36,199,199,.85));
+      padding:10px 12px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.18);
+      white-space:nowrap;
+    }
+
+    /* Steps */
+    .steps{
+      display:grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap:14px;
+      margin-top: 22px;
+    }
+    .step{
+      position:relative;
+      padding:16px;
+      border-radius: var(--radius);
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      transition: all .3s ease;
+    }
+    .step:hover{
+      transform: translateY(-5px);
+      border-color: rgba(40,209,124,.3);
+    }
+    .step .n{
+      position:absolute; top:14px; right:14px;
+      width:34px; height:34px;
+      border-radius: 999px;
+      display:grid; place-items:center;
+      background: rgba(36,199,199,.14);
+      border:1px solid rgba(36,199,199,.22);
+      color: rgba(36,199,199,.95);
+      font-weight:950;
+    }
+    .step h4{margin:4px 0 8px; font-size:15px}
+    .step p{margin:0; color:var(--muted); line-height:1.65; font-size:13px}
+
+    /* Testimonials */
+    .stars{color: rgba(255,205,77,.95); letter-spacing:1px}
+    .t-foot{display:flex; align-items:center; gap:10px; margin-top:12px}
+    .face{
+      width:38px; height:38px; border-radius:14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(255,255,255,.06);
+      display:grid; place-items:center;
+      font-weight:950;
+    }
+    .who b{display:block; font-size:13px}
+    .who span{font-size:12px; color:var(--muted2); font-weight:900}
+
+    /* FAQ */
+    .faq{
       display:grid;
       grid-template-columns: 1fr 1fr;
       gap:14px;
-      margin-top:16px;
+      margin-top: 22px;
     }
-    @media (max-width: 980px){
-      .grid2{grid-template-columns:1fr}
+    details{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius: var(--radius);
+      padding:14px 14px;
+      overflow:hidden;
+      transition: all .3s ease;
     }
-    .sectionTitle{
+    details:hover{
+      border-color: rgba(40,209,124,.3);
+    }
+    details[open]{
+      background: rgba(255,255,255,.06);
+      border-color: rgba(40,209,124,.4);
+    }
+    summary{
+      cursor:pointer;
+      font-weight:950;
       font-size:14px;
-      letter-spacing:.6px;
-      text-transform:uppercase;
-      color: rgba(244,247,255,.78);
-      margin:0 0 10px;
-    }
-    .list{
-      display:grid; gap:10px;
-    }
-    .item{
-      padding:12px 12px;
-      border-radius:16px;
-      border:1px solid var(--stroke);
-      background: rgba(255,255,255,.05);
-    }
-    .item b{display:block; font-size:13px}
-    .item p{margin:6px 0 0; color:var(--muted); font-size:13px}
-
-    /* Fit check form */
-    form{
-      display:grid; gap:10px;
-      margin-top:10px;
-    }
-    .row{
-      display:grid;
-      grid-template-columns: 1fr 1fr;
+      list-style:none;
+      display:flex; align-items:center; justify-content:space-between;
       gap:10px;
     }
-    @media (max-width: 520px){
-      .row{grid-template-columns:1fr}
+    summary::-webkit-details-marker{display:none}
+    details p{
+      margin:10px 0 0;
+      color:var(--muted);
+      line-height:1.65;
+      font-size:13px;
+      animation: slideDown 0.3s ease-out;
     }
-    label{font-size:12px; color:var(--muted); display:block; margin-bottom:6px}
-    input, select, textarea{
-      width:100%;
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid var(--stroke);
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .chev{
+      width:30px; height:30px; border-radius:12px;
+      display:grid; place-items:center;
+      border:1px solid rgba(255,255,255,.10);
       background: rgba(255,255,255,.05);
-      color: var(--text);
-      outline:none;
+      transition: all .3s ease;
+      flex: 0 0 auto;
+    }
+    details[open] .chev{transform: rotate(180deg); background: rgba(40,209,124,.1);}
+
+    /* Lead form */
+    .lead-box{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:18px;
+      margin-top: 22px;
+      border-radius: var(--radius2);
+      overflow:hidden;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      box-shadow: var(--shadow);
+    }
+    .lead-left{
+      padding:22px;
+      background:
+        radial-gradient(700px 360px at 0% 20%, rgba(36,199,199,.16), transparent 55%),
+        radial-gradient(700px 360px at 100% 80%, rgba(40,209,124,.14), transparent 55%),
+        rgba(0,0,0,.12);
+      border-right:1px solid rgba(255,255,255,.08);
+    }
+    .lead-left h3{margin:0 0 10px; font-size:28px; letter-spacing:-.6px}
+    .lead-left .accent{
+      background: linear-gradient(135deg, rgba(40,209,124,1), rgba(36,199,199,1));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      font-weight:950;
+    }
+    .lead-left p{margin:0; color:var(--muted); line-height:1.7}
+    .lead-right{padding:18px}
+    .two{
+      display:grid; grid-template-columns: 1fr 1fr; gap:12px;
+    }
+    .submit{
+      width:100%;
+      justify-content:center;
+      padding:14px 16px;
+      border-radius: 16px;
       font-size:14px;
     }
-    textarea{min-height:92px; resize:vertical}
-    input:focus, select:focus, textarea:focus{
-      border-color: rgba(124,92,255,.55);
-      box-shadow: 0 0 0 6px rgba(124,92,255,.12);
-    }
-    .formActions{
-      display:flex; gap:10px; flex-wrap:wrap; align-items:center;
-      margin-top:4px;
-    }
-    .note{
-      font-size:12px; color: var(--muted2);
+    .tiny{
+      font-size:12px;
+      color: var(--muted2);
+      margin-top: 10px;
+      line-height:1.6;
+      font-weight:800;
     }
 
     /* Footer */
     footer{
-      margin-top:22px;
-      padding-top:14px;
-      border-top:1px solid rgba(255,255,255,.10);
-      color: rgba(244,247,255,.55);
-      font-size:12px;
-      display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;
+      padding: 30px 0 40px;
+      border-top: 1px solid rgba(255,255,255,.08);
+      color: var(--muted2);
+      font-weight:800;
+      font-size:13px;
     }
-    .kbd{
-      font-family: var(--mono);
-      font-size:12px;
-      padding:2px 6px;
-      border-radius:8px;
+    .foot{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px; flex-wrap:wrap;
+    }
+    .foot a{opacity:.85; transition: opacity .2s ease;}
+    .foot a:hover{opacity:1; color:rgba(255,255,255,.92)}
+
+    /* Floating WhatsApp */
+    .float-wa{
+      position:fixed;
+      right:18px;
+      bottom:18px;
+      z-index:80;
+      width:56px; height:56px;
+      border-radius: 999px;
+      border:1px solid rgba(255,255,255,.16);
+      background: linear-gradient(135deg, rgba(40,209,124,.95), rgba(36,199,199,.85));
+      box-shadow: 0 22px 60px rgba(0,0,0,.55);
+      display:grid; place-items:center;
+      color:#062012;
+      cursor:pointer;
+      transition: all .3s ease;
+      animation: float 3s ease-in-out infinite;
+    }
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    .float-wa:hover{
+      transform: translateY(-2px) scale(1.02);
+      box-shadow: 0 26px 70px rgba(40,209,124,.3);
+    }
+    .wa-tip{
+      position:fixed;
+      right:84px;
+      bottom:26px;
+      z-index:79;
+      padding:10px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(10,18,38,.85);
+      backdrop-filter: blur(10px);
+      color: rgba(255,255,255,.90);
+      font-weight:900;
+      font-size:12.5px;
+      opacity:0;
+      transform: translateY(6px);
+      transition: all .3s ease;
+      pointer-events:none;
+    }
+    .float-wa:hover + .wa-tip{opacity:1; transform: translateY(0)}
+
+    /* Modal */
+    .modal-backdrop{
+      position:fixed; inset:0;
+      background: rgba(0,0,0,.75);
+      backdrop-filter: blur(10px);
+      display:none;
+      z-index:120;
+      padding: 18px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    .modal-backdrop.active{
+      display: flex;
+      opacity: 1;
+      align-items: center;
+      justify-content: center;
+    }
+    .modal{
+      max-width: 820px;
+      margin: 40px auto;
+      border-radius: var(--radius2);
+      border: 1px solid rgba(255,255,255,.12);
+      background: rgba(10,18,38,.95);
+      box-shadow: 0 30px 80px rgba(0,0,0,.85);
+      overflow:hidden;
+      transform: translateY(20px);
+      transition: transform 0.3s ease;
+      max-height: 90vh;
+      overflow-y: auto;
+    }
+    .modal-backdrop.active .modal{
+      transform: translateY(0);
+    }
+    .modal-head{
+      display:flex; align-items:center; justify-content:space-between;
+      padding: 14px 16px;
+      border-bottom: 1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+    }
+    .modal-head b{font-size:14px}
+    .modal-close{
+      width:38px; height:38px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.12);
       background: rgba(255,255,255,.06);
-      border:1px solid var(--stroke);
-      color: rgba(244,247,255,.84);
+      display:grid; place-items:center;
+      cursor:pointer;
+      font-weight:950;
+      transition: all .2s ease;
+    }
+    .modal-close:hover{
+      background: rgba(255,255,255,.1);
+      transform: rotate(90deg);
+    }
+    .modal-body{padding:16px}
+    .modal-grid{
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      align-items:start;
+    }
+    .mini-note{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.04);
+      border-radius: var(--radius);
+      padding: 14px;
+      color: var(--muted);
+      line-height:1.65;
+      font-size: 13px;
+      font-weight:700;
+    }
+
+    /* Success Message */
+    .success-message {
+      display: none;
+      padding: 20px;
+      text-align: center;
+      background: rgba(40,209,124,.1);
+      border: 1px solid rgba(40,209,124,.3);
+      border-radius: var(--radius);
+      margin-top: 20px;
+    }
+    .success-message.active {
+      display: block;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns:1fr; gap:18px}
+      .demo-wrap{order:2}
+      .grid-3{grid-template-columns:1fr}
+      .grid-2{grid-template-columns:1fr}
+      .roi-inner{grid-template-columns:1fr}
+      .roi-left{border-right:none; border-bottom:1px solid rgba(255,255,255,.08)}
+      .steps{grid-template-columns:1fr 1fr}
+      .lead-box{grid-template-columns:1fr}
+      .lead-left{border-right:none; border-bottom:1px solid rgba(255,255,255,.08)}
+      .modal-grid{grid-template-columns:1fr}
+      .faq{grid-template-columns:1fr}
+    }
+    @media (max-width: 768px){
+      .nav-links{display:none}
+      .brand{font-size: 1rem;}
+    }
+    @media (max-width: 520px){
+      .steps{grid-template-columns:1fr}
+      .two{grid-template-columns:1fr}
+      .phone{width: 96%}
+      h1{font-size: 28px;}
+      .hero{padding: 30px 0 20px;}
+      .section{padding: 40px 0;}
     }
   </style>
 </head>
 
 <body>
-  <div class="wrap">
-    <div class="topbar">
-      <a class="brand" href="#top" aria-label="Home">
-        <div class="logo" aria-hidden="true"></div>
-        <div>
-          <b>WhatsApp Front Desk</b>
-          <small>Demo تفاعلي بدارجة (service ماشي “chatbot”)</small>
+  <div class="nav">
+    <div class="container">
+      <div class="nav-inner">
+        <div class="brand">
+          <div class="logo"></div>
+          <div>WhatsApp 24/7</div>
         </div>
-      </a>
 
-      <div class="nav">
-        <a class="pill" href="#demo"><span class="dot"></span> شوف الديمو</a>
-        <a class="pill" href="#fit">Fit Check</a>
+        <div class="nav-links">
+          <a href="#demo">Démo</a>
+          <a href="#roi">Calculateur</a>
+          <a href="#secteurs">Secteurs</a>
+          <a href="#faq">FAQ</a>
+        </div>
+
+        <div class="nav-cta">
+          <a class="btn ghost" href="#roi">Calculer les gains</a>
+          <a class="btn primary" href="#contact">Essai / Démo</a>
+        </div>
       </div>
     </div>
+  </div>
 
-    <div id="top" class="hero">
-      <!-- LEFT: Pitch -->
-      <section class="card">
-        <div class="inner">
-          <div class="badge"><span class="spark"></span> كيضيعو عليك الزبناء فـ WhatsApp… بلا ما تحس</div>
-
-          <h1>WhatsApp ديالك راه هو “الريسيبسيون”.<br/>حنا كننظموه وكنحميـو المبيعات.</h1>
-
-          <p class="sub">
-            ماشي “بوت” كيرد وخلاص. هاد الشي هو <b>Front Desk</b>: كيشد المحادثة حتى كتولي
-            <b>حجز / طلب / موعد / قرار</b>… وكيصعّبها غير فاش خاص إنسان يدخل.
+  <!-- HERO -->
+  <header class="hero" id="top">
+    <div class="pattern"></div>
+    <div class="container">
+      <div class="hero-grid">
+        <div>
+          <div class="pill"><span class="dot"></span> Agent intelligent pour WhatsApp Business</div>
+          <h1>
+            Transformez WhatsApp en
+            <span class="h1-accent">canal de vente 24/7</span>
+          </h1>
+          <p class="lead">
+            Finis les retards de réponse. L'agent répond instantanément, qualifie les demandes,
+            prend des rendez-vous, envoie les informations et transfère à un humain uniquement quand c'est nécessaire.
           </p>
 
-          <div class="kpis" role="list">
-            <div class="kpi" role="listitem">
-              <b>ردّ فاللحظة</b>
-              <small>الزبون ما كينتظرش ساعات</small>
-            </div>
-            <div class="kpi" role="listitem">
-              <b>فلترة الناس</b>
-              <small>جادّين vs تضييع الوقت</small>
-            </div>
-            <div class="kpi" role="listitem">
-              <b>تأكيد + تذكير</b>
-              <small>هبوط no-shows</small>
-            </div>
+          <div class="hero-actions">
+            <a class="btn primary" href="#contact">Essayer maintenant</a>
+            <a class="btn" href="#roi">Calculer vos gains</a>
+            <button class="btn" id="openDemoModal" type="button">Voir une démo guidée</button>
           </div>
 
-          <div class="ctaRow">
-            <a class="btn primary" href="#demo">بدا الديمو دابا</a>
-            <a class="btn ghost" href="#fit">دير Fit Check (15 دقيقة)</a>
-          </div>
-
-          <div class="tiny">
-            ملاحظة: هاد الصفحة غير Demo. فالخدمة الحقيقية كنديروها فـ WhatsApp ديالك عبر flows مضبوطين.
-            <span class="kbd">Ctrl</span> + <span class="kbd">K</span> كيعطيك اختصارات فالأسفل.
-          </div>
-        </div>
-      </section>
-
-      <!-- RIGHT: Demo -->
-      <section id="demo" class="card" aria-label="Interactive demo">
-        <div class="demoHeader">
-          <div class="left">
-            <div class="avatar" aria-hidden="true"></div>
-            <div class="who">
-              <b id="demoTitle">Magico Safi — WhatsApp</b>
-              <small id="demoSub">Front Desk: ردّ + تنظيم + تأكيد</small>
-            </div>
-          </div>
-          <div class="status" title="حالة الخدمة">
-            <span class="dot"></span> خدام 24/7
+          <div class="badges">
+            <div class="badge"><span class="check">✓</span> Réponse instantanée</div>
+            <div class="badge"><span class="check">✓</span> Langage naturel</div>
+            <div class="badge"><span class="check">✓</span> Actif 24/7</div>
           </div>
         </div>
 
-        <div id="chat" class="chat" aria-live="polite" aria-label="Chat">
-          <!-- Messages injected -->
-        </div>
+        <div class="demo-wrap" id="demo">
+          <div class="demo-top">
+            <div class="segmented" role="tablist" aria-label="Secteur">
+              <button class="seg-btn active" data-mode="restaurant" role="tab" aria-selected="true">
+                <span class="seg-ico">🍽️</span> Restaurant
+              </button>
+              <button class="seg-btn" data-mode="clinique" role="tab" aria-selected="false">
+                <span class="seg-ico">🩺</span> Clinique
+              </button>
+              <button class="seg-btn" data-mode="boutique" role="tab" aria-selected="false">
+                <span class="seg-ico">🛍️</span> Boutique
+              </button>
+            </div>
+          </div>
 
-        <div class="chips" aria-label="Scenarios">
-          <button class="chip" data-scenario="clinic"><strong>عيادة</strong><span class="tag">موعد + تذكير</span></button>
-          <button class="chip" data-scenario="restaurant"><strong>مطعم</strong><span class="tag">حجز طابلة</span></button>
-          <button class="chip" data-scenario="realestate"><strong>عقار</strong><span class="tag">زيارة + فلترة</span></button>
-          <button class="chip" data-scenario="ecom"><strong>E-com</strong><span class="tag">FAQ + COD</span></button>
-        </div>
+          <div class="phone" aria-label="Aperçu conversation">
+            <div class="phone-header">
+              <div class="ph-left">
+                <div class="avatar" id="avatar">AI</div>
+                <div class="ph-title">
+                  <b id="chatTitle">Bistro 24/7</b>
+                  <span>Compte professionnel · Réponse instantanée</span>
+                </div>
+              </div>
+              <div class="ph-actions">
+                <div class="ico" title="Appel">📞</div>
+                <div class="ico" title="Vidéo">🎥</div>
+              </div>
+            </div>
 
-        <div class="inner" style="padding-top:14px">
-          <div class="sysNote" id="sysNote">
-            اختار سيناريو من الفوق. غادي تشوف كيفاش النظام كيرد، كيطلب معلومات ناقصة، وكيصعّد لِإنسان غير فاش خاص.
+            <div class="chat" id="chat">
+              <!-- Messages will be inserted here by JavaScript -->
+            </div>
+
+            <div class="phone-footer">
+              <input class="input" id="fakeInput" placeholder="Écrire un message…" />
+              <button class="send" id="sendBtn" title="Envoyer">➤</button>
+            </div>
+          </div>
+
+          <div class="demo-caption">
+            Démo interactive : changez de secteur ou envoyez un message pour voir la réponse.
           </div>
         </div>
-      </section>
-    </div>
-
-    <!-- Middle content -->
-    <div class="grid2">
-      <section class="card">
-        <div class="inner">
-          <p class="sectionTitle">شنو كيتبدّل فالحقيقة</p>
-          <div class="list">
-            <div class="item">
-              <b>ما كاينش “Seen” وسكات</b>
-              <p>أي رسالة كتلقا ردّ فـ ثواني، حتى إلا كان غير “غادي نعاونك دابا”.</p>
-            </div>
-            <div class="item">
-              <b>النظام كيسول الأسئلة اللي كتنقص</b>
-              <p>باش يوصل للقرار: شكون؟ شحال؟ فين؟ وقتاش؟… بلا ما يضيع الوقت.</p>
-            </div>
-            <div class="item">
-              <b>Escalation نظيف</b>
-              <p>فاش خاص إنسان يدخل، كيتصيفط ليه الملخص ديال الحالة باش ما يبقاش يقلب فالشات.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="card">
-        <div class="inner">
-          <p class="sectionTitle">هاد الخدمة ماشي لهاد الناس</p>
-          <div class="list">
-            <div class="item">
-              <b>إلا كتجيك 5 رسائل فالنهار</b>
-              <p>ما غاديش تحس بالفرق. هادي كتخدم مزيان مع volume.</p>
-            </div>
-            <div class="item">
-              <b>إلا باغي غير “تجربة AI”</b>
-              <p>حنا كنبيعو نتيجة: تنظيم + مبيعات + وقت. ماشي ألعاب.</p>
-            </div>
-            <div class="item">
-              <b>إلا ما كتجاوبش نهائيا</b>
-              <p>Front Desk كيساعدك، ولكن خاص تكون كتحترم الزبون حتى فالhandoff.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-    </div>
-
-    <!-- Fit check -->
-    <section id="fit" class="card" style="margin-top:14px">
-      <div class="inner">
-        <p class="sectionTitle">Fit Check (15 دقيقة)</p>
-        <p class="sub" style="margin-top:-2px">
-          خليه بسيط: شنو النشاط ديالك، شحال ديال messages كتجيك، وشنو أكثر سؤال كيعوّدوه الزبناء.
-          (هاد الفورم كيدير demo محلياً فقط — إلى بغيتيه يرسل، بدل لينا endpoint ديال السيرفر/CRM ديالك.)
-        </p>
-
-        <form id="fitForm">
-          <div class="row">
-            <div>
-              <label for="biz">النشاط / البزنس</label>
-              <input id="biz" name="biz" placeholder="مثال: عيادة أسنان / مطعم / وكالة عقار..." required />
-            </div>
-            <div>
-              <label for="city">المدينة</label>
-              <input id="city" name="city" placeholder="مثال: القنيطرة / الرباط / سلا / الدار البيضاء..." required />
-            </div>
-          </div>
-
-          <div class="row">
-            <div>
-              <label for="volume">تقريباً شحال رسالة فالنهار؟</label>
-              <select id="volume" name="volume" required>
-                <option value="" selected disabled>اختار</option>
-                <option>5 - 20</option>
-                <option>20 - 60</option>
-                <option>60 - 150</option>
-                <option>150+</option>
-              </select>
-            </div>
-            <div>
-              <label for="channel">فين كيجيو الزبناء أكثر؟</label>
-              <select id="channel" name="channel" required>
-                <option value="" selected disabled>اختار</option>
-                <option>WhatsApp فقط</option>
-                <option>WhatsApp + Instagram</option>
-                <option>WhatsApp + Facebook</option>
-                <option>مزيج (Ads + Organic)</option>
-              </select>
-            </div>
-          </div>
-
-          <div>
-            <label for="pain">شنو أكثر حاجة كتقهرَك فـ WhatsApp دابا؟</label>
-            <textarea id="pain" name="pain" placeholder="مثال: الناس كيسولو على الثمن بزاف / كيحجزو وما كيجيـوش / كنضيع الوقت فالمكان واللوكيشن..." required></textarea>
-          </div>
-
-          <div class="formActions">
-            <button class="btn primary" type="submit">خدّ ليا الملخص</button>
-            <button class="btn ghost" type="button" id="copySummary">نسخ الملخص</button>
-            <span class="note" id="formNote"></span>
-          </div>
-        </form>
-
-        <div class="sysNote" id="summaryBox" style="display:none; margin-top:12px"></div>
       </div>
-    </section>
+    </div>
+  </header>
 
-    <footer>
-      <div>© <span id="year"></span> WhatsApp Front Desk Demo — دارجة.</div>
-      <div>اختصارات: <span class="kbd">1</span> عيادة • <span class="kbd">2</span> مطعم • <span class="kbd">3</span> عقار • <span class="kbd">4</span> E-com</div>
-    </footer>
+  <!-- PAIN -->
+  <section class="section">
+    <div class="container">
+      <h2>Pourquoi perdez-vous des clients ? 😰</h2>
+      <p class="sub">
+        Les retards diminuent la confiance et les ventes. Les prospects veulent une réponse tout de suite.
+        Quand ils n'en reçoivent pas, ils passent au concurrent.
+      </p>
+
+      <div class="grid-2">
+        <div class="card glass">
+          <div class="card-title">
+            <div class="mini-ico">⏱️</div>
+            <span>Réponse lente</span>
+          </div>
+          <p>Le client attend une réponse immédiate. Quelques minutes de retard peuvent suffire à le perdre.</p>
+        </div>
+
+        <div class="card glass">
+          <div class="card-title">
+            <div class="mini-ico">🌙</div>
+            <span>Ventes perdues hors horaires</span>
+          </div>
+          <p>Beaucoup écrivent après la fermeture. Un agent 24/7 récupère ces opportunités automatiquement.</p>
+        </div>
+
+        <div class="card glass">
+          <div class="card-title">
+            <div class="mini-ico">💸</div>
+            <span>Coûts de personnel élevés</span>
+          </div>
+          <p>Assurer du 24/7 avec une équipe coûte cher. L'automatisation réduit la charge et améliore l'expérience.</p>
+        </div>
+
+        <div class="card glass callout-danger">
+          <div class="card-title">
+            <div class="mini-ico">⚠️</div>
+            <span>Vérité douloureuse</span>
+          </div>
+          <p><b>Un retard de 5 minutes</b> peut vous faire perdre un client définitivement. La plupart des pertes sont invisibles.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ROI -->
+  <section class="section" id="roi">
+    <div class="container">
+      <h2>Calculateur de gains</h2>
+      <p class="sub">Entrez vos chiffres pour estimer le temps économisé et l'impact sur le chiffre d'affaires.</p>
+
+      <div class="roi">
+        <div class="roi-inner">
+          <div class="roi-left">
+            <div class="field">
+              <label>Nombre de messages WhatsApp par jour</label>
+              <div class="range">
+                <input id="messages" type="range" min="10" max="1000" value="50"/>
+                <div class="val"><span id="messagesVal">50</span></div>
+              </div>
+            </div>
+
+            <div class="field">
+              <label>Valeur moyenne d'une commande (DH)</label>
+              <input id="aov" type="number" min="0" step="10" value="200"/>
+            </div>
+
+            <div class="field">
+              <label>Temps moyen passé par client (minutes)</label>
+              <input id="time" type="number" min="1" step="1" value="5"/>
+            </div>
+
+            <div class="field">
+              <label>Taux de conversion actuel (%)</label>
+              <input id="conv" type="number" min="0" max="100" step="1" value="10"/>
+            </div>
+
+            <div class="field">
+              <label>Amélioration attendue (%)</label>
+              <select id="uplift">
+                <option value="10">+10%</option>
+                <option value="15">+15%</option>
+                <option value="20">+20%</option>
+                <option value="25" selected>+25%</option>
+                <option value="30">+30%</option>
+              </select>
+            </div>
+
+            <a class="btn primary" href="#contact" style="width:100%; justify-content:center;">
+              Voir une démo sur votre activité
+            </a>
+          </div>
+
+          <div class="roi-right">
+            <div class="roi-metrics">
+              <div class="metric">
+                <div class="k">Heures économisées / mois</div>
+                <div class="v" id="hoursSaved">125</div>
+                <div class="hint">Équivalent à une charge de travail importante.</div>
+              </div>
+              <div class="metric">
+                <div class="k">Revenu mensuel actuel (estimé)</div>
+                <div class="v"><span id="revNow">30,000</span> DH</div>
+                <div class="hint">Basé sur les données saisies.</div>
+              </div>
+            </div>
+
+            <div class="roi-big">
+              <div>
+                <b>Avec l'agent (+<span id="upliftVal">25</span>% d'amélioration)</b>
+                <div class="gain">+<span id="revGain">7,600</span> DH</div>
+                <div class="hint" style="margin-top:6px">Revenus supplémentaires mensuels estimés.</div>
+              </div>
+              <div class="roi-pill">
+                <span>+<span id="ordersMore">38</span></span>
+                <span style="font-weight:950;">commandes / mois</span>
+              </div>
+            </div>
+
+            <div class="tiny">
+              Estimation indicative : le résultat dépend de votre offre, rapidité, volume et organisation.
+              L'objectif : <b>réduire les pertes invisibles</b> et augmenter les conversions.
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTEURS -->
+  <section class="section" id="secteurs">
+    <div class="container">
+      <h2>Solutions par secteur</h2>
+      <p class="sub">Des scénarios concrets avec des résultats mesurables : réservation, rendez-vous, qualification, suivi.</p>
+
+      <div class="grid-3">
+        <div class="card glass">
+          <div class="card-title"><div class="mini-ico">🍽️</div><span>Restaurants</span></div>
+          <p>Réservations instantanées, menu partagé, confirmations automatiques.</p>
+          <p style="margin-top:10px;color:rgba(40,209,124,.95);font-weight:950;">Résultat : moins de réservations perdues.</p>
+        </div>
+
+        <div class="card glass">
+          <div class="card-title"><div class="mini-ico">🩺</div><span>Cliniques</span></div>
+          <p>Prise de rendez-vous, rappels automatiques, questions pré-visite.</p>
+          <p style="margin-top:10px;color:rgba(40,209,124,.95);font-weight:950;">Résultat : moins d'absences et meilleure expérience.</p>
+        </div>
+
+        <div class="card glass">
+          <div class="card-title"><div class="mini-ico">🏠</div><span>Immobilier</span></div>
+          <p>Qualification des leads, partage de photos, planification des visites.</p>
+          <p style="margin-top:10px;color:rgba(40,209,124,.95);font-weight:950;">Résultat : visites plus qualifiées.</p>
+        </div>
+
+        <div class="card glass">
+          <div class="card-title"><div class="mini-ico">🛒</div><span>E-commerce</span></div>
+          <p>FAQ produits, suivi de commande, relance panier, support rapide.</p>
+          <p style="margin-top:10px;color:rgba(40,209,124,.95);font-weight:950;">Résultat : ventes récupérées.</p>
+        </div>
+
+        <div class="card glass">
+          <div class="card-title"><div class="mini-ico">🎓</div><span>Éducation</span></div>
+          <p>Inscriptions, envoi de planning, réponses aux questions fréquentes.</p>
+          <p style="margin-top:10px;color:rgba(40,209,124,.95);font-weight:950;">Résultat : accueil allégé.</p>
+        </div>
+
+        <div class="card glass">
+          <div class="card-title"><div class="mini-ico">🧰</div><span>Services</span></div>
+          <p>Collecte des demandes, devis, escalade des cas complexes.</p>
+          <p style="margin-top:10px;color:rgba(40,209,124,.95);font-weight:950;">Résultat : meilleure organisation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STEPS -->
+  <section class="section">
+    <div class="container">
+      <h2>Commencez en 4 étapes simples</h2>
+      <p class="sub">Un flux clair : connexion, configuration, mise en ligne, optimisation continue.</p>
+
+      <div class="steps">
+        <div class="step">
+          <div class="n">1</div>
+          <h4>Connexion</h4>
+          <p>On connecte WhatsApp Business et prépare les éléments essentiels (profil, horaires, offres, FAQs).</p>
+        </div>
+        <div class="step">
+          <div class="n">2</div>
+          <h4>Configuration</h4>
+          <p>On définit les scénarios, les règles d'escalade, le ton et les langues pour votre activité.</p>
+        </div>
+        <div class="step">
+          <div class="n">3</div>
+          <h4>Mise en ligne</h4>
+          <p>On active l'agent et on démarre les conversations, avec suivi de la qualité des réponses.</p>
+        </div>
+        <div class="step">
+          <div class="n">4</div>
+          <h4>Optimisation</h4>
+          <p>On améliore les conversions avec des ajustements réguliers : scripts, priorités, reporting.</p>
+        </div>
+      </div>
+
+      <div style="display:flex; justify-content:center; margin-top:18px">
+        <a class="btn primary" href="#contact">Automatiser maintenant</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TESTIMONIALS -->
+  <section class="section">
+    <div class="container">
+      <h2>Histoires de réussite</h2>
+      <p class="sub">Des retours orientés résultats : moins de pertes, plus de vitesse, meilleure conversion.</p>
+
+      <div class="grid-3">
+        <div class="card glass">
+          <div class="stars">★★★★★</div>
+          <p style="margin-top:8px">
+            "On perdait des rendez-vous parce que personne ne répondait assez vite. Maintenant c'est confirmé automatiquement."
+          </p>
+          <div class="t-foot">
+            <div class="face">YA</div>
+            <div class="who"><b>Yassine A.</b><span>Cabinet / Santé</span></div>
+          </div>
+        </div>
+
+        <div class="card glass">
+          <div class="stars">★★★★★</div>
+          <p style="margin-top:8px">
+            "On a réduit les questions répétitives et récupéré des ventes en dehors des horaires. Gain de temps énorme."
+          </p>
+          <div class="t-foot">
+            <div class="face">SZ</div>
+            <div class="who"><b>Salma Z.</b><span>Boutique en ligne</span></div>
+          </div>
+        </div>
+
+        <div class="card glass">
+          <div class="stars">★★★★★</div>
+          <p style="margin-top:8px">
+            "Les réservations sont confirmées et rappelées. Les clients adorent la rapidité, et l'équipe respire."
+          </p>
+          <div class="t-foot">
+            <div class="face">KB</div>
+            <div class="who"><b>Karim B.</b><span>Restaurant</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq">
+    <div class="container">
+      <h2>Questions fréquentes</h2>
+      <p class="sub">Des réponses claires avant de démarrer.</p>
+
+      <div class="faq">
+        <details>
+          <summary>Ai-je besoin d'un nouveau numéro WhatsApp ? <span class="chev">⌄</span></summary>
+          <p>Non. On peut connecter l'agent à votre WhatsApp Business actuel. Si besoin, un nouveau numéro peut être créé.</p>
+        </details>
+
+        <details>
+          <summary>Quel est le délai de mise en place ? <span class="chev">⌄</span></summary>
+          <p>En général 24 à 72 heures selon votre activité, vos scénarios et le volume de messages.</p>
+        </details>
+
+        <details>
+          <summary>Peut-il transférer la conversation à un humain ? <span class="chev">⌄</span></summary>
+          <p>Oui. Des règles permettent d'escalader automatiquement (cas complexe, client chaud, urgence, etc.).</p>
+        </details>
+
+        <details>
+          <summary>Quelles langues sont prises en charge ? <span class="chev">⌄</span></summary>
+          <p>Français, arabe et darija selon vos besoins, avec possibilité d'ajouter l'anglais.</p>
+        </details>
+
+        <details style="grid-column:1/-1">
+          <summary>Comment gérez-vous la confidentialité ? <span class="chev">⌄</span></summary>
+          <p>
+            Accès limité, bonnes pratiques de sécurité, et suppression possible sur demande.
+            On définit ensemble ce qui est stocké et ce qui ne l'est pas.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="section" id="contact">
+    <div class="container">
+      <div class="lead-box">
+        <div class="lead-left">
+          <div class="pill"><span class="dot"></span> Essai gratuit limité</div>
+          <h3>Prêt à automatiser <span class="accent">vos conversations clients</span> ?</h3>
+          <p>
+            Remplissez le formulaire : on configure un scénario adapté à votre activité
+            (réservation, rendez-vous, commande, FAQ) et on vous montre la démo.
+          </p>
+
+          <div class="badges" style="margin-top:16px">
+            <div class="badge"><span class="check">✓</span> Mise en place rapide</div>
+            <div class="badge"><span class="check">✓</span> Scripts sur-mesure</div>
+            <div class="badge"><span class="check">✓</span> Amélioration continue</div>
+          </div>
+        </div>
+
+        <div class="lead-right">
+          <form id="leadForm">
+            <div id="formSuccess" class="success-message">
+              <div style="font-size: 24px; margin-bottom: 10px;">✅</div>
+              <h3 style="margin: 0 0 10px;">Demande envoyée !</h3>
+              <p>Nous vous contacterons dans les 24 heures pour configurer votre démo personnalisée.</p>
+            </div>
+
+            <div id="formFields">
+              <div class="two">
+                <div class="field">
+                  <label>Nom complet</label>
+                  <input type="text" name="fullname" placeholder="Ex : Amine El Amri" required>
+                </div>
+                <div class="field">
+                  <label>Ville</label>
+                  <input type="text" name="city" placeholder="Ex : Casablanca" required>
+                </div>
+              </div>
+
+              <div class="field">
+                <label>E-mail professionnel</label>
+                <input type="email" name="email" placeholder="exemple@email.com" required>
+              </div>
+
+              <div class="two">
+                <div class="field">
+                  <label>Indicatif</label>
+                  <select name="country">
+                    <option value="+212" selected>MA Maroc (+212)</option>
+                    <option value="+33">FR France (+33)</option>
+                    <option value="+32">BE Belgique (+32)</option>
+                    <option value="+1">US/CA (+1)</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>Numéro WhatsApp Business</label>
+                  <input type="tel" name="phone" placeholder="06XXXXXXXX" required>
+                </div>
+              </div>
+
+              <div class="two">
+                <div class="field">
+                  <label>Type d'activité</label>
+                  <select name="industry" required>
+                    <option value="" disabled selected>Choisir…</option>
+                    <option>Restaurant / Café</option>
+                    <option>Clinique / Cabinet</option>
+                    <option>E-commerce</option>
+                    <option>Immobilier</option>
+                    <option>Éducation / Formation</option>
+                    <option>Services (garage, beauté, etc.)</option>
+                    <option>Autre</option>
+                  </select>
+                </div>
+                <div class="field">
+                  <label>Volume WhatsApp / jour</label>
+                  <select name="volume" required>
+                    <option value="" disabled selected>Choisir…</option>
+                    <option>10–30</option>
+                    <option>30–80</option>
+                    <option>80–150</option>
+                    <option>150–300</option>
+                    <option>300+</option>
+                  </select>
+                </div>
+              </div>
+
+              <div class="field">
+                <label>Votre objectif principal</label>
+                <input type="text" name="goal" placeholder="Ex : Réservations, RDV, ventes, support…" required>
+              </div>
+
+              <button class="btn primary submit" type="submit">
+                Envoyer la demande et démarrer l'essai
+              </button>
+            </div>
+
+            <div class="tiny">
+              En envoyant ce formulaire, vous acceptez d'être contacté pour la mise en place.
+              Aucune donnée sensible n'est demandée ici.
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="foot">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <div class="logo" style="width:30px;height:30px;border-radius:12px"></div>
+          <span>WhatsApp 24/7 · Ventes & Support</span>
+        </div>
+        <div style="display:flex; gap:14px; flex-wrap:wrap;">
+          <a href="#top">Haut</a>
+          <a href="#demo">Démo</a>
+          <a href="#roi">Calculateur</a>
+          <a href="#contact">Contact</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Floating WhatsApp -->
+  <a class="float-wa" id="waBtn" href="https://wa.me/212600000000?text=Bonjour,%20je%20suis%20intéressé%20par%20l'agent%20WhatsApp%2024/7" target="_blank" aria-label="WhatsApp">
+    💬
+  </a>
+  <div class="wa-tip">Discuter sur WhatsApp</div>
+
+  <!-- Demo Modal -->
+  <div class="modal-backdrop" id="modalBackdrop">
+    <div class="modal">
+      <div class="modal-head">
+        <b>Démo guidée (2 minutes)</b>
+        <div class="modal-close" id="closeDemoModal">×</div>
+      </div>
+      <div class="modal-body">
+        <div class="modal-grid">
+          <div>
+            <h3 style="margin-top:0">Comment fonctionne l'agent ?</h3>
+            <p>L'agent analyse les messages entrants et répond automatiquement selon des règles que vous définissez.</p>
+            
+            <div class="mini-note">
+              <strong>Exemple pour un restaurant :</strong><br>
+              1. "Bonjour, je voudrais réserver une table" → L'agent demande la date et l'heure.<br>
+              2. "Pour 4 personnes demain 20h" → L'agent vérifie la disponibilité et propose un créneau.<br>
+              3. "Oui parfait" → L'agent confirme et envoie un rappel 24h avant.
+            </div>
+          </div>
+          
+          <div>
+            <h3 style="margin-top:0">Ce que vous configurez</h3>
+            <ul style="color:var(--muted); line-height:1.65; padding-left:20px;">
+              <li>Les horaires d'ouverture</li>
+              <li>Les scénarios de conversation</li>
+              <li>Les informations à envoyer (menu, tarifs, etc.)</li>
+              <li>Les règles d'escalade vers un humain</li>
+              <li>Les langues supportées</li>
+            </ul>
+            
+            <div class="mini-note" style="margin-top:20px">
+              <strong>Pas de compétences techniques nécessaires</strong><br>
+              On vous guide pas à pas. La plupart des configurations sont prêtes à l'emploi.
+            </div>
+            
+            <a href="#contact" class="btn primary" style="width:100%; margin-top:20px; justify-content:center;">
+              Commencer maintenant
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
-    // ---------- Helpers ----------
-    const chatEl = document.getElementById('chat');
-    const sysNoteEl = document.getElementById('sysNote');
-    const demoTitleEl = document.getElementById('demoTitle');
-    const demoSubEl = document.getElementById('demoSub');
-
-    function nowTime(){
-      const d = new Date();
-      return d.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-    }
-    function scrollToBottom(){
-      chatEl.scrollTop = chatEl.scrollHeight;
-    }
-    function bubble(text, side, meta = ""){
-      const row = document.createElement('div');
-      row.className = 'bubbleRow ' + (side === 'you' ? 'you' : 'bot');
-
-      const b = document.createElement('div');
-      b.className = 'bubble ' + (side === 'bot' ? 'bot' : '');
-      b.innerHTML = text;
-
-      row.appendChild(b);
-
-      if(meta){
-        const m = document.createElement('div');
-        m.className = 'meta';
-        m.innerHTML = meta;
-        b.appendChild(m);
-      }
-      chatEl.appendChild(row);
-      scrollToBottom();
-    }
-    function typing(side='bot'){
-      const id = 'typing-' + Math.random().toString(16).slice(2);
-      const row = document.createElement('div');
-      row.className = 'bubbleRow ' + (side === 'you' ? 'you' : 'bot');
-      row.id = id;
-
-      const b = document.createElement('div');
-      b.className = 'bubble ' + (side === 'bot' ? 'bot' : '');
-      b.innerHTML = '...';
-      row.appendChild(b);
-
-      chatEl.appendChild(row);
-      scrollToBottom();
-      return id;
-    }
-    function removeTyping(id){
-      const el = document.getElementById(id);
-      if(el) el.remove();
-      scrollToBottom();
-    }
-    function wait(ms){ return new Promise(r => setTimeout(r, ms)); }
-
-    // ---------- Scenarios ----------
-    const scenarios = {
-      clinic: {
-        title: "عيادة — WhatsApp",
-        sub: "موعد + تأكيد + تذكير",
-        note: "هنا كيبان الفرق: ماشي غير جواب، ولكن إدارة الموعد حتى يتأكد.",
-        script: async () => {
-          chatEl.innerHTML = "";
-          bubble("سلام، بغيت ناخد موعد عند الدكتور 🙏", "you", `<span>${nowTime()}</span>`);
-          const t1 = typing(); await wait(550); removeTyping(t1);
-          bubble("مرحبا 👋 أنا المساعد ديال العيادة. شنو كاين؟ واش بغيت <b>موعد</b> ولا عندك سؤال على <b>الثمن/الخدمات</b>؟", "bot", `<span>${nowTime()}</span>`);
-          await wait(450);
-          bubble("موعد. ممكن غدا فالعشية؟", "you", `<span>${nowTime()}</span>`);
-          const t2 = typing(); await wait(650); removeTyping(t2);
-          bubble("تمام. باش نثبّت الموعد، عطيني لو سمحتي: <b>الاسم</b> + <b>السن</b> + <b>شنو كتحس</b> (باختصار).", "bot", `<span>${nowTime()}</span>`);
-          await wait(500);
-          bubble("سارة، 28، ألم فالضرس 😣", "you", `<span>${nowTime()}</span>`);
-          const t3 = typing(); await wait(750); removeTyping(t3);
-          bubble("واخا سارة. كاينين جوج أوقات غدا: <b>17:30</b> ولا <b>19:00</b>. شنو كيناسبك؟", "bot", `<span>${nowTime()}</span>`);
-          await wait(500);
-          bubble("19:00", "you", `<span>${nowTime()}</span>`);
-          const t4 = typing(); await wait(700); removeTyping(t4);
-          bubble("✅ تمّ الحجز: <b>غدا 19:00</b>. غادي توصلك رسالة تذكير قبل الموعد بـ 3 سوايع. <br><br>باش نأكد نهائياً: واش رقمك هو نفس اللي كنهدرو به دابا؟", "bot", `<span>${nowTime()}</span>`);
-          await wait(500);
-          bubble("نعم", "you", `<span>${nowTime()}</span>`);
-          const t5 = typing(); await wait(650); removeTyping(t5);
-          bubble("Perfect ✅ إلى كان شي تغيير كتب لينا <b>“نبدّل الموعد”</b>. <br><br><i>(Escalation)</i> إلى بغيتي تهضر مع السكرتيرة مباشرة، كتب <b>“إنسان”</b>.", "bot", `<span>${nowTime()}</span>`);
-        }
-      },
-
+    // Chat Demo Configuration
+    const chatScenarios = {
       restaurant: {
-        title: "مطعم — WhatsApp",
-        sub: "حجز طابلة + تأكيد",
-        note: "المطاعم كيبغيو السرعة + الوضوح: عدد الناس، الوقت، الاسم، تليفون.",
-        script: async () => {
-          chatEl.innerHTML = "";
-          bubble("سلام، واش كاين حجز الليلة؟", "you", `<span>${nowTime()}</span>`);
-          const t1 = typing(); await wait(520); removeTyping(t1);
-          bubble("مرحبا 👋 كاين. باش نوجد ليك الحجز: شحال ديال الناس وشنو الوقت اللي بغيتي؟", "bot", `<span>${nowTime()}</span>`);
-          await wait(420);
-          bubble("4 دالناس، 21:30", "you", `<span>${nowTime()}</span>`);
-          const t2 = typing(); await wait(700); removeTyping(t2);
-          bubble("واخا. كاين 21:30 ✅. عطيني الاسم اللي نكتب به الحجز + رقم للتأكيد.", "bot", `<span>${nowTime()}</span>`);
-          await wait(420);
-          bubble("Chakir، ونفس الرقم", "you", `<span>${nowTime()}</span>`);
-          const t3 = typing(); await wait(650); removeTyping(t3);
-          bubble("✅ حجزك تأكد: <b>اليوم 21:30</b> لـ <b>4</b> أشخاص باسم <b>Chakir</b>. <br><br>ملاحظة: إلا تأخرت أكثر من 15 دقيقة، غير كتب <b>“تأخير”</b> باش ما يضيعش الحجز.", "bot", `<span>${nowTime()}</span>`);
-          await wait(450);
-          bubble("فين المكان؟", "you", `<span>${nowTime()}</span>`);
-          const t4 = typing(); await wait(600); removeTyping(t4);
-          bubble("📍 ها لوكيشن: <b>Google Maps</b> (رابط) <br>وها العنوان: <b>26 Rue ...</b> <br><br>بغيت نرسلك المينيو؟ كتب <b>“menu”</b>.", "bot", `<span>${nowTime()}</span>`);
+        title: "Bistro 24/7",
+        avatar: "🍽️",
+        initialMessages: [
+          { type: "bot", text: "Bonjour ! 👋 Bienvenue au Bistro 24/7. Je suis votre assistant de réservation.", time: "16:02" },
+          { type: "bot", text: "Voulez-vous réserver une table ou consulter notre menu ?", time: "16:02" }
+        ],
+        responses: {
+          "bonjour": "Bonjour ! Comment puis-je vous aider aujourd'hui ?",
+          "reservation": "Parfait ! Pour quelle date et heure souhaitez-vous réserver ?",
+          "menu": "Voici notre menu : https://bistro24/7.menu. Quelle catégorie vous intéresse ?",
+          "au revoir": "Merci ! N'hésitez pas à nous recontacter. Bonne journée !",
+          "2 personnes": "Super ! Nous avons de la disponibilité ce soir à 19h ou 20h30. Que préférez-vous ?",
+          "demain": "D'accord pour demain. Nous avons des tables libres à 19h, 20h et 21h. Quel créneau vous convient ?",
+          "oui": "Parfait ! Réservation confirmée pour demain 20h pour 2 personnes. Un rappel vous sera envoyé demain matin. Au plaisir de vous recevoir !"
         }
       },
-
-      realestate: {
-        title: "عقار — WhatsApp",
-        sub: "فلترة + موعد زيارة",
-        note: "العقار خاصو فلترة: budget + مدينة + نوع + جاهزية. وإلا غادي تضيع الوقت مع الفضوليين.",
-        script: async () => {
-          chatEl.innerHTML = "";
-          bubble("سلام، شفت annonce ديال شقة. واش مازال كاينة؟", "you", `<span>${nowTime()}</span>`);
-          const t1 = typing(); await wait(520); removeTyping(t1);
-          bubble("مرحبا 👋 كاينة. باش نأكد ليك المناسبة: شنو المدينة/الحي + budget التقريبي + كراء ولا شراء؟", "bot", `<span>${nowTime()}</span>`);
-          await wait(450);
-          bubble("القنيطرة، budget 4000، كراء", "you", `<span>${nowTime()}</span>`);
-          const t2 = typing(); await wait(720); removeTyping(t2);
-          bubble("تمام. شحال ديال الغرف اللي بغيتي؟ ووقتاش باغي تبدا السكن؟", "bot", `<span>${nowTime()}</span>`);
-          await wait(420);
-          bubble("2 غرف، الأسبوع الجاي", "you", `<span>${nowTime()}</span>`);
-          const t3 = typing(); await wait(650); removeTyping(t3);
-          bubble("واخا. عندي جوج اختيارات فالbudget ديالك. <br>1) 2 غرف فـ ... <br>2) 2 غرف فـ ... <br><br>بغيت <b>زيارة</b>؟ عطيني نهار/وقت مناسب.", "bot", `<span>${nowTime()}</span>`);
-          await wait(520);
-          bubble("السبت مع 16:00", "you", `<span>${nowTime()}</span>`);
-          const t4 = typing(); await wait(700); removeTyping(t4);
-          bubble("✅ تدار موعد زيارة: <b>السبت 16:00</b>. <br><br>باش نأكد: واش غادي تجي بوحدك ولا مع شي حد؟ (غير باش نوجد الوقت.)", "bot", `<span>${nowTime()}</span>`);
-          await wait(450);
-          bubble("مع الزوجة", "you", `<span>${nowTime()}</span>`);
-          const t5 = typing(); await wait(650); removeTyping(t5);
-          bubble("تمام ✅ غادي توصلك رسالة تذكير قبلها بـ 2 سوايع. <br><br><i>(Escalation)</i> إلا بغيتي تفاصيل أكثر/صور كثر، كتب <b>“صور”</b> ولا <b>“إنسان”</b>.", "bot", `<span>${nowTime()}</span>`);
+      clinique: {
+        title: "Clinique du Soin",
+        avatar: "🩺",
+        initialMessages: [
+          { type: "bot", text: "Bonjour, je suis l'assistant de la Clinique du Soin. 🤗", time: "09:15" },
+          { type: "bot", text: "Souhaitez-vous prendre rendez-vous ou avoir des informations sur nos spécialités ?", time: "09:15" }
+        ],
+        responses: {
+          "bonjour": "Bonjour ! Comment pouvons-nous vous aider aujourd'hui ?",
+          "rdv": "Pour quelle spécialité souhaitez-vous un rendez-vous ?",
+          "urgence": "Pour les urgences, appelez le 05 22 00 00 00. Sinon, je peux vous orienter.",
+          "dentiste": "Nos dentistes ont des disponibilités cette semaine. Quel jour vous conviendrait ?",
+          "demain": "Désolé, nous n'avons plus de créneau demain. Je vous propose jeudi ?",
+          "oui": "Rendez-vous confirmé pour jeudi à 14h avec le Dr. Martin. Un rappel SMS vous sera envoyé 24h avant."
         }
       },
-
-      ecom: {
-        title: "E-commerce — WhatsApp",
-        sub: "FAQ + طلب + COD",
-        note: "Ecom كيموت فـ الأسئلة المتكررة: ثمن، توصيل، استبدال، COD. خاص flow سريع.",
-        script: async () => {
-          chatEl.innerHTML = "";
-          bubble("سلام، شحال ثمن هاد المنتوج؟ وواش كاين توصيل؟", "you", `<span>${nowTime()}</span>`);
-          const t1 = typing(); await wait(540); removeTyping(t1);
-          bubble("مرحبا 👋 الثمن هو <b>199dh</b>. التوصيل: <b>25dh</b> داخل المدينة و <b>35dh</b> خارجها. <br><br>بغيتي <b>الدفع عند الاستلام (COD)</b> ولا تحويل؟", "bot", `<span>${nowTime()}</span>`);
-          await wait(470);
-          bubble("COD. واش كاين استبدال؟", "you", `<span>${nowTime()}</span>`);
-          const t2 = typing(); await wait(620); removeTyping(t2);
-          bubble("كاين ✅ عندك <b>7 أيام</b> للاستبدال بشرط يكون المنتوج جديد. <br><br>باش نسجلو الطلب: عطيني <b>الاسم</b> + <b>العنوان</b> + <b>المدينة</b> + <b>تليفون</b>.", "bot", `<span>${nowTime()}</span>`);
-          await wait(500);
-          bubble("Yassine، حي السلام، سلا، نفس الرقم", "you", `<span>${nowTime()}</span>`);
-          const t3 = typing(); await wait(720); removeTyping(t3);
-          bubble("✅ تم تسجيل الطلب. غادي نوصلوك فـ <b>24-48 ساعة</b>. <br><br>بغيت تتبع الشحنة؟ كتب <b>“tracking”</b>. <br><i>(Escalation)</i> إلى وقع شي مشكل، كتب <b>“خدمة الزبناء”</b>.", "bot", `<span>${nowTime()}</span>`);
+      boutique: {
+        title: "Style & Co",
+        avatar: "🛍️",
+        initialMessages: [
+          { type: "bot", text: "Salut ! 👋 Bienvenue chez Style & Co.", time: "11:30" },
+          { type: "bot", text: "Je peux vous aider à trouver des produits, vérifier les disponibilités ou suivre une commande.", time: "11:30" }
+        ],
+        responses: {
+          "bonjour": "Bonjour ! Que recherchez-vous aujourd'hui ?",
+          "robe": "Nous avons de nouvelles robes arrivées cette semaine ! Quelle taille cherchez-vous ?",
+          "dispo": "Quel produit vous intéresse ? Je vérifie le stock immédiatement.",
+          "commande": "Pour suivre une commande, donnez-moi votre numéro de commande.",
+          "livraison": "Livraison gratuite à partir de 500 DH. Délai : 24-48h en ville.",
+          "M": "La robe que vous regardez est disponible en taille M. Voulez-vous que je vous réserve une pièce ?",
+          "oui": "Parfait ! Réservation effectuée. Vous avez 24h pour venir en boutique ou commander en ligne."
         }
       }
     };
 
-    async function loadScenario(key){
-      const s = scenarios[key];
-      if(!s) return;
-      demoTitleEl.textContent = s.title;
-      demoSubEl.textContent = s.sub;
-      sysNoteEl.textContent = s.note;
-      await s.script();
+    // DOM Elements
+    const chatContainer = document.getElementById('chat');
+    const chatTitle = document.getElementById('chatTitle');
+    const avatar = document.getElementById('avatar');
+    const fakeInput = document.getElementById('fakeInput');
+    const sendBtn = document.getElementById('sendBtn');
+    const segBtns = document.querySelectorAll('.seg-btn');
+    const openDemoModal = document.getElementById('openDemoModal');
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const closeDemoModal = document.getElementById('closeDemoModal');
+    const leadForm = document.getElementById('leadForm');
+    const formFields = document.getElementById('formFields');
+    const formSuccess = document.getElementById('formSuccess');
+    const waBtn = document.getElementById('waBtn');
+
+    // Current chat mode
+    let currentMode = 'restaurant';
+    let messageCount = 0;
+
+    // Initialize chat
+    function initChat() {
+      chatContainer.innerHTML = '';
+      const scenario = chatScenarios[currentMode];
+      chatTitle.textContent = scenario.title;
+      avatar.textContent = scenario.avatar;
+      
+      scenario.initialMessages.forEach(msg => {
+        addMessage(msg.type, msg.text, msg.time);
+      });
     }
 
-    // ---------- Bind chips ----------
-    document.querySelectorAll('.chip').forEach(btn=>{
-      btn.addEventListener('click', () => loadScenario(btn.dataset.scenario));
-    });
+    // Add message to chat
+    function addMessage(type, text, time = null) {
+      const msgDiv = document.createElement('div');
+      msgDiv.className = `msg ${type}`;
+      
+      const timeText = time || new Date().toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+      
+      msgDiv.innerHTML = `
+        ${text}
+        <div class="meta">${timeText} ${type === 'me' ? '✓✓' : ''}</div>
+      `;
+      
+      chatContainer.appendChild(msgDiv);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+      messageCount++;
+    }
 
-    // Keyboard shortcuts
-    document.addEventListener('keydown', (e) => {
-      if (e.key === '1') loadScenario('clinic');
-      if (e.key === '2') loadScenario('restaurant');
-      if (e.key === '3') loadScenario('realestate');
-      if (e.key === '4') loadScenario('ecom');
-      // Ctrl+K focus fit form
-      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
-        e.preventDefault();
-        document.getElementById('biz').focus();
-        location.hash = '#fit';
+    // Show typing indicator
+    function showTyping() {
+      const typingDiv = document.createElement('div');
+      typingDiv.className = 'typing';
+      typingDiv.innerHTML = `
+        <span>L'agent écrit</span>
+        <div class="dots">
+          <i></i><i></i><i></i>
+        </div>
+      `;
+      chatContainer.appendChild(typingDiv);
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+      
+      return typingDiv;
+    }
+
+    // Get bot response
+    function getBotResponse(userMessage) {
+      const scenario = chatScenarios[currentMode];
+      const lowerMsg = userMessage.toLowerCase();
+      
+      // Check for keywords in the response mapping
+      for (const [keyword, response] of Object.entries(scenario.responses)) {
+        if (lowerMsg.includes(keyword)) {
+          return response;
+        }
       }
-    });
-
-    // ---------- Fit check form (local summary) ----------
-    const fitForm = document.getElementById('fitForm');
-    const summaryBox = document.getElementById('summaryBox');
-    const formNote = document.getElementById('formNote');
-
-    function makeSummary(data){
-      const lines = [
-        "📌 <b>ملخص Fit Check</b>",
-        `• النشاط: <b>${escapeHtml(data.biz)}</b>`,
-        `• المدينة: <b>${escapeHtml(data.city)}</b>`,
-        `• الرسائل/اليوم: <b>${escapeHtml(data.volume)}</b>`,
-        `• القناة: <b>${escapeHtml(data.channel)}</b>`,
-        `• الألم الرئيسي: <b>${escapeHtml(data.pain)}</b>`,
-        "",
-        "✅ <b>شنو نقدر نديرو ليك (اقتراح سريع):</b>",
-        "1) ردّ تلقائي فاللحظة + جمع المعلومات الناقصة",
-        "2) Flow ديال الحجز/الطلب + تأكيد + تذكير",
-        "3) Escalation لِإنسان غير فاش خاص",
-        "4) تقرير أسبوعي: الرسائل → التحويلات → النقط اللي كيتسربو فيها الزبناء"
-      ];
-      return lines.join("<br>");
+      
+      // Default responses based on mode
+      const defaultResponses = {
+        restaurant: "Je comprends. Pour une réservation, dites-moi simplement la date, l'heure et le nombre de personnes.",
+        clinique: "Je peux vous aider à prendre rendez-vous ou répondre à vos questions médicales générales.",
+        boutique: "Je peux vous aider à trouver des produits, vérifier les disponibilités ou vous informer sur les livraisons."
+      };
+      
+      return defaultResponses[currentMode] || "Je vous remercie de votre message. Un conseiller vous répondra rapidement si besoin.";
     }
 
-    function escapeHtml(str){
-      return String(str)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
+    // Handle user message
+    function handleUserMessage() {
+      const userMessage = fakeInput.value.trim();
+      if (!userMessage) return;
+      
+      addMessage('me', userMessage);
+      fakeInput.value = '';
+      
+      // Show typing indicator
+      const typing = showTyping();
+      
+      // Simulate bot thinking time
+      setTimeout(() => {
+        typing.remove();
+        const botResponse = getBotResponse(userMessage);
+        addMessage('bot', botResponse);
+      }, 1000 + Math.random() * 1000);
     }
 
-    fitForm.addEventListener('submit', (e)=>{
+    // Switch chat mode
+    function switchMode(mode) {
+      currentMode = mode;
+      segBtns.forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.mode === mode);
+        btn.setAttribute('aria-selected', btn.dataset.mode === mode);
+      });
+      initChat();
+    }
+
+    // ROI Calculator
+    function updateROI() {
+      const messages = parseInt(document.getElementById('messages').value);
+      const aov = parseInt(document.getElementById('aov').value) || 200;
+      const time = parseInt(document.getElementById('time').value) || 5;
+      const conv = parseInt(document.getElementById('conv').value) || 10;
+      const uplift = parseInt(document.getElementById('uplift').value) || 25;
+      
+      // Update displayed values
+      document.getElementById('messagesVal').textContent = messages;
+      document.getElementById('upliftVal').textContent = uplift;
+      
+      // Calculate metrics
+      const hoursSaved = (messages * time * 22) / 60; // 22 working days per month
+      const currentOrders = Math.floor((messages * conv / 100) * 22);
+      const currentRevenue = currentOrders * aov;
+      const improvedConv = conv + (conv * uplift / 100);
+      const improvedOrders = Math.floor((messages * improvedConv / 100) * 22);
+      const improvedRevenue = improvedOrders * aov;
+      const revenueGain = improvedRevenue - currentRevenue;
+      const extraOrders = improvedOrders - currentOrders;
+      
+      // Update UI
+      document.getElementById('hoursSaved').textContent = Math.round(hoursSaved);
+      document.getElementById('revNow').textContent = currentRevenue.toLocaleString('fr-FR');
+      document.getElementById('revGain').textContent = revenueGain.toLocaleString('fr-FR');
+      document.getElementById('ordersMore').textContent = extraOrders;
+    }
+
+    // Form submission
+    function handleFormSubmit(e) {
       e.preventDefault();
-      const data = Object.fromEntries(new FormData(fitForm).entries());
-      const html = makeSummary(data);
-      summaryBox.innerHTML = html;
-      summaryBox.style.display = "block";
-      formNote.textContent = "تمّ توليد الملخص. تقدر تنسخو أو تبعثو لينا.";
-      summaryBox.scrollIntoView({behavior:"smooth", block:"start"});
-    });
+      
+      // In a real app, you would send this data to your backend
+      // For demo purposes, we'll just show success message
+      
+      // Get form data
+      const formData = new FormData(leadForm);
+      const data = Object.fromEntries(formData);
+      
+      console.log('Form submitted:', data);
+      
+      // Show success message
+      formFields.style.display = 'none';
+      formSuccess.classList.add('active');
+      
+      // Scroll to success message
+      formSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      
+      // In production, you would send this data to your backend:
+      // fetch('/api/lead', {
+      //   method: 'POST',
+      //   headers: { 'Content-Type': 'application/json' },
+      //   body: JSON.stringify(data)
+      // })
+    }
 
-    document.getElementById('copySummary').addEventListener('click', async ()=>{
-      if(summaryBox.style.display === "none"){
-        formNote.textContent = "عمر الفورم الأول باش يتولد الملخص.";
-        return;
+    // Event Listeners
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize chat
+      initChat();
+      
+      // Initialize ROI calculator
+      updateROI();
+      
+      // ROI Calculator listeners
+      document.getElementById('messages').addEventListener('input', updateROI);
+      document.getElementById('aov').addEventListener('input', updateROI);
+      document.getElementById('time').addEventListener('input', updateROI);
+      document.getElementById('conv').addEventListener('input', updateROI);
+      document.getElementById('uplift').addEventListener('change', updateROI);
+      
+      // Segment buttons
+      segBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          switchMode(btn.dataset.mode);
+        });
+      });
+      
+      // Send message
+      sendBtn.addEventListener('click', handleUserMessage);
+      fakeInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') handleUserMessage();
+      });
+      
+      // Demo messages
+      const demoMessages = [
+        "Bonjour",
+        "Je voudrais réserver",
+        "2 personnes",
+        "Demain",
+        "Oui"
+      ];
+      
+      let demoIndex = 0;
+      function sendDemoMessage() {
+        if (demoIndex < demoMessages.length) {
+          fakeInput.value = demoMessages[demoIndex];
+          handleUserMessage();
+          demoIndex++;
+        }
       }
-      const temp = summaryBox.innerText;
-      try{
-        await navigator.clipboard.writeText(temp);
-        formNote.textContent = "تنسخ ✅";
-      }catch{
-        formNote.textContent = "ما قدرناش ننسخو (browser). نسخ يدويًا من الصندوق.";
-      }
-    });
-
-    // ---------- Init ----------
-    document.getElementById('year').textContent = new Date().getFullYear();
-    loadScenario('clinic');
-  </script>
-</body>
-</html>
+      
+      // Auto-demo (every 10 seconds if no interaction)
+      let demoInterval = setInterval(() => {
+        if (messageCount < 10) {
+          sendDemoMessage();
+        } else {
+          clearInterval(demoInterval);
+        }
+      }, 10000);
+      
+      // Modal functionality
+      openDemoModal.addEventListener('click', () => {
+        modalBackdrop.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      });
+      
+      closeDemoModal.addEventListener('click', () => {
+        modalBackdrop.classList.remove('active');
+        document.body.style.overflow = 'auto';
+      });
+      
+      modalBackdrop.addEventListener('click', (e) => {
+        if (e.target === modalBackdrop) {
+          modalBackdrop.classList.remove('active');
+          document.body.style.overflow = 'auto';
+        }
+      });
+      
+      // Form submission
+      leadForm.addEventListener('submit', handleFormSubmit);
+      
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          const href = this.getAttribute('href');
+          if (href === '#') return;
+          
+          e.preventDefault();
+          const target = document.querySelector(href);
+          if (target) {
+            target.scrollIntoView({ behavior: 'smooth' });
+          }
+        });
+      });
+      
+      // Update WhatsApp button with form data on input
+      document.querySelectorAll('#leadForm input, #leadForm select').forEach(input => {
+        input.addEventListener('input', updateWhatsAppLink);
+        input.addEventListener('change', updateWhatsAppLink);
+      });
+      
+      function updateWhatsAppLink() {
+        const name = document.querySelector('input[name="fullname"]')?.value || '';
+        const industry = document.querySelector('select[name="industry"]')?.value || '';
+        const goal = document.querySelector('input[name="goal"]')?.value || '';
+        
+        let message = "Bonjour, je suis intéressé par l'agent WhatsApp 24/7.";
+        if (name) message += `\nNom : ${name}`;
+        if (industry) message += `\nActivit
